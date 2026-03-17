@@ -1,0 +1,11 @@
+{
+  "name": "vc-deep-research",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "VC deep research pipeline with multi-model critique",
+  "dependencies": {
+    "openai": "^4.73.0",
+    "@google/generative-ai": "^0.21.0"
+  }
+}
