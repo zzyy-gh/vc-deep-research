@@ -29,10 +29,11 @@ Based on user input or ask:
 
 ### Step 3: Launch Synthesizer
 Launch the **synthesizer** agent with:
-- Entity research directory paths
+- Entity research directory paths (point to `output/` for each entity)
 - Synthesis type
-- Output: `research/syntheses/{slug}/synthesis.md` (slug from entity names or topic)
+- Output: `research/syntheses/{slug}/output/synthesizer-{description}-v1.md` (follow CLAUDE.md Output Convention)
 - User directions
+- Frontmatter values per CLAUDE.md Output Convention
 
 ### Step 4: Present Results
 Read the synthesis output. Present key findings:

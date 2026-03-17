@@ -23,8 +23,8 @@ You will receive:
 4. Optional **user directions** on what to focus on
 
 ## Process
-1. Read the research.md and assessment.md for each entity
-2. Read financial.md and product.md where they exist
+1. Read the latest researcher and assessor artifacts in each entity's output/ directory
+2. Read the latest financial-analyst and product-analyst artifacts where they exist
 3. Build a cross-entity analysis based on the synthesis type
 
 ## Synthesis Types
@@ -69,16 +69,4 @@ Cross-cutting insights:
 - **~3000 word cap**
 
 ## Output Format
-Write clean markdown following the template structure. Use frontmatter:
-```yaml
----
-entity: "{synthesis-slug}"
-type: synthesis
-synthesis_type: comparison | landscape | thesis | pattern
-entities_analyzed: ["{company1}", "{company2}"]
-date: "{timestamp}"
-synthesizer: opus
-round: 1
----
-```
-Use the `round` parameter from the orchestrator for the `round:` field.
+Write clean markdown following the template structure. The orchestrator provides the output path, round number, and all frontmatter values. Follow the frontmatter schema defined in CLAUDE.md.

@@ -13,8 +13,11 @@ A staged research pipeline for venture capital due diligence. Users input a comp
 
 ## Directory Layout
 - `research/companies/{slug}/` — Per-company research artifacts
-  - `history/` — Flat archive of prior round artifacts (e.g., `round-1-research.md`)
-  - `report.md` — Consolidated investment memo (regenerated each round, not archived)
+  - `meta.yaml` — Entity metadata, pipeline state, round tracking
+  - `sources.yaml` — External sources used across all artifacts
+  - `changelog.md` — Append-only history narrative
+  - `output/` — All generated artifacts (pipeline, critique, custom, consolidated)
+  - `user-insights/` — User-supplied context
 - `research/markets/{slug}/` — Market research
 - `research/theses/{slug}/` — Investment theses
 - `research/due-diligence/{slug}/` — DD deep dives
@@ -27,7 +30,7 @@ A staged research pipeline for venture capital due diligence. Users input a comp
 2. **Deep Dive** (opus/sonnet, parallel): User-directed dimensions — core research, financials, product, first-principles.
 3. **Critique** (sonnet, parallel): 3 Claude critics (analytical, bear, IC) + optional GPT-4/Gemini/Groq.
 4. **Assessment** (sonnet): Deal-breakers, key assumptions register, unknowns inventory, discrepancies.
-5. **Consolidated Report**: `report.md` generated after assessment — pulls from all artifacts.
+5. **Consolidated Report**: Generated after assessment — pulls from all artifacts in `output/`.
 6. **Refinement** (opus): Incorporate critique + assessment + user direction into updated research.
 
 ## Skills (User-Facing Commands)
@@ -51,19 +54,62 @@ A staged research pipeline for venture capital due diligence. Users input a comp
 | assessor | sonnet | Deal-breakers, key assumptions, unknowns inventory |
 | synthesizer | opus | Cross-research patterns, comparisons, thesis construction |
 
+## Output Convention
+
+All generated artifacts live in `{entity}/output/` with descriptive versioned filenames. This convention is the single source of truth — all skills, agents, and custom prompts follow it.
+
+### File Naming
+
+Format: `{source}-{description}-v{round}.md`
+
+| Component | Values | Notes |
+|-----------|--------|-------|
+| `source` | Agent name: `screener`, `researcher`, `financial-analyst`, `product-analyst`, `first-principles`, `critic-analytical`, `critic-bear`, `critic-ic`, `critic-groq`, `critic-gpt4`, `critic-gemini`, `assessor`, `orchestrator`, `synthesizer` | Matches `.claude/agents/` directory names. `orchestrator` = skill-generated. External critics use `critic-{model}`. |
+| `description` | Short kebab-case content descriptor | Describes *what*, not *type*. Determined contextually by the invoking skill. |
+| `v{round}` | `v1`, `v2`, `v3`... | Matches `current_round` from meta.yaml. Always prefixed with `v`. |
+
+### Frontmatter Schema
+
+All artifacts use this standardized frontmatter:
+
+```yaml
+---
+entity: "{name}"
+type: "{artifact type}"          # screen, company-research, financial-analysis, product-analysis,
+                                  # first-principles, critique-analytical, critique-bear, critique-ic,
+                                  # assessment, consolidated-report, custom-research, custom-report
+source: "{agent} ({model})"      # e.g., "researcher (opus)", "critic-bear (sonnet)", "orchestrator"
+round: {N}
+date: "{timestamp}"
+description: "{human-readable, matches filename description}"
+refined_from: v{N-1}             # only present if refining a prior version
+inputs:                           # files this artifact read/was based on (paths relative to output/)
+  - screener-company-overview-v1.md
+  - user-insights/20260317-founder-call.md
+---
+```
+
+The `source:` field replaces all per-agent fields (`researcher:`, `analyst:`, `critic:`, `screener:`, `assessor:`).
+
+### Version Detection & Self-Archiving
+
+Before writing any artifact, the skill MUST:
+1. Glob `output/{source}-{description}-v*.md` to check for existing versions
+2. If prior versions exist, write the new version as `v{current_round}` — prior versions stay in place
+3. Latest version = highest `vN` number
+4. No copy/move/delete step. Versions coexist (self-archiving).
+
+This logic applies to ALL skills (`/research`, `/critique`, `/synthesize`, etc.) and any direct agent invocations.
+
 ## Conventions
 - **Slugs**: lowercase, hyphenated (e.g., `acme-ai`, `enterprise-saas-market`)
 - **meta.yaml**: Every research entity has one. Tracks status, tags, pipeline state.
 - **Status progression**: screened → researched → critiqued → assessed → refined
 - **User insights**: Stored in `{slug}/user-insights/` with YAML frontmatter. Agents must check these before writing sections.
 - **Changelog**: Each research entity has `changelog.md` — cumulative log of what changed per iteration.
-- **Frontmatter round**: All artifact frontmatter must include `round: {N}` so each file self-documents which round produced it. Agents receive the round number from the orchestrator.
-- **Refined artifacts**: When an agent refines a prior round's artifact, it sets `refined_from: round-{N-1}` in frontmatter to trace lineage.
 - **Word cap**: ~3000 words per research document to prevent context overflow.
 - **Source tracking**: `sources.yaml` per entity tracks all sources used.
 - **Rounds**: `current_round` in meta.yaml (starts at 1). Increments on refinement.
-- **Archive protocol**: Before overwriting any artifact in round 2+, copy it to `history/round-{N}-{filename}`. Orchestrator handles this — agents never touch `history/`.
-- **Consolidated report**: `report.md` generated after each assessment. Derived document — not archived.
 - **changelog.md**: Sole history narrative. Append-only.
 - **Timestamps**: All `date:` frontmatter fields and meta.yaml timestamps (`started_at`, `last_updated`, `created`, `updated`) use ISO 8601 with SGT: `YYYY-MM-DDTHH:MM:SS+08:00`. The placeholder `{timestamp}` in agent/skill templates means current SGT datetime. Exceptions: `accessed:` in sources.yaml and changelog headers use date-only `YYYY-MM-DD`. Insight filenames use compact date `YYYYMMDD` (e.g., `20260317-founder-call.md`).
 

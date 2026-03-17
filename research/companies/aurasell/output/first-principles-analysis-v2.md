@@ -1,8 +1,11 @@
 ---
 entity: AuraSell
 type: first-principles
-date: 2026-03-17
-analyst: first-principles-agent
+description: "analysis"
+date: "2026-03-17T00:00:00+08:00"
+source: "first-principles (opus)"
+round: 2
+refined_from: v1
 ---
 
 # AuraSell -- First Principles Analysis

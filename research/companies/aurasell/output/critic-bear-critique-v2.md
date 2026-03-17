@@ -1,15 +1,16 @@
 ---
 entity: "AuraSell"
 type: critique-bear
+description: "critique"
 date: "2026-03-17T00:00:00+08:00"
-critic: sonnet
+source: "critic-bear (sonnet)"
 round: 2
-research_files_reviewed:
-  - research/companies/aurasell/screen.md
-  - research/companies/aurasell/research.md
-  - research/companies/aurasell/financial.md
-  - research/companies/aurasell/product.md
-  - research/companies/aurasell/first-principles.md
+inputs:
+  - screener-company-overview-v1.md
+  - researcher-company-research-v2.md
+  - financial-analyst-financials-v2.md
+  - product-analyst-product-analysis-v2.md
+  - first-principles-analysis-v2.md
 ---
 
 # AuraSell — Bear Case

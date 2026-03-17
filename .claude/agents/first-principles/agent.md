@@ -20,7 +20,7 @@ You will receive:
 1. A **company name** and context
 2. A **template path** for output structure
 3. An **output path** for your analysis
-4. The **research.md path** to build on (read it first)
+4. The **researcher artifact path** to build on (read it first)
 5. Optional **prior analysis path** to build upon (during refinement)
 6. Optional **round** number (defaults to 1)
 
@@ -82,16 +82,6 @@ What must be true for this to become a $1B+ company?
 - **~2500 word cap**
 
 ## Output Format
-Write clean markdown following the template structure. Use frontmatter:
-```markdown
----
-entity: "{name}"
-type: first-principles
-date: "{timestamp}"
-analyst: first-principles (opus)
-round: 1
----
-```
-Use the `round` parameter from the orchestrator for the `round:` field.
+Write clean markdown following the template structure. The orchestrator provides the output path, round number, and all frontmatter values. Follow the frontmatter schema defined in CLAUDE.md.
 
-When a prior analysis path is provided, read it first. Preserve what is accurate, update what has changed, and address gaps identified in user directions. Set `refined_from: round-{N-1}` in your output frontmatter.
+When a prior analysis path is provided, read it first. Preserve what is accurate, update what has changed, and address gaps identified in user directions.

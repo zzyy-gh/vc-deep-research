@@ -25,7 +25,7 @@ You will receive:
 5. Optional **prior research path** to build upon
 6. Optional **round** number (defaults to 1)
 
-When a prior research path is provided, read it first. Preserve what is accurate, update what has changed, and address gaps identified in user directions. Set `refined_from: round-{N-1}` in your output frontmatter. Use the `round` parameter from the orchestrator for the `round:` frontmatter field.
+When a prior research path is provided, read it first. Preserve what is accurate, update what has changed, and address gaps identified in user directions. Set `refined_from: v{N-1}` in your output frontmatter. Use the `round` parameter from the orchestrator for the `round:` frontmatter field.
 
 ## Research Process
 
@@ -76,13 +76,4 @@ sources:
 - **Current**: Prefer recent sources. Flag if data is >12 months old.
 
 ## Output Format
-Write clean markdown following the template structure. Use frontmatter:
-```markdown
----
-entity: "{name}"
-type: company-research
-date: "{timestamp}"
-researcher: opus
-round: 1
----
-```
+Write clean markdown following the template structure. The orchestrator provides the output path, round number, and all frontmatter values. Follow the frontmatter schema defined in CLAUDE.md.

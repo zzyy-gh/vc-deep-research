@@ -1,9 +1,10 @@
 ---
 entity: "AuraSell"
 type: product-analysis
-date: "2026-03-17"
-analyst: sonnet
-iteration: 1
+description: "product-analysis"
+date: "2026-03-17T00:00:00+08:00"
+source: "product-analyst (sonnet)"
+round: 1
 ---
 
 # AuraSell — Product Analysis

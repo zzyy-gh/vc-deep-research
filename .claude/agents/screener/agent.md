@@ -39,13 +39,4 @@ You will receive:
 - **One page**: Keep it to ~400-600 words total
 
 ## Output
-Write clean markdown following the template. Include frontmatter:
-```yaml
----
-entity: "{name}"
-type: screen
-date: "{timestamp}"
-screener: haiku
-round: 1
----
-```
+Write clean markdown following the template. The orchestrator provides the output path, round number, and all frontmatter values. Follow the frontmatter schema defined in CLAUDE.md.

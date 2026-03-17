@@ -1,11 +1,11 @@
 ---
 entity: AuraSell
 type: financial-analysis
+description: "financials"
 date: "2026-03-17T00:00:00+08:00"
-analyst: financial-analyst (opus)
-status: refined
+source: "financial-analyst (opus)"
 round: 2
-note: "Round 2 refinement. Incorporates critique feedback on AI inference costs, burn rate acceleration, comparable methodology, down-round risk, and burn multiple context."
+refined_from: v1
 ---
 
 # AuraSell -- Financial Analysis (Round 2)

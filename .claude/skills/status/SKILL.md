@@ -21,7 +21,7 @@ Use Glob to find all `meta.yaml` files:
 - `research/due-diligence/*/meta.yaml`
 
 ### Step 2: Build Pipeline View
-For each entity, read its `meta.yaml` and optionally `assessment.md` (if exists).
+For each entity, read its `meta.yaml` and optionally the latest `assessor-*-v*.md` in `output/` (if exists).
 
 ### Step 3: Present Dashboard
 
@@ -51,7 +51,7 @@ Format as a table:
 If user asks about a specific entity, show detailed status:
 - Current pipeline state
 - Completed phases
-- Available files (which research artifacts exist)
+- Available files in `output/` (which research artifacts exist)
 - Assessment summary (if exists)
 - User insights count
 - Last updated timestamp (SGT timezone, +08:00)

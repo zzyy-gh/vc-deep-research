@@ -1,8 +1,16 @@
 ---
+entity: AuraSell
 type: critique-groq
+description: "critique"
 date: "2026-03-17T00:00:00+08:00"
-model: llama-3.3-70b-versatile
+source: "critic-groq (llama-3.3-70b-versatile)"
 round: 2
+inputs:
+  - screener-company-overview-v1.md
+  - researcher-company-research-v2.md
+  - financial-analyst-financials-v2.md
+  - product-analyst-product-analysis-v2.md
+  - first-principles-analysis-v2.md
 ---
 
 ## Historical Analogues

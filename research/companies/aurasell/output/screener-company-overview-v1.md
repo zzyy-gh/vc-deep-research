@@ -1,8 +1,9 @@
 ---
 entity: AuraSell
 type: screen
+description: "company-overview"
 date: "2026-03-17T00:00:00+08:00"
-screener: haiku
+source: "screener (haiku)"
 round: 1
 ---
 

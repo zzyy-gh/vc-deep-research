@@ -1,9 +1,10 @@
 ---
 entity: AuraSell
 type: financial-analysis
-date: 2026-03-17
-analyst: financial-analyst (opus)
-status: researched
+description: "financials"
+date: "2026-03-17T00:00:00+08:00"
+source: "financial-analyst (opus)"
+round: 1
 ---
 
 # AuraSell -- Financial Analysis

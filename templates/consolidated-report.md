@@ -6,14 +6,7 @@ word_cap: 3000
 
 # {Company Name} — Consolidated Investment Memo
 
-```yaml
----
-entity: "{name}"
-type: consolidated-report
-round: {N}
-date: "{timestamp}"
----
-```
+Frontmatter: Follow CLAUDE.md Output Convention (entity, type, source, round, date, description, inputs).
 
 ## TL;DR
 3-4 sentences. What this company does, why it's interesting (or not), and the key tension in the investment decision.
@@ -43,22 +36,22 @@ date: "{timestamp}"
 - {bullet 3}
 
 ## Key Findings
-*(Sourced from research.md)*
+*(Sourced from the latest researcher artifact in output/)*
 
 Synthesize the most important findings from core research. Focus on what matters for the investment decision — market position, traction, differentiation, team quality. Not a summary of everything, but the findings that move the needle.
 
 ## Financial Picture
-*(Sourced from financial.md)*
+*(Sourced from the latest financial-analyst artifact in output/)*
 
 Unit economics, burn rate, revenue trajectory, capital efficiency. If pre-revenue, focus on burn and runway. Include key financial metrics in a compact table if data is available.
 
 ## Product & Technology
-*(Sourced from product.md)*
+*(Sourced from the latest product-analyst artifact in output/)*
 
 Product-market fit signals, technical moat (or lack thereof), platform risk, defensibility. What's the product insight and is it durable?
 
 ## Risk Assessment
-*(Sourced from assessment.md)*
+*(Sourced from the latest assessor artifact in output/)*
 
 ### Deal Breakers
 List any identified deal breakers. If none, state "None identified."
@@ -81,7 +74,7 @@ Critical unknowns that remain. Categorize as critical / important / nice-to-know
 | Risks | {green/yellow/red} | {one-line rationale} |
 
 ## Critique Summary
-*(Sourced from critiques/)*
+*(Sourced from the latest critic artifacts in output/)*
 
 ### Analytical Critic
 - {top concern 1}
@@ -103,13 +96,7 @@ Prioritized list of actions to derisk the investment or reach conviction. E.g., 
 
 ## Source Versions
 
-| Artifact | Round | Date |
-|----------|-------|------|
-| research.md | {round} | {date from frontmatter} |
-| financial.md | {round} | {date} |
-| product.md | {round} | {date} |
-| assessment.md | {round} | {date} |
-| critiques/ | {round} | {date} |
+List all artifacts in `output/` that were used to build this report, with their round and date from frontmatter. Follow CLAUDE.md Output Convention for locating artifacts.
 
 ## Evolution Notes
 *(Round 2+ only — omit for round 1)*

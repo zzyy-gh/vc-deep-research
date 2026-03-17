@@ -1,10 +1,16 @@
 ---
 entity: "AuraSell"
 type: critique-analytical
+description: "critique"
 date: "2026-03-17T00:00:00+08:00"
-critic: sonnet
-round: 2
-research_files_reviewed: [screen.md, research.md, financial.md, product.md, first-principles.md]
+source: "critic-analytical (sonnet)"
+round: 1
+inputs:
+  - screener-company-overview-v1.md
+  - researcher-company-research-v1.md
+  - financial-analyst-financials-v1.md
+  - product-analyst-product-analysis-v1.md
+  - first-principles-analysis-v1.md
 ---
 
 # AuraSell — Analytical Critique

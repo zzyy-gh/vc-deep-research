@@ -7,14 +7,6 @@ description: "Main research entry point — runs the staged pipeline: screen →
 
 You are orchestrating the VC deep research pipeline. This is the main entry point for all research.
 
-## Archive Protocol
-When overwriting artifacts in round 2+:
-1. Read `current_round` (N) from meta.yaml (default 1 if missing)
-2. Run: `mkdir -p history && cp {file} history/round-{N}-{basename}` (e.g., `cp research.md history/round-1-research.md`)
-3. Archive only: `research.md`, `financial.md`, `product.md`, `first-principles.md`, `assessment.md`, `sources.yaml`, `critiques/*.md`
-4. Do NOT archive: `meta.yaml`, `changelog.md`, `screen.md`, `report.md`, `user-insights/`
-5. Only archive files that are actually being overwritten — don't snapshot untouched files
-
 ## When Invoked
 
 The user will say something like:
@@ -67,7 +59,8 @@ updated: "{timestamp}"
 3. Launch the **screener** agent (haiku model) with:
    - Entity name and any context
    - Template: `templates/screen.md`
-   - Output: `research/companies/{slug}/screen.md`
+   - Output: `research/companies/{slug}/output/screener-company-overview-v1.md`
+   - Frontmatter values per CLAUDE.md Output Convention
 4. Wait for completion, then **present the screen to the user**.
 5. Ask: "Here's the quick screen. Worth a deep dive? If so, any areas to focus on?"
 
@@ -75,20 +68,20 @@ updated: "{timestamp}"
 
 ## Step 4: Directed Deep Dive (Phase 2)
 
-Based on user direction, launch relevant agents **in parallel**:
+Based on user direction, launch relevant agents **in parallel**. Follow CLAUDE.md Output Convention for all paths and frontmatter:
 
-- **Always**: researcher agent → `research.md`
-- **Default or if requested**: financial-analyst → `financial.md`
-- **Default or if requested**: product-analyst → `product.md`
-- **If requested**: first-principles → `first-principles.md`
+- **Always**: researcher agent → `output/researcher-deep-dive-v{round}.md`
+- **Default or if requested**: financial-analyst → `output/financial-analyst-unit-economics-v{round}.md`
+- **Default or if requested**: product-analyst → `output/product-analyst-product-teardown-v{round}.md`
+- **If requested**: first-principles → `output/first-principles-constraint-analysis-v{round}.md`
 
 Each agent receives:
 - Entity name, stage, sector
 - Their specific template path
-- Output path
+- Output path (full path under `output/`)
 - User directions
 - Path to `user-insights/` directory
-- `round: {current_round}` (from meta.yaml, for frontmatter — all agents must include `round:` in output frontmatter)
+- Frontmatter values: round, source, description, entity, type, date, inputs, and refined_from (if applicable)
 
 Update `meta.yaml`: status=researched, completed_phases includes "research".
 
@@ -96,12 +89,10 @@ Present a **summary** of findings to the user (read key points from each output 
 
 ## Step 5: Multi-Model Critique (Phase 3)
 
-**Archive existing critiques**: If `critiques/` has existing files, follow Archive Protocol for each before overwriting.
-
-Launch **3 required critics in parallel** as subagents, passing `round: {current_round}` (for frontmatter):
-- critic-analytical → `critiques/analytical.md`
-- critic-bear → `critiques/bear.md`
-- critic-ic → `critiques/ic.md`
+Launch **3 required critics in parallel** as subagents. Follow CLAUDE.md Output Convention for paths and frontmatter:
+- critic-analytical → `output/critic-analytical-factual-gaps-v{round}.md`
+- critic-bear → `output/critic-bear-bear-case-v{round}.md`
+- critic-ic → `output/critic-ic-ic-review-v{round}.md`
 
 Each critic receives paths to the research files (not the content).
 
@@ -114,12 +105,11 @@ Update `meta.yaml`: status=critiqued.
 
 ## Step 6: Assessment (Phase 4)
 
-**Archive existing assessment**: If `assessment.md` exists, follow Archive Protocol before overwriting.
-
 Launch the **assessor** agent with:
-- Paths to research files and critique files
+- Paths to research files and critique files (in `output/`)
 - Assessment template path
-- Output: `research/companies/{slug}/assessment.md`
+- Output: `research/companies/{slug}/output/assessor-deal-assessment-v{round}.md`
+- Frontmatter values per CLAUDE.md Output Convention
 
 The assessor reads research + critique **summaries** and produces:
 - Deal-breakers (binary flags)
@@ -135,9 +125,9 @@ Update `meta.yaml`: status=assessed.
 ## Step 6b: Consolidated Report
 
 After assessment completes:
-1. Read key findings from: `research.md`, `financial.md`, `product.md`, `assessment.md`, `critiques/`
+1. Read key findings from the latest versions of research, financial, product, assessment, and critique artifacts in `output/`
 2. Follow `templates/consolidated-report.md` structure
-3. Write to `report.md` in the entity directory
+3. Write to `output/orchestrator-consolidated-report-v{round}.md` following CLAUDE.md Output Convention
 4. Present summary to user
 
 Present the **assessment summary** to the user. Ask: "Want to refine the research based on these findings? Or dig deeper into specific areas?"
@@ -146,15 +136,13 @@ Present the **assessment summary** to the user. Ask: "Want to refine the researc
 
 1. Read the user's refinement direction
 2. Read `current_round` (N) from meta.yaml (default 1 if missing)
-3. Follow Archive Protocol for `research.md` (and `financial.md`, `product.md`, `first-principles.md` if re-running those)
-4. Archive `sources.yaml`
-5. Increment `current_round` to N+1 in meta.yaml
-6. Launch the **researcher** agent with:
-   - Prior research path: `history/round-{N}-research.md`
+3. Increment `current_round` to N+1 in meta.yaml
+4. Launch the **researcher** agent with:
+   - Prior research path: locate the latest researcher artifact in `output/` following CLAUDE.md Output Convention (glob `output/researcher-*-v{N}.md`)
    - Assessment summary (not full critiques)
    - User's refinement direction
-   - `round: {N+1}`
-   - Output: same `research.md` (overwrite)
+   - Output: write the new version as `output/researcher-{description}-v{N+1}.md` following CLAUDE.md Output Convention (new version coexists with prior)
+   - Frontmatter values per CLAUDE.md Output Convention (including `refined_from: v{N}`)
 7. Append to `changelog.md`:
 ```markdown
 ## Round {N+1} — {date}

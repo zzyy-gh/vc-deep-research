@@ -1,10 +1,11 @@
 ---
 entity: "AuraSell"
 type: company-research
+description: "company-research"
 date: "2026-03-17T00:00:00+08:00"
-researcher: opus
+source: "researcher (opus)"
 round: 2
-refined_from: round-1
+refined_from: v1
 ---
 
 # AuraSell -- Research Report (Round 2)

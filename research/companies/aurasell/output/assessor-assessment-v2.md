@@ -1,17 +1,18 @@
 ---
 entity: "AuraSell"
 type: assessment
-date: "2026-03-17"
-assessor: sonnet
-research_files_reviewed:
-  - research/companies/aurasell/research.md
-  - research/companies/aurasell/financial.md
-  - research/companies/aurasell/product.md
-  - research/companies/aurasell/first-principles.md
-critique_files_reviewed:
-  - research/companies/aurasell/critiques/analytical.md
-  - research/companies/aurasell/critiques/bear.md
-  - research/companies/aurasell/critiques/ic.md
+description: "assessment"
+date: "2026-03-17T00:00:00+08:00"
+source: "assessor (sonnet)"
+round: 2
+inputs:
+  - researcher-company-research-v2.md
+  - financial-analyst-financials-v2.md
+  - product-analyst-product-analysis-v2.md
+  - first-principles-analysis-v2.md
+  - critic-analytical-critique-v2.md
+  - critic-bear-critique-v2.md
+  - critic-ic-critique-v2.md
 ---
 
 # AuraSell — Investment Assessment

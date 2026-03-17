@@ -1,5 +1,21 @@
 # AuraSell — Changelog
 
+## Storage Migration (2026-03-17)
+
+**Trigger**: Structural refactor — flat output directory with versioned naming.
+
+**Changes**:
+1. All artifacts moved to `output/` with `{source}-{description}-v{round}.md` naming
+2. `history/` folder eliminated — v1 files coexist with v2 in output/
+3. `critiques/` subfolder eliminated — critic files live in output/
+4. `custom-reports/tech-competitive/` flattened into output/
+5. Custom sources.yaml merged into main sources.yaml
+6. All frontmatter updated: `researcher:`/`analyst:`/`critic:` → unified `source:` field
+7. Added `description:` and `inputs:` frontmatter fields
+8. `refined_from: round-1` → `refined_from: v1`
+
+---
+
 ## Round 2 (2026-03-17)
 
 **Trigger**: Refinement incorporating round 1 critique feedback + external model critiques.

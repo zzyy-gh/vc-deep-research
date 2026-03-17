@@ -88,3 +88,128 @@ sources:
     title: "AI App of the Week: Aurasell - SaaStr"
     accessed: "2026-03-17"
     used_for: "Industry analyst perspective"
+
+  # Sources from competitive deep dive (tech-competitive custom research)
+  - url: "https://techcrunch.com/2025/03/24/a16z-and-benchmark-backed-11x-has-been-claiming-customers-it-doesnt-have/"
+    title: "a16z- and Benchmark-backed 11x has been claiming customers it doesn't have"
+    accessed: "2026-03-17"
+    used_for: "11x fake customer claims, ARR manipulation, churn data"
+
+  - url: "https://techcrunch.com/2025/05/05/11x-ceo-hasan-sukkar-steps-down/"
+    title: "11x CEO Hasan Sukkar steps down"
+    accessed: "2026-03-17"
+    used_for: "CEO transition, Prabhav Jain appointment"
+
+  - url: "https://techcrunch.com/2024/09/30/11x-ai-a-developer-of-ai-sales-reps-has-raised-50m-series-b-led-by-a16z-sources-say/"
+    title: "11x.ai has raised $50M Series B led by A16Z"
+    accessed: "2026-03-17"
+    used_for: "Series B funding details, valuation"
+
+  - url: "https://www.zenml.io/llmops-database/rebuilding-an-ai-sdr-agent-with-multi-agent-architecture-for-enterprise-sales-automation"
+    title: "11x: Rebuilding an AI SDR Agent with Multi-Agent Architecture"
+    accessed: "2026-03-17"
+    used_for: "11x technical architecture, tech stack, multi-agent design"
+
+  - url: "https://www.11x.ai/worker/alice"
+    title: "11x Alice - AI Powered SDR"
+    accessed: "2026-03-17"
+    used_for: "Alice product features and capabilities"
+
+  - url: "https://www.11x.ai/blog/series-a"
+    title: "11x - Announcing our Series A"
+    accessed: "2026-03-17"
+    used_for: "Series A funding, company vision"
+
+  - url: "https://reply.io/blog/11x-ai-review/"
+    title: "11x AI Review in 2026"
+    accessed: "2026-03-17"
+    used_for: "11x product review, pricing, customer experience"
+
+  - url: "https://getlatka.com/companies/11x.ai"
+    title: "How 11x.ai hit $2M revenue with a 48 person team"
+    accessed: "2026-03-17"
+    used_for: "Revenue data, team size"
+
+  - url: "https://aisdr.com/blog/11x-techcrunch/"
+    title: "Lessons in Transparency: Inside the 11x.ai Controversy"
+    accessed: "2026-03-17"
+    used_for: "11x controversy analysis, industry implications"
+
+  - url: "https://salesmotion.io/blog/turns-out-ai-sdrs-are-too-good-to-be-true-11x-might-face-legal-action"
+    title: "AI SDRs Are Too Good to Be True: 11x Faces Legal Action"
+    accessed: "2026-03-17"
+    used_for: "ZoomInfo legal threats, false advertising claims"
+
+  - url: "https://coldreach.ai/blog/11x.ai-review"
+    title: "11x AI Review: Is It Worth It for B2B Outbound?"
+    accessed: "2026-03-17"
+    used_for: "11x product quality, customer complaints"
+
+  - url: "https://www.wing.vc/content/ai-growth-flywheel-11x-scaling-automated-sales-rep"
+    title: "The AI growth flywheel: How 11x is scaling fast"
+    accessed: "2026-03-17"
+    used_for: "11x go-to-market strategy, growth model"
+
+  - url: "https://www.vendr.com/marketplace/11x"
+    title: "11x.ai Software Pricing & Plans"
+    accessed: "2026-03-17"
+    used_for: "11x pricing estimates"
+
+  - url: "https://www.artisan.co/blog/artisan-series-a"
+    title: "Artisan Raises $25M Series A"
+    accessed: "2026-03-17"
+    used_for: "Artisan funding, team, product details"
+
+  - url: "https://coldreach.ai/blog/artisan-ai-review"
+    title: "Artisan AI Review 2026: Insights From 100+ Verified Users"
+    accessed: "2026-03-17"
+    used_for: "Artisan product quality, customer experience"
+
+  - url: "https://en.wikipedia.org/wiki/Artisan_AI"
+    title: "Artisan AI - Wikipedia"
+    accessed: "2026-03-17"
+    used_for: "Artisan company background, funding history"
+
+  - url: "https://techcrunch.com/2025/05/06/relevance-ai-raises-24m-series-b-to-help-anyone-build-teams-of-ai-agents/"
+    title: "Relevance AI raises $24M Series B"
+    accessed: "2026-03-17"
+    used_for: "Relevance AI funding, product, traction"
+
+  - url: "https://www.marketsandmarkets.com/Market-Reports/ai-sdr-market-83561460.html"
+    title: "AI SDR Market Size and Forecast to 2030"
+    accessed: "2026-03-17"
+    used_for: "AI SDR market sizing"
+
+  - url: "https://www.researchandmarkets.com/reports/6225977/ai-sales-development-representative-sdr-market"
+    title: "AI SDR Market Report 2026"
+    accessed: "2026-03-17"
+    used_for: "AI SDR market growth data"
+
+  - url: "https://www.fortunebusinessinsights.com/ai-sdr-market-114112"
+    title: "AI SDR Market Size, Share, Trends"
+    accessed: "2026-03-17"
+    used_for: "Market size projections"
+
+  - url: "https://aisdr.com/"
+    title: "AiSDR - AI Sales Development Representative"
+    accessed: "2026-03-17"
+    used_for: "AiSDR product features, pricing"
+
+  - url: "https://www.regie.ai/"
+    title: "Regie.ai - AI Sales Engagement Platform"
+    accessed: "2026-03-17"
+    used_for: "Regie.ai product positioning, pricing"
+
+  - url: "https://www.landbase.com/blog/top-ai-sdr-platforms-in-2025"
+    title: "Top AI SDR Platforms in 2026"
+    accessed: "2026-03-17"
+    used_for: "AI SDR competitive landscape overview"
+
+  - url: "https://tech.eu/2025/05/06/founder-of-a16z-backed-11x-steps-down-as-ceo/"
+    title: "Founder of a16z-backed 11x steps down as CEO"
+    accessed: "2026-03-17"
+    used_for: "11x leadership transition details"
+
+  - type: "user_insight"
+    file: "user-insights/20260317-11x-competitor.md"
+    used_for: "Initial 11x competitive framing and analysis direction"

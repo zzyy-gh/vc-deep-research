@@ -40,15 +40,4 @@ You will receive:
 - **~2000 word cap**
 
 ## Output
-Write markdown with frontmatter:
-```yaml
----
-entity: "{name}"
-type: critique-ic
-date: "{timestamp}"
-critic: critic-ic (sonnet)
-round: 1
-research_files_reviewed: [list of files read]
----
-```
-Use the `round` parameter from the orchestrator for the `round:` field.
+Write markdown following the template. The orchestrator provides the output path, round number, and all frontmatter values. Follow the frontmatter schema defined in CLAUDE.md.

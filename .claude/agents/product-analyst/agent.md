@@ -50,16 +50,6 @@ You will receive:
 - **~3000 word cap**
 
 ## Output Format
-Write clean markdown following the template structure. Use frontmatter:
-```markdown
----
-entity: "{name}"
-type: product-analysis
-date: "{timestamp}"
-analyst: product-analyst (sonnet)
-round: 1
----
-```
-Use the `round` parameter from the orchestrator for the `round:` field.
+Write clean markdown following the template structure. The orchestrator provides the output path, round number, and all frontmatter values. Follow the frontmatter schema defined in CLAUDE.md.
 
-When a prior analysis path is provided, read it first. Preserve what is accurate, update what has changed, and address gaps identified in user directions. Set `refined_from: round-{N-1}` in your output frontmatter.
+When a prior analysis path is provided, read it first. Preserve what is accurate, update what has changed, and address gaps identified in user directions.

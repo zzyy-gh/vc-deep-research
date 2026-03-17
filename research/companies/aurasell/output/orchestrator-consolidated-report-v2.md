@@ -1,9 +1,18 @@
 ---
 entity: "AuraSell"
 type: consolidated-report
+description: "consolidated-report"
 round: 2
 date: "2026-03-17T00:00:00+08:00"
-status: refined
+source: "orchestrator"
+inputs:
+  - researcher-company-research-v2.md
+  - financial-analyst-financials-v2.md
+  - product-analyst-product-analysis-v2.md
+  - assessor-assessment-v2.md
+  - critic-analytical-critique-v2.md
+  - critic-bear-critique-v2.md
+  - critic-ic-critique-v2.md
 ---
 
 # AuraSell -- Consolidated Investment Memo

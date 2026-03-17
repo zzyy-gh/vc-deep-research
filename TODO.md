@@ -8,6 +8,8 @@
 
 - [ ] **Auto-generate competitor folders** — When researching a primary target, competitors that surface prominently (e.g., Rox AI, Attio during AuraSell research) should optionally get their own research/companies/{slug}/ folder with at least a screen-level artifact. Balance effort — don't run full pipeline on every mention, but create lightweight stubs expandable later.
 
+- [x] **Report storage and naming** — All artifacts now live in `output/` with `{source}-{description}-v{round}.md` naming. Self-archiving: versions coexist, no history/ folder. Unified frontmatter with `source:`, `description:`, `inputs:` fields. See CLAUDE.md Output Convention.
+
 ## Export
 
 - [ ] **HTML export** — Convert report.md (and optionally individual artifacts) into a styled HTML document for sharing. Preserve traffic light colors, tables, formatting. Use a markdown-to-HTML library (marked, markdown-it) with a CSS template. Future formats: PDF, Google Docs, Notion — start with HTML.
