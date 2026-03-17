@@ -1,8 +1,9 @@
 ---
 entity: "AuraSell"
 type: critique-ic
-date: "2026-03-17"
+date: "2026-03-17T00:00:00+08:00"
 critic: sonnet
+round: 2
 research_files_reviewed:
   - research/companies/aurasell/screen.md
   - research/companies/aurasell/research.md

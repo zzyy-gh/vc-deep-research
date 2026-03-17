@@ -54,4 +54,4 @@ If user asks about a specific entity, show detailed status:
 - Available files (which research artifacts exist)
 - Assessment summary (if exists)
 - User insights count
-- Last updated timestamp
+- Last updated timestamp (SGT timezone, +08:00)

@@ -25,7 +25,7 @@ A staged research pipeline for venture capital due diligence. Users input a comp
 ## Research Pipeline Phases
 1. **Screen** (haiku, ~60s): One-page overview. User decides if worth pursuing.
 2. **Deep Dive** (opus/sonnet, parallel): User-directed dimensions — core research, financials, product, first-principles.
-3. **Critique** (sonnet, parallel): 3 Claude critics (analytical, bear, IC) + optional GPT-4/Gemini.
+3. **Critique** (sonnet, parallel): 3 Claude critics (analytical, bear, IC) + optional GPT-4/Gemini/Groq.
 4. **Assessment** (sonnet): Deal-breakers, key assumptions register, unknowns inventory, discrepancies.
 5. **Consolidated Report**: `report.md` generated after assessment — pulls from all artifacts.
 6. **Refinement** (opus): Incorporate critique + assessment + user direction into updated research.
@@ -38,18 +38,18 @@ A staged research pipeline for venture capital due diligence. Users input a comp
 - `/status` — Deal pipeline dashboard with traffic-light assessments.
 
 ## Agent Routing
-| Agent | Model | When to Use |
+| Agent | Model | What It Does |
 |-------|-------|-------------|
-| screener | haiku | Phase 1: Quick screen |
-| researcher | opus | Phase 2: Core deep research |
-| financial-analyst | opus | Phase 2: Financial deep dive |
-| product-analyst | sonnet | Phase 2: Product/tech analysis |
-| first-principles | opus | Phase 2: Constraint-based reasoning |
-| critic-analytical | sonnet | Phase 3: Factual gaps + rigor |
-| critic-bear | sonnet | Phase 3: Bear case + risks |
-| critic-ic | sonnet | Phase 3: IC partner perspective |
-| assessor | sonnet | Phase 4: Deal-breaker/assumptions/unknowns |
-| synthesizer | opus | Synthesis: Cross-research patterns |
+| screener | haiku | Quick 1-page company overview for go/no-go |
+| researcher | opus | Comprehensive company/market research + refinement |
+| financial-analyst | opus | Unit economics, burn, cap table, comps, revenue quality |
+| product-analyst | sonnet | Product teardown, tech moat, PMF signals |
+| first-principles | opus | Constraint-based reasoning, kill-the-company, historical analogs |
+| critic-analytical | sonnet | Factual gaps, unsupported claims, logical rigor |
+| critic-bear | sonnet | Strongest case against the investment |
+| critic-ic | sonnet | IC partner perspective — returns, fund fit |
+| assessor | sonnet | Deal-breakers, key assumptions, unknowns inventory |
+| synthesizer | opus | Cross-research patterns, comparisons, thesis construction |
 
 ## Conventions
 - **Slugs**: lowercase, hyphenated (e.g., `acme-ai`, `enterprise-saas-market`)
@@ -57,12 +57,15 @@ A staged research pipeline for venture capital due diligence. Users input a comp
 - **Status progression**: screened → researched → critiqued → assessed → refined
 - **User insights**: Stored in `{slug}/user-insights/` with YAML frontmatter. Agents must check these before writing sections.
 - **Changelog**: Each research entity has `changelog.md` — cumulative log of what changed per iteration.
+- **Frontmatter round**: All artifact frontmatter must include `round: {N}` so each file self-documents which round produced it. Agents receive the round number from the orchestrator.
+- **Refined artifacts**: When an agent refines a prior round's artifact, it sets `refined_from: round-{N-1}` in frontmatter to trace lineage.
 - **Word cap**: ~3000 words per research document to prevent context overflow.
 - **Source tracking**: `sources.yaml` per entity tracks all sources used.
 - **Rounds**: `current_round` in meta.yaml (starts at 1). Increments on refinement.
 - **Archive protocol**: Before overwriting any artifact in round 2+, copy it to `history/round-{N}-{filename}`. Orchestrator handles this — agents never touch `history/`.
 - **Consolidated report**: `report.md` generated after each assessment. Derived document — not archived.
 - **changelog.md**: Sole history narrative. Append-only.
+- **Timestamps**: All `date:` frontmatter fields and meta.yaml timestamps (`started_at`, `last_updated`, `created`, `updated`) use ISO 8601 with SGT: `YYYY-MM-DDTHH:MM:SS+08:00`. The placeholder `{timestamp}` in agent/skill templates means current SGT datetime. Exceptions: `accessed:` in sources.yaml and changelog headers use date-only `YYYY-MM-DD`. Insight filenames use compact date `YYYYMMDD` (e.g., `20260317-founder-call.md`).
 
 ## Pipeline State & Resume
 When `/research` starts, check `meta.yaml` for `pipeline_state`. If partial completion exists, offer to resume from the next phase. The `pipeline_state` field tracks:
@@ -70,7 +73,7 @@ When `/research` starts, check `meta.yaml` for `pipeline_state`. If partial comp
 - `completed_phases`: list of finished phases
 - `user_directions`: what the user asked to focus on
 - `current_round`: which research round (starts at 1, increments on refinement)
-- `started_at` / `last_updated`: timestamps
+- `started_at` / `last_updated`: SGT timestamps (e.g., `2026-03-17T14:30:00+08:00`)
 
 ## Context Window Management
 - Pass file paths to agents, not file contents

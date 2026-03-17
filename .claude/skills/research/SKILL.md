@@ -59,10 +59,10 @@ pipeline_state:
   current_phase: screen
   completed_phases: []
   user_directions: "{any directions}"
-  started_at: "{ISO timestamp}"
-  last_updated: "{ISO timestamp}"
-created: "{date}"
-updated: "{date}"
+  started_at: "{timestamp}"
+  last_updated: "{timestamp}"
+created: "{timestamp}"
+updated: "{timestamp}"
 ```
 3. Launch the **screener** agent (haiku model) with:
    - Entity name and any context
@@ -88,7 +88,7 @@ Each agent receives:
 - Output path
 - User directions
 - Path to `user-insights/` directory
-- `round: {current_round}` (from meta.yaml, for frontmatter)
+- `round: {current_round}` (from meta.yaml, for frontmatter — all agents must include `round:` in output frontmatter)
 
 Update `meta.yaml`: status=researched, completed_phases includes "research".
 
@@ -98,7 +98,7 @@ Present a **summary** of findings to the user (read key points from each output 
 
 **Archive existing critiques**: If `critiques/` has existing files, follow Archive Protocol for each before overwriting.
 
-Launch **3 required critics in parallel** as subagents, passing `round: {current_round}`:
+Launch **3 required critics in parallel** as subagents, passing `round: {current_round}` (for frontmatter):
 - critic-analytical → `critiques/analytical.md`
 - critic-bear → `critiques/bear.md`
 - critic-ic → `critiques/ic.md`

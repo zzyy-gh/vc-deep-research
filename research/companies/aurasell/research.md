@@ -1,7 +1,7 @@
 ---
 entity: "AuraSell"
 type: company-research
-date: "2026-03-17"
+date: "2026-03-17T00:00:00+08:00"
 researcher: opus
 round: 2
 refined_from: round-1

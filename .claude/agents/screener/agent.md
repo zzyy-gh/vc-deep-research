@@ -44,7 +44,8 @@ Write clean markdown following the template. Include frontmatter:
 ---
 entity: "{name}"
 type: screen
-date: "{today}"
+date: "{timestamp}"
 screener: haiku
+round: 1
 ---
 ```

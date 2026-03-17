@@ -11,7 +11,7 @@ word_cap: 3000
 entity: "{name}"
 type: consolidated-report
 round: {N}
-date: "{today}"
+date: "{timestamp}"
 ---
 ```
 

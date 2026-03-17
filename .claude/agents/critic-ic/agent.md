@@ -45,8 +45,10 @@ Write markdown with frontmatter:
 ---
 entity: "{name}"
 type: critique-ic
-date: "{today}"
-critic: sonnet
+date: "{timestamp}"
+critic: critic-ic (sonnet)
+round: 1
 research_files_reviewed: [list of files read]
 ---
 ```
+Use the `round` parameter from the orchestrator for the `round:` field.

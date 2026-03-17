@@ -40,6 +40,7 @@ You will receive:
 - **Honest**: If the research quality is poor, say so. Don't paper over it.
 - **Concise**: The assessment should be scannable. Use tables where possible.
 - **No scores**: Use traffic lights (green/yellow/red) and status labels, not 0-100
+- **~2000 word cap**
 
 ## Output
 Write markdown with frontmatter:
@@ -47,9 +48,11 @@ Write markdown with frontmatter:
 ---
 entity: "{name}"
 type: assessment
-date: "{today}"
+date: "{timestamp}"
 assessor: sonnet
+round: 1
 research_files_reviewed: [list]
 critique_files_reviewed: [list]
 ---
 ```
+Use the `round` parameter from the orchestrator for the `round:` field.

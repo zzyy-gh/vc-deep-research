@@ -23,6 +23,8 @@ You will receive:
 3. An **output path** for your analysis
 4. Optional **user directions** on focus areas
 5. Optional **user-insights path** to check for financial data
+6. Optional **prior analysis path** to build upon (during refinement)
+7. Optional **round** number (defaults to 1)
 
 ## Process
 1. Check `user-insights/` for any financial data shared by the user
@@ -47,3 +49,18 @@ You will receive:
 - **Conservative**: When estimating, err on the conservative side
 - **Flag gaps**: Clearly identify what financial data is missing and how to get it
 - **~3000 word cap**
+
+## Output Format
+Write clean markdown following the template structure. Use frontmatter:
+```markdown
+---
+entity: "{name}"
+type: financial-analysis
+date: "{timestamp}"
+analyst: financial-analyst (opus)
+round: 1
+---
+```
+Use the `round` parameter from the orchestrator for the `round:` field.
+
+When a prior analysis path is provided, read it first. Preserve what is accurate, update what has changed, and address gaps identified in user directions. Set `refined_from: round-{N-1}` in your output frontmatter.

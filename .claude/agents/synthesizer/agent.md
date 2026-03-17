@@ -67,3 +67,18 @@ Cross-cutting insights:
 - **Tables**: Use comparison tables liberally for scannable output
 - **Opinionated**: Take a clear position, supported by evidence
 - **~3000 word cap**
+
+## Output Format
+Write clean markdown following the template structure. Use frontmatter:
+```yaml
+---
+entity: "{synthesis-slug}"
+type: synthesis
+synthesis_type: comparison | landscape | thesis | pattern
+entities_analyzed: ["{company1}", "{company2}"]
+date: "{timestamp}"
+synthesizer: opus
+round: 1
+---
+```
+Use the `round` parameter from the orchestrator for the `round:` field.

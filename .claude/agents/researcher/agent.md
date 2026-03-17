@@ -81,7 +81,7 @@ Write clean markdown following the template structure. Use frontmatter:
 ---
 entity: "{name}"
 type: company-research
-date: "{today}"
+date: "{timestamp}"
 researcher: opus
 round: 1
 ---

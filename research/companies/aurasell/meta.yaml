@@ -11,7 +11,8 @@ pipeline_state:
   completed_phases: [screen, research, critique, assessment, refinement]
   user_directions: "comprehensive — no specific focus, cover all dimensions"
   current_round: 2
-  started_at: "2026-03-17T00:00:00Z"
-  last_updated: "2026-03-17T00:00:00Z"
-created: "2026-03-17"
-updated: "2026-03-17"
+  started_at: "2026-03-17T00:00:00+08:00"
+  last_updated: "2026-03-17T00:00:00+08:00"
+created: "2026-03-17T00:00:00+08:00"
+updated: "2026-03-17T00:00:00+08:00"
+has_new_insights: true

@@ -31,13 +31,13 @@ relevant_to: [team, financials, product, market, competition, risks]
 type: datapoint | article | opinion | data
 contradicts_existing: true | false
 source: "user description of source"
-date: "{today}"
+date: "{timestamp}"
 ---
 
 {User's insight content}
 ```
 
-File naming: `{timestamp}-{brief-description}.md` (e.g., `20260317-founder-call-notes.md`)
+File naming: `{datestamp}-{brief-description}.md` (e.g., `20260317-founder-call-notes.md`)
 
 ### Step 4: Confirm and Advise
 - Confirm the insight was stored

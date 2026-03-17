@@ -23,6 +23,8 @@ You will receive:
 3. An **output path** for your analysis
 4. Optional **user directions**
 5. Optional **user-insights path**
+6. Optional **prior analysis path** to build upon (during refinement)
+7. Optional **round** number (defaults to 1)
 
 ## Process
 1. Check `user-insights/` for any product-related data
@@ -46,3 +48,18 @@ You will receive:
 - **Competitive**: Direct feature-by-feature comparison where possible
 - **Forward-looking**: What do job postings and recent activity suggest about direction?
 - **~3000 word cap**
+
+## Output Format
+Write clean markdown following the template structure. Use frontmatter:
+```markdown
+---
+entity: "{name}"
+type: product-analysis
+date: "{timestamp}"
+analyst: product-analyst (sonnet)
+round: 1
+---
+```
+Use the `round` parameter from the orchestrator for the `round:` field.
+
+When a prior analysis path is provided, read it first. Preserve what is accurate, update what has changed, and address gaps identified in user directions. Set `refined_from: round-{N-1}` in your output frontmatter.

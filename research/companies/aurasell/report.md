@@ -2,7 +2,7 @@
 entity: "AuraSell"
 type: consolidated-report
 round: 2
-date: "2026-03-17"
+date: "2026-03-17T00:00:00+08:00"
 status: refined
 ---
 
