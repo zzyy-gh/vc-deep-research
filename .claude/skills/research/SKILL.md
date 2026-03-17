@@ -7,6 +7,8 @@ description: "Main research entry point — runs the staged pipeline: screen →
 
 You are orchestrating the VC deep research pipeline. This is the main entry point for all research.
 
+**Convention**: All output paths, filenames, versioning, and frontmatter follow CLAUDE.md Output Convention. This applies to every step below.
+
 ## When Invoked
 
 The user will say something like:
@@ -60,7 +62,6 @@ updated: "{timestamp}"
    - Entity name and any context
    - Template: `templates/screen.md`
    - Output: `research/companies/{slug}/output/screener-company-overview-v1.md`
-   - Frontmatter values per CLAUDE.md Output Convention
 4. Wait for completion, then **present the screen to the user**.
 5. Ask: "Here's the quick screen. Worth a deep dive? If so, any areas to focus on?"
 
@@ -68,20 +69,20 @@ updated: "{timestamp}"
 
 ## Step 4: Directed Deep Dive (Phase 2)
 
-Based on user direction, launch relevant agents **in parallel**. Follow CLAUDE.md Output Convention for all paths and frontmatter:
+Based on user direction, launch relevant agents **in parallel**:
 
-- **Always**: researcher agent → `output/researcher-deep-dive-v{round}.md`
-- **Default or if requested**: financial-analyst → `output/financial-analyst-unit-economics-v{round}.md`
-- **Default or if requested**: product-analyst → `output/product-analyst-product-teardown-v{round}.md`
-- **If requested**: first-principles → `output/first-principles-constraint-analysis-v{round}.md`
+- **Always**: researcher agent
+- **Default or if requested**: financial-analyst
+- **Default or if requested**: product-analyst
+- **If requested**: first-principles
 
 Each agent receives:
 - Entity name, stage, sector
-- Their specific template path
-- Output path (full path under `output/`)
+- Template path (e.g., `templates/research.md`) — agent reads this file and follows its structure
+- Output path in `output/` (agent chooses a contextual description for the filename)
 - User directions
 - Path to `user-insights/` directory
-- Frontmatter values: round, source, description, entity, type, date, inputs, and refined_from (if applicable)
+- For first-principles: path to the latest researcher artifact (so it can build on existing research)
 
 Update `meta.yaml`: status=researched, completed_phases includes "research".
 
@@ -89,12 +90,12 @@ Present a **summary** of findings to the user (read key points from each output 
 
 ## Step 5: Multi-Model Critique (Phase 3)
 
-Launch **3 required critics in parallel** as subagents. Follow CLAUDE.md Output Convention for paths and frontmatter:
-- critic-analytical → `output/critic-analytical-factual-gaps-v{round}.md`
-- critic-bear → `output/critic-bear-bear-case-v{round}.md`
-- critic-ic → `output/critic-ic-ic-review-v{round}.md`
+Launch **3 required critics in parallel** as subagents: critic-analytical, critic-bear, critic-ic.
 
-Each critic receives paths to the research files (not the content).
+Each critic receives:
+- Paths to the research files in `output/` (not the content)
+- Their template path — agent reads it and follows its structure
+- Output path in `output/`
 
 **Optional external critics** (launch in parallel with Claude critics):
 - Check if `scripts/call-gpt4.mjs` exists and OPENAI_API_KEY is set → run via Bash
@@ -107,9 +108,8 @@ Update `meta.yaml`: status=critiqued.
 
 Launch the **assessor** agent with:
 - Paths to research files and critique files (in `output/`)
-- Assessment template path
-- Output: `research/companies/{slug}/output/assessor-deal-assessment-v{round}.md`
-- Frontmatter values per CLAUDE.md Output Convention
+- Template path — agent reads it and follows its structure
+- Output path in `output/`
 
 The assessor reads research + critique **summaries** and produces:
 - Deal-breakers (binary flags)
@@ -127,7 +127,7 @@ Update `meta.yaml`: status=assessed.
 After assessment completes:
 1. Read key findings from the latest versions of research, financial, product, assessment, and critique artifacts in `output/`
 2. Follow `templates/consolidated-report.md` structure
-3. Write to `output/orchestrator-consolidated-report-v{round}.md` following CLAUDE.md Output Convention
+3. Write to `output/orchestrator-consolidated-report-v{round}.md`
 4. Present summary to user
 
 Present the **assessment summary** to the user. Ask: "Want to refine the research based on these findings? Or dig deeper into specific areas?"
@@ -138,19 +138,18 @@ Present the **assessment summary** to the user. Ask: "Want to refine the researc
 2. Read `current_round` (N) from meta.yaml (default 1 if missing)
 3. Increment `current_round` to N+1 in meta.yaml
 4. Launch the **researcher** agent with:
-   - Prior research path: locate the latest researcher artifact in `output/` following CLAUDE.md Output Convention (glob `output/researcher-*-v{N}.md`)
+   - Prior research path: locate the latest researcher artifact in `output/`
    - Assessment summary (not full critiques)
    - User's refinement direction
-   - Output: write the new version as `output/researcher-{description}-v{N+1}.md` following CLAUDE.md Output Convention (new version coexists with prior)
-   - Frontmatter values per CLAUDE.md Output Convention (including `refined_from: v{N}`)
-7. Append to `changelog.md`:
+   - Output: new version in `output/` (coexists with prior, include `refined_from: v{N}`)
+5. Append to `changelog.md`:
 ```markdown
 ## Round {N+1} — {date}
 **Triggered by**: {user direction or assessment findings}
 **Changes**: {summary of what was updated}
 **Key findings**: {new information discovered}
 ```
-8. Update `meta.yaml`: status=refined.
+6. Update `meta.yaml`: status=refined.
 
 Present updated research summary. Offer: "Iterate again, re-run critique + assessment + report (Steps 5 → 6 → 6b)? Run `/synthesize` to compare with other companies?"
 

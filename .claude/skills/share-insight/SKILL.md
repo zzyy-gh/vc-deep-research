@@ -46,4 +46,4 @@ File naming: `{datestamp}-{brief-description}.md` (e.g., `20260317-founder-call-
 - Suggest: "Run `/research {entity}` to incorporate this into the analysis, or `/critique {entity}` to see how it changes the assessment."
 
 ### Step 5: Update Meta
-If `meta.yaml` exists, note that new user insights are available (don't change status).
+If `meta.yaml` exists, update `last_updated` timestamp. Don't change status — insights are incorporated on the next research/refinement run.

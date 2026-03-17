@@ -21,7 +21,7 @@ A staged research pipeline for venture capital due diligence. Users input a comp
 - `research/markets/{slug}/` — Market research
 - `research/theses/{slug}/` — Investment theses
 - `research/due-diligence/{slug}/` — DD deep dives
-- `research/syntheses/{slug}/` — Cross-entity synthesis
+- `research/{slug}/` — Cross-entity synthesis (e.g., `research/acme-vs-beta/`)
 - `templates/` — Output templates for each research type
 - `scripts/` — External model integration scripts
 

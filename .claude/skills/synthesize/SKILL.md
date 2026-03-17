@@ -7,6 +7,8 @@ description: "Cross-company/market synthesis — compare companies, build landsc
 
 Synthesize insights across multiple researched entities.
 
+**Convention**: All output paths, filenames, versioning, and frontmatter follow CLAUDE.md Output Convention.
+
 ## When Invoked
 - `/synthesize acme-ai, beta-corp` — compare two companies
 - `/synthesize ai-devtools landscape` — market landscape
@@ -31,9 +33,8 @@ Based on user input or ask:
 Launch the **synthesizer** agent with:
 - Entity research directory paths (point to `output/` for each entity)
 - Synthesis type
-- Output: `research/syntheses/{slug}/output/synthesizer-{description}-v1.md` (follow CLAUDE.md Output Convention)
+- Output: `research/{slug}/output/synthesizer-{description}-v1.md` (slug is generated from the synthesis topic, e.g. `acme-vs-beta`)
 - User directions
-- Frontmatter values per CLAUDE.md Output Convention
 
 ### Step 4: Present Results
 Read the synthesis output. Present key findings:
@@ -42,4 +43,4 @@ Read the synthesis output. Present key findings:
 - For thesis: Core thesis and confidence
 - For pattern: Top 3 patterns identified
 
-Create `research/syntheses/{slug}/meta.yaml` with status tracking.
+Create `research/{slug}/meta.yaml` with status tracking.

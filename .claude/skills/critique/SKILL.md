@@ -7,6 +7,8 @@ description: "Run multi-model critique on existing research — analytical, bear
 
 Run a critique cycle on existing research. This is a standalone entry point for users who want to critique research without going through the full pipeline.
 
+**Convention**: All output paths, filenames, versioning, and frontmatter follow CLAUDE.md Output Convention.
+
 ## When Invoked
 
 The user will say something like:
@@ -28,40 +30,27 @@ Glob for the latest-version research artifacts in the entity's `output/` directo
 
 ### Step 3: Run Critics in Parallel
 
-Follow CLAUDE.md Output Convention for all paths and frontmatter. Read `current_round` from meta.yaml.
+Read `current_round` from meta.yaml.
 
-Launch **3 Claude critic agents in parallel**:
+Launch **3 Claude critic agents in parallel**: critic-analytical, critic-bear, critic-ic.
 
-1. **critic-analytical** agent:
-   - Research file paths: [list of latest-version research files found in output/]
-   - Template: `templates/critique-analytical.md`
-   - Output: `research/companies/{slug}/output/critic-analytical-factual-gaps-v{round}.md`
-
-2. **critic-bear** agent:
-   - Research file paths: [list of latest-version research files found in output/]
-   - Template: `templates/critique-bear.md`
-   - Output: `research/companies/{slug}/output/critic-bear-bear-case-v{round}.md`
-
-3. **critic-ic** agent:
-   - Research file paths: [list of latest-version research files found in output/]
-   - Template: `templates/critique-ic.md`
-   - Output: `research/companies/{slug}/output/critic-ic-ic-review-v{round}.md`
+Each critic receives:
+- Research file paths: [list of latest-version research files found in output/]
+- Template path (e.g., `templates/critique-analytical.md`) — agent reads this file and follows its structure
+- Output path in `research/companies/{slug}/output/`
 
 ### Step 4: Optional External Critics (Parallel)
 
-Check for external model availability. Output paths follow CLAUDE.md Output Convention:
+Check for external model availability. Locate the latest researcher artifact in `output/` and pass its path to each script:
 - If `scripts/call-gpt4.mjs` exists AND `OPENAI_API_KEY` env var is set:
-  Locate the latest researcher artifact following CLAUDE.md Output Convention (glob `output/researcher-*-v{round}.md`) and pass its path to the script:
   ```bash
   node scripts/call-gpt4.mjs "{researcher_artifact_path}" "research/companies/{slug}/output/critic-gpt4-external-critique-v{round}.md" "templates/critique-gpt4-prompt.md"
   ```
 - If `scripts/call-gemini.mjs` exists AND `GOOGLE_API_KEY` env var is set:
-  Locate the latest researcher artifact as above and pass its path:
   ```bash
   node scripts/call-gemini.mjs "{researcher_artifact_path}" "research/companies/{slug}/output/critic-gemini-external-critique-v{round}.md" "templates/critique-gemini-prompt.md"
   ```
 - If `scripts/call-groq.mjs` exists AND `GROQ_API_KEY` env var is set:
-  Locate the latest researcher artifact as above and pass its path:
   ```bash
   node scripts/call-groq.mjs "{researcher_artifact_path}" "research/companies/{slug}/output/critic-groq-external-critique-v{round}.md" "templates/critique-groq-prompt.md"
   ```
