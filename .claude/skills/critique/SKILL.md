@@ -58,6 +58,10 @@ Check for external model availability:
   ```bash
   node scripts/call-gemini.mjs "research/companies/{slug}/research.md" "research/companies/{slug}/critiques/gemini.md" "templates/critique-gemini-prompt.md"
   ```
+- If `scripts/call-groq.mjs` exists AND `GROQ_API_KEY` env var is set:
+  ```bash
+  node scripts/call-groq.mjs "research/companies/{slug}/research.md" "research/companies/{slug}/critiques/groq.md" "templates/critique-groq-prompt.md"
+  ```
 
 If external critics fail: note the failure, continue with Claude critics.
 

@@ -9,7 +9,7 @@ A staged research pipeline for venture capital due diligence. Users input a comp
 - **User decides at every gate**: 4 decision points (after screen, after research, after assessment, after refinement)
 - **Deal-breakers over scores**: No 0-100 confidence scores. Use deal_breakers / key_assumptions / unknowns_inventory framework.
 - **Filesystem as index**: Research lives in `research/companies/{slug}/`. Git tracks history. No YAML index files.
-- **Graceful degradation**: External model critics (GPT-4, Gemini) are optional enrichment. System works fine without them.
+- **Graceful degradation**: External model critics (GPT-4, Gemini, Groq) are optional enrichment. System works fine without them.
 
 ## Directory Layout
 - `research/companies/{slug}/` — Per-company research artifacts
