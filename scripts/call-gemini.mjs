@@ -7,6 +7,7 @@
  * Exit 0 on success, exit 1 on skip (with stderr message).
  */
 
+import "dotenv/config";
 import { readFile, writeFile, mkdir } from "fs/promises";
 import { dirname } from "path";
 import { GoogleGenerativeAI } from "@google/generative-ai";

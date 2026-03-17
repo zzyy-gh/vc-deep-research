@@ -1,0 +1,90 @@
+sources:
+  - url: "https://pulse2.com/aurasell-profile-jason-eubanks-interview/"
+    title: "Aurasell: Interview With Co-Founder & CEO Jason Eubanks"
+    accessed: "2026-03-17"
+    used_for: "CEO background, product details, customer results, competitive positioning"
+
+  - url: "https://www.globenewswire.com/news-release/2025/08/26/3139229/0/en/Aurasell-launches-as-the-world-s-first-AI-native-CRM-platform.html"
+    title: "Aurasell launches as the world's first AI-native CRM platform"
+    accessed: "2026-03-17"
+    used_for: "Launch announcement, founding details, funding"
+
+  - url: "https://www.globenewswire.com/news-release/2025/11/13/3187410/0/en/Aurasell-Ends-Tool-Sprawl-With-Rapid-Growth-of-the-First-AI-Native-GTM-Platform.html"
+    title: "Aurasell Ends Tool Sprawl With Rapid Growth"
+    accessed: "2026-03-17"
+    used_for: "Traction metrics (41M agent runs), customer case studies (AVO Automation, MobiClocks)"
+
+  - url: "https://www.globenewswire.com/news-release/2026/02/12/3237260/0/en/Aurasell-Launches-World-s-First-AI-Native-OS-to-Run-Intelligent-GTM-Workflows-on-Any-CRM.html"
+    title: "Aurasell Launches World's First AI-Native OS (GTM OS)"
+    accessed: "2026-03-17"
+    used_for: "GTM OS product launch, overlay strategy, features"
+
+  - url: "https://www.globenewswire.com/news-release/2026/02/11/3236507/0/en/Aurasell-Hires-CMO-and-VP-of-RevOps-to-Drive-Strategic-Growth-and-Execution-Amid-Rapid-Momentum.html"
+    title: "Aurasell Hires CMO and VP of RevOps"
+    accessed: "2026-03-17"
+    used_for: "Executive hires (Steve Burton, David Winslow), team expansion"
+
+  - url: "https://siliconangle.com/2026/02/12/aurasell-launches-ai-native-go-market-operating-system-salesforce-hubspot/"
+    title: "Aurasell launches AI-native Go-To-Market Operating System"
+    accessed: "2026-03-17"
+    used_for: "GTM OS details, deployment model, competitive positioning"
+
+  - url: "https://techfundingnews.com/aurasell-raises-30m-seed-for-ai-native-crm-platform/"
+    title: "Aurasell raises $30M to build AI-native CRM platform"
+    accessed: "2026-03-17"
+    used_for: "Funding details, founding timeline, investor background"
+
+  - url: "https://sacra.com/c/aurasell/"
+    title: "Aurasell funding, news & analysis - Sacra"
+    accessed: "2026-03-17"
+    used_for: "Business model, pricing structure (access not confirmed as direct or secondary)"
+
+  - url: "https://www.prnewswire.com/news-releases/attio-raises-52m-series-b-to-scale-the-first-ai-native-crm-for-go-to-market-builders-302538357.html"
+    title: "Attio Raises $52M Series B"
+    accessed: "2026-03-17"
+    used_for: "Competitor analysis (Attio)"
+
+  - url: "https://www.precedenceresearch.com/customer-relationship-management-market"
+    title: "Customer Relationship Management Market Size to Hit USD 304.03 Bn by 2035"
+    accessed: "2026-03-17"
+    used_for: "CRM market TAM sizing"
+
+  - url: "https://techcrunch.com/2026/03/12/sales-automation-startup-rox-ai-hits-1-2b-valuation-sources-say/"
+    title: "Sales automation startup Rox AI hits $1.2B valuation, sources say"
+    accessed: "2026-03-17"
+    used_for: "Rox AI competitive analysis: valuation, funding, wrap-and-extend approach, ARR"
+
+  - url: "https://techfundingnews.com/rox-ai-1-2b-valuation-general-catalyst-sales-agents/"
+    title: "Rox AI could hit $1.2B valuation in new round led by General Catalyst"
+    accessed: "2026-03-17"
+    used_for: "Rox AI funding details, $8M ARR projection, Sequoia/GC backing"
+
+  - url: "https://investor.salesforce.com/news/news-details/2026/Salesforce-Delivers-Record-Fourth-Quarter-Fiscal-2026-Results/default.aspx"
+    title: "Salesforce Delivers Record Fourth Quarter Fiscal 2026 Results"
+    accessed: "2026-03-17"
+    used_for: "Agentforce $800M standalone ARR, 29K deals, 169% YoY growth, AELA details"
+
+  - url: "https://www.pressqouta.in/2026/02/salesforce-crm-q4-fy2026-earnings.html"
+    title: "Salesforce Q4 FY2026 Earnings Report"
+    accessed: "2026-03-17"
+    used_for: "Agentforce ARR breakdown, AELA pipeline (~100 AELAs), Q4 deal metrics"
+
+  - url: "https://techcrunch.com/2026/02/11/former-founders-fund-vc-sam-blond-launches-ai-sales-startup-to-upend-salesforce/"
+    title: "Former Founders Fund VC Sam Blond launches AI sales startup (Monaco)"
+    accessed: "2026-03-17"
+    used_for: "Monaco competitive data: $35M raised, Founders Fund-led, AI-native CRM"
+
+  - url: "https://www.cdpinstitute.org/news/attio-and-aurasell-compete-for-ai-native-crm-crown/"
+    title: "Attio and Aurasell Compete for AI-Native CRM Crown"
+    accessed: "2026-03-17"
+    used_for: "Competitive landscape between AI-native CRM players"
+
+  - url: "https://www.demandgenreport.com/demanding-views/demand-gen-report-2025-reflections-aurasells-jason-eubanks/51067/"
+    title: "Demand Gen Report 2025 Reflections: Aurasell's Jason Eubanks"
+    accessed: "2026-03-17"
+    used_for: "CEO perspective on market"
+
+  - url: "https://www.saastr.com/ai-app-of-the-week-aurasell-the-ai-native-crm-thats-actually-replacing-15-tools/"
+    title: "AI App of the Week: Aurasell - SaaStr"
+    accessed: "2026-03-17"
+    used_for: "Industry analyst perspective"
