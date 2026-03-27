@@ -1,128 +1,163 @@
 # VC Deep Research System
 
 ## What This Is
-A staged research pipeline for venture capital due diligence. Users input a company/market/thesis, and the system runs: quick screen → directed deep dive → multi-model critique → assessment → refinement.
+A modular skill-based system for venture capital due diligence research. Each skill is an independent, self-contained research task that produces one artifact. The main agent decides which skills to run based on what the user needs and what already exists.
 
 ## Core Principles
-- **Staged workflow**: Don't burn compute on companies the user would screen out in 2 minutes
-- **Write to disk, read from disk**: Never pass large content through conversation context. All inter-phase data goes through files.
-- **User decides at every gate**: 4 decision points (after screen, after research, after assessment, after refinement)
-- **Deal-breakers over scores**: No 0-100 confidence scores. Use deal_breakers / key_assumptions / unknowns_inventory framework.
-- **Filesystem as index**: Research lives in `research/companies/{slug}/`. Git tracks history. No YAML index files.
-- **Graceful degradation**: External model critics (GPT-4, Gemini, Groq) are optional enrichment. System works fine without them.
+- **Skills are independent**: Each skill is a complete task — persona, process, and quality standards inline. No skill calls another skill. All research output belongs to skills.
+- **Agents are workflows, not owners**: Agents can be created to bundle skills into reusable workflows (e.g., "full company analysis" = company-deep-dive + financial-analysis + product-teardown + bear-case + assessment). But agents don't produce their own artifacts — they orchestrate skills, and all output is still skill-owned.
+- **One skill = one artifact**: Every skill writes one output file to `output/{skill}/`.
+- **Inputs at runtime**: Skills receive their inputs when invoked. Some skills read other artifacts as context; others work from web research alone. Inputs are flexible — not all need to be defined upfront.
+- **Write to disk, read from disk**: All inter-skill data goes through files, never conversation context.
+- **Deal-breakers over scores**: No 0-100 confidence scores. Use deal_breakers / key_assumptions / unknowns_inventory framework. Qualitative ratings (Exceptional / Strong / Solid / Developing / Limited) where needed.
 
 ## Directory Layout
-- `research/companies/{slug}/` — Per-company research artifacts
-  - `meta.yaml` — Entity metadata, pipeline state, round tracking
-  - `sources.yaml` — External sources used across all artifacts
-  - `changelog.md` — Append-only history narrative
-  - `output/` — All generated artifacts (pipeline, critique, custom, consolidated)
-  - `user-insights/` — User-supplied context
-- `research/markets/{slug}/` — Market research
-- `research/theses/{slug}/` — Investment theses
-- `research/due-diligence/{slug}/` — DD deep dives
-- `research/{slug}/` — Cross-entity synthesis (e.g., `research/acme-vs-beta/`)
-- `templates/` — Output templates for each research type
-- `scripts/` — External model integration scripts
+```
+.claude/
+  skills/          — Skill definitions (one SKILL.md per skill)
+  templates/       — Output templates for skills + prompt templates for external models
+  scripts/         — External model scripts (call-gemini.mjs, call-groq.mjs)
+  agents/          — Agent definitions (tester, future workflow agents)
+```
 
-## Research Pipeline Phases
-1. **Screen** (haiku, ~60s): One-page overview. User decides if worth pursuing.
-2. **Deep Dive** (opus/sonnet, parallel): User-directed dimensions — core research, financials, product, first-principles.
-3. **Critique** (sonnet, parallel): 3 Claude critics (analytical, bear, IC) + optional GPT-4/Gemini/Groq.
-4. **Assessment** (sonnet): Deal-breakers, key assumptions register, unknowns inventory, discrepancies.
-5. **Consolidated Report**: Generated after assessment — pulls from all artifacts in `output/`.
-6. **Refinement** (opus): Incorporate critique + assessment + user direction into updated research.
+## Skills
 
-## Skills (User-Facing Commands)
-- `/research` — Main entry point. Wizard → screen → dive → critique → assess → refine.
-- `/critique` — Standalone critique on existing research.
-- `/synthesize` — Cross-company/market synthesis and comparison.
-- `/share-insight` — User feeds in articles, data, opinions for a company.
-- `/status` — Deal pipeline dashboard with traffic-light assessments.
+### Research
+| Skill | What It Does |
+|-------|-------------|
+| `company-deep-dive` | Comprehensive company research — team, product, market, competition, traction, risks, thesis |
+| `financial-analysis` | Unit economics, burn rate, cap table, comparables, revenue quality |
+| `product-teardown` | Product architecture, moat, PMF signals, competitive comparison |
+| `first-principles` | Stress-tests claims — minimum viable version, kill-the-company, historical analogs, path to $1B+ |
 
-## Agent Routing
-| Agent | Model | What It Does |
-|-------|-------|-------------|
-| screener | haiku | Quick 1-page company overview for go/no-go |
-| researcher | opus | Comprehensive company/market research + refinement |
-| financial-analyst | opus | Unit economics, burn, cap table, comps, revenue quality |
-| product-analyst | sonnet | Product teardown, tech moat, PMF signals |
-| first-principles | opus | Constraint-based reasoning, kill-the-company, historical analogs |
-| critic-analytical | sonnet | Factual gaps, unsupported claims, logical rigor |
-| critic-bear | sonnet | Strongest case against the investment |
-| critic-ic | sonnet | IC partner perspective — returns, fund fit |
-| assessor | sonnet | Deal-breakers, key assumptions, unknowns inventory |
-| synthesizer | opus | Cross-research patterns, comparisons, thesis construction |
+### People Analysis
+| Skill | What It Does |
+|-------|-------------|
+| `graham-duncan-eval` | Talent evaluation using Graham Duncan's framework (6 dimensions, qualitative ratings) |
+| `founder-market-fit` | Founder-market fit — domain expertise, network, timing, motivation, complementarity |
+
+### Critique
+| Skill | What It Does |
+|-------|-------------|
+| `bear-case` | Strongest evidence-based case against the investment |
+| `ic-review` | IC partner perspective — returns math, fund fit, hard questions |
+
+### Synthesis
+| Skill | What It Does |
+|-------|-------------|
+| `assessment` | Synthesize research + critiques into deal-breakers / assumptions / unknowns |
+| `consolidated-report` | Investment memo merging all available artifacts |
+
+### Due Diligence
+| Skill | What It Does |
+|-------|-------------|
+| `due-diligence` | Verification and correction pass on any artifact — verifies claims via independent research, checks logical soundness, reads the original skill's SKILL.md, and writes a corrected new version if issues found. Marks corrections with `[DD-corrected]`. |
+
+Due diligence doesn't produce its own artifact type. It reads an existing artifact, verifies it, and if corrections are needed, writes a new version of that same artifact (e.g., `company-deep-dive-acme-ai-v2.md` with `refined_from: v1`).
+
+## External Models
+
+Gemini and Groq are available as infrastructure — not skills. The agent can call them on any artifact for independent verification or a second opinion.
+
+```bash
+node .claude/scripts/call-gemini.mjs <input-path> <output-path> <prompt-template-path>
+node .claude/scripts/call-groq.mjs <input-path> <output-path> <prompt-template-path>
+```
+
+Requires `GOOGLE_API_KEY` / `GROQ_API_KEY` in `.env`. Graceful skip if not set.
+
+Prompt templates in `.claude/templates/`: `critique-gemini-prompt.md`, `critique-groq-prompt.md`.
+
+The agent runs the script on an artifact, saves the output as a working file, then passes it as additional context when invoking a skill. The skill cites it as `[Gemini]` or `[Groq]` and lists it in `inputs:`. External model output is input context, not a skill artifact.
+
+## Example Run
+
+A typical research flow — the user and agent decide together what to run, in what order, and can adjust mid-process:
+
+```
+User: "Research Acme AI for me"
+
+Agent: Runs company-deep-dive → produces company-deep-dive-acme-ai-v1.md
+Agent: Runs financial-analysis → produces financial-analysis-acme-ai-v1.md
+Agent: Runs product-teardown → produces product-teardown-acme-ai-v1.md
+Agent: Presents summaries to user.
+
+User: "The financials look shaky — can you verify those claims?"
+
+Agent: Runs due-diligence on financial-analysis-acme-ai-v1.md
+       → finds 3 contradicted claims, 2 unverified
+       → writes financial-analysis-acme-ai-v2.md (corrected, with [DD-corrected] markers)
+
+User: "Get a second opinion from Gemini on the company research"
+
+Agent: Runs call-gemini.mjs on company-deep-dive-acme-ai-v1.md
+       → saves Gemini output as working file
+Agent: Runs first-principles with company-deep-dive + Gemini output as inputs
+       → produces first-principles-acme-ai-v1.md (cites [Gemini] where relevant)
+
+User: "Now run the bear case and IC review"
+
+Agent: Runs bear-case → bear-case-acme-ai-v1.md
+Agent: Runs ic-review → ic-review-acme-ai-v1.md
+
+User: "Let's also look at the founders"
+
+Agent: Runs graham-duncan-eval → graham-duncan-eval-acme-ai-v1.md
+Agent: Runs founder-market-fit → founder-market-fit-acme-ai-v1.md
+
+User: "Consolidate everything"
+
+Agent: Runs assessment (reads all research + critique artifacts)
+       → assessment-acme-ai-v1.md
+Agent: Runs consolidated-report (reads everything including assessment)
+       → consolidated-report-acme-ai-v1.md
+```
+
+Key points: the user can inject DD or external models at any point, skip skills that aren't needed, run things in any order, and the agent adapts. There is no fixed pipeline — just skills and the user's judgment.
 
 ## Output Convention
 
-All generated artifacts live in `{entity}/output/` with descriptive versioned filenames. This convention is the single source of truth — all skills, agents, and custom prompts follow it.
+### Structure
+Each skill writes to its own subfolder: `output/{skill}/{skill}-{slug}-v{round}.md`
+
+```
+output/
+  company-deep-dive/company-deep-dive-acme-ai-v1.md
+  company-deep-dive/company-deep-dive-acme-ai-v2.md   # DD-corrected
+  financial-analysis/financial-analysis-acme-ai-v1.md
+  financial-analysis/financial-analysis-acme-ai-v2.md   # DD-corrected
+  first-principles/first-principles-acme-ai-v1.md
+  bear-case/bear-case-acme-ai-v1.md
+  assessment/assessment-acme-ai-v1.md
+  consolidated-report/consolidated-report-acme-ai-v1.md
+```
 
 ### File Naming
+Format: `{skill}-{slug}-v{round}.md`
 
-Format: `{source}-{description}-v{round}.md`
-
-| Component | Values | Notes |
-|-----------|--------|-------|
-| `source` | Agent name: `screener`, `researcher`, `financial-analyst`, `product-analyst`, `first-principles`, `critic-analytical`, `critic-bear`, `critic-ic`, `critic-groq`, `critic-gpt4`, `critic-gemini`, `assessor`, `orchestrator`, `synthesizer` | Matches `.claude/agents/` directory names. `orchestrator` = skill-generated. External critics use `critic-{model}`. |
-| `description` | Short kebab-case content descriptor | Describes *what*, not *type*. Determined contextually by the invoking skill. |
-| `v{round}` | `v1`, `v2`, `v3`... | Matches `current_round` from meta.yaml. Always prefixed with `v`. |
-
-### Frontmatter Schema
-
-All artifacts use this standardized frontmatter:
+### Frontmatter
+Every versioned artifact has this frontmatter. `inputs:` uses filename only (globally unique via skill+slug+round).
 
 ```yaml
 ---
 entity: "{name}"
-type: "{artifact type}"          # screen, company-research, financial-analysis, product-analysis,
-                                  # first-principles, critique-analytical, critique-bear, critique-ic,
-                                  # assessment, consolidated-report, custom-research, custom-report
-source: "{agent} ({model})"      # e.g., "researcher (opus)", "critic-bear (sonnet)", "orchestrator"
+skill: "{skill-name}"
+type: "{artifact type}"
 round: {N}
 date: "{timestamp}"
-description: "{human-readable, matches filename description}"
-refined_from: v{N-1}             # only present if refining a prior version
-inputs:                           # files this artifact read/was based on (paths relative to output/)
-  - screener-company-overview-v1.md
-  - user-insights/20260317-founder-call.md
+model: "{model}"
+description: "{human-readable}"
+inputs:
+  - company-deep-dive-acme-ai-v1.md
+refined_from: v{N-1}              # only if refining
 ---
 ```
 
-The `source:` field replaces all per-agent fields (`researcher:`, `analyst:`, `critic:`, `screener:`, `assessor:`).
-
-### Version Detection & Self-Archiving
-
-Before writing any artifact, the skill MUST:
-1. Glob `output/{source}-{description}-v*.md` to check for existing versions
-2. If prior versions exist, write the new version as `v{current_round}` — prior versions stay in place
-3. Latest version = highest `vN` number
-4. No copy/move/delete step. Versions coexist (self-archiving).
-
-This logic applies to ALL skills (`/research`, `/critique`, `/synthesize`, etc.) and any direct agent invocations.
+### Versioning
+Before writing, check `glob output/{skill}/{skill}-{slug}-v*.md`. Prior versions stay in place — versions coexist.
 
 ## Conventions
-- **Slugs**: lowercase, hyphenated (e.g., `acme-ai`, `enterprise-saas-market`)
-- **meta.yaml**: Every research entity has one. Tracks status, tags, pipeline state.
-- **Status progression**: screened → researched → critiqued → assessed → refined
-- **User insights**: Stored in `{slug}/user-insights/` with YAML frontmatter. Agents must check these before writing sections.
-- **Changelog**: Each research entity has `changelog.md` — cumulative log of what changed per iteration.
-- **Word cap**: ~3000 words per research document to prevent context overflow.
-- **Source tracking**: `sources.yaml` per entity tracks all sources used.
-- **Rounds**: `current_round` in meta.yaml (starts at 1). Increments on refinement.
-- **changelog.md**: Sole history narrative. Append-only.
-- **Timestamps**: All `date:` frontmatter fields and meta.yaml timestamps (`started_at`, `last_updated`, `created`, `updated`) use ISO 8601 with SGT: `YYYY-MM-DDTHH:MM:SS+08:00`. The placeholder `{timestamp}` in agent/skill templates means current SGT datetime. Exceptions: `accessed:` in sources.yaml and changelog headers use date-only `YYYY-MM-DD`. Insight filenames use compact date `YYYYMMDD` (e.g., `20260317-founder-call.md`).
-
-## Pipeline State & Resume
-When `/research` starts, check `meta.yaml` for `pipeline_state`. If partial completion exists, offer to resume from the next phase. The `pipeline_state` field tracks:
-- `current_phase`: which phase is active
-- `completed_phases`: list of finished phases
-- `user_directions`: what the user asked to focus on
-- `current_round`: which research round (starts at 1, increments on refinement)
-- `started_at` / `last_updated`: SGT timestamps (e.g., `2026-03-17T14:30:00+08:00`)
-
-## Context Window Management
-- Pass file paths to agents, not file contents
-- Agents read files themselves using Read tool
-- Refinement agent gets research + assessment summary (not all raw critiques)
-- If user-insights/ exceeds ~8k tokens, summarize before feeding to agents
+- **Slugs**: lowercase, hyphenated (e.g., `acme-ai`)
+- **Word cap**: ~3000 for research, ~2500 for first-principles, ~2000 for critiques/assessment/people analysis
+- **Timestamps**: ISO 8601 with SGT: `YYYY-MM-DDTHH:MM:SS+08:00`
+- **Context management**: Pass file paths to skills, not file contents. Skills read files themselves.
