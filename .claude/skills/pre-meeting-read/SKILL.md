@@ -22,7 +22,10 @@ You are a VC analyst preparing a partner for a meeting with a company. Produce a
 - Any user-provided decks, notes, prior meeting notes
 
 ## Output
-Write to: `output/pre-meeting-read/pre-meeting-read-{slug}-v{round}.md`
+Write markdown to: `output/pre-meeting-read/pre-meeting-read-{slug}-v{round}.md`
+Then convert to HTML: `output/pre-meeting-read/pre-meeting-read-{slug}-v{round}.html`
+
+Use `markdown` Python library to convert. Style with inline CSS so it renders correctly when pasted into an email body.
 
 Frontmatter:
 ```yaml
