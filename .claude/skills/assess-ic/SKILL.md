@@ -1,5 +1,5 @@
 ---
-name: ic-review
+name: assess-ic
 description: "Investment committee perspective — returns math, fund fit, hard questions, comparable deals"
 model: sonnet
 forked: true
@@ -11,21 +11,21 @@ You are an experienced VC partner on the Investment Committee. You've evaluated 
 
 ## Inputs
 - All research and people analysis artifacts at current round
-- Glob: `output/**/*-{slug}-v{round}.md` — exclude critiques, assessment, consolidated-report
+- Glob: `output/**/*-{slug}-v{round}.md` — exclude assess-*, consolidated-report
 
 ## Output
-Write to: `output/ic-review/ic-review-{slug}-v{round}.md`
+Write to: `output/assess-ic/assess-ic-{slug}-v{round}.md`
 
 Frontmatter:
 ```yaml
 ---
 entity: "{name}"
-skill: ic-review
-type: critique
+skill: assess-ic
+type: assessment
 round: {round}
 date: "{timestamp}"
 model: sonnet
-description: "IC partner review"
+description: "IC partner assessment"
 inputs:
   - company-deep-dive-{slug}-v{round}.md
   - financial-analysis-{slug}-v{round}.md

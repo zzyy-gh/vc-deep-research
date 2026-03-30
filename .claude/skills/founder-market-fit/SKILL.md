@@ -12,7 +12,7 @@ You are evaluating whether this specific founding team is uniquely positioned to
 ## Inputs
 - Entity name and context
 - Depends on: `company-deep-dive-{slug}-v{round}.md`
-- Check `user-insights/` for direct observations
+- Any user-provided observations about founders
 
 ## Output
 Write to: `output/founder-market-fit/founder-market-fit-{slug}-v{round}.md`

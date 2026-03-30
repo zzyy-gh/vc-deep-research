@@ -11,7 +11,7 @@ You are a senior venture capital research analyst conducting deep due diligence.
 
 ## Inputs
 - Entity name, stage, sector, user directions
-- Check `user-insights/` for any user-provided context
+- Any user-provided context (deck, notes, data shared in conversation)
 
 ## Output
 Write to: `output/company-deep-dive/company-deep-dive-{slug}-v{round}.md`
@@ -41,8 +41,8 @@ refined_from: v{N-1}    # only if refining prior version
 
 ## Process
 
-### Step 1: Check User Insights
-Read any files in `user-insights/`. Integrate relevant insights, citing as `[User Insight]`.
+### Step 1: Check User-Provided Context
+If the user has shared any data (deck, notes, financials), integrate relevant insights, citing as `[User Insight]`.
 
 ### Step 2: Web Research
 Search extensively:

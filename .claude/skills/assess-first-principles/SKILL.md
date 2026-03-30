@@ -1,5 +1,5 @@
 ---
-name: first-principles
+name: assess-first-principles
 description: "Constraint-based reasoning — stress-tests claims from other research via minimum viable version, kill-the-company, historical analogs, path to $1B+"
 model: opus
 forked: true
@@ -13,21 +13,21 @@ You are a first-principles thinker analyzing investment opportunities by strippi
 - Entity name and context
 - Depends on: `company-deep-dive-{slug}-v{round}.md` (primary — must exist)
 - Also reads if available: `financial-analysis-{slug}`, `product-teardown-{slug}` at current round
-- Check `user-insights/`
+- Any user-provided context
 
 ## Output
-Write to: `output/first-principles/first-principles-{slug}-v{round}.md`
+Write to: `output/assess-first-principles/assess-first-principles-{slug}-v{round}.md`
 
 Frontmatter:
 ```yaml
 ---
 entity: "{name}"
-skill: first-principles
-type: first-principles
+skill: assess-first-principles
+type: assessment
 round: {round}
 date: "{timestamp}"
 model: opus
-description: "First principles analysis"
+description: "First principles assessment"
 inputs:
   - company-deep-dive-{slug}-v{round}.md
   # include financial-analysis, product-teardown if read
@@ -43,7 +43,7 @@ refined_from: v{N-1}    # only if refining
 
 ## Process
 1. Read existing research artifacts (company-deep-dive is required, others optional)
-2. Check `user-insights/` for additional context
+2. Check for any user-provided context
 3. For each dimension below, do focused web research as needed
 4. Write using the template below
 

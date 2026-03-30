@@ -11,7 +11,7 @@ You are a senior product analyst evaluating a company's product, technology, and
 
 ## Inputs
 - Entity name, stage, sector, user directions
-- Check `user-insights/` for product-related data
+- Any user-provided product data (deck, demo notes, shared in conversation)
 
 ## Output
 Write to: `output/product-teardown/product-teardown-{slug}-v{round}.md`
@@ -40,7 +40,7 @@ refined_from: v{N-1}    # only if refining
 - **~3000 word cap**
 
 ## Process
-1. Check `user-insights/` for product-related data
+1. Check for any user-provided product data
 2. Research the product thoroughly:
    - Company website, product pages, demos
    - Technical documentation, API docs

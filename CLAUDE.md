@@ -5,7 +5,7 @@ A modular skill-based system for venture capital due diligence research. Each sk
 
 ## Core Principles
 - **Skills are independent**: Each skill is a complete task — persona, process, and quality standards inline. No skill calls another skill. All research output belongs to skills.
-- **Agents are workflows, not owners**: Agents can be created to bundle skills into reusable workflows (e.g., "full company analysis" = company-deep-dive + financial-analysis + product-teardown + bear-case + assessment). But agents don't produce their own artifacts — they orchestrate skills, and all output is still skill-owned.
+- **Agents are workflows, not owners**: Agents can be created to bundle skills into reusable workflows (e.g., "full company analysis" = company-deep-dive + financial-analysis + product-teardown + assess-bear + assess-general). But agents don't produce their own artifacts — they orchestrate skills, and all output is still skill-owned.
 - **One skill = one artifact**: Every skill writes one output file to `output/{skill}/`.
 - **Inputs at runtime**: Skills receive their inputs when invoked. Some skills read other artifacts as context; others work from web research alone. Inputs are flexible — not all need to be defined upfront.
 - **Write to disk, read from disk**: All inter-skill data goes through files, never conversation context.
@@ -13,8 +13,9 @@ A modular skill-based system for venture capital due diligence research. Each sk
 
 ## Directory Layout
 ```
+docs/              — Place user-provided materials here (decks, notes, data)
 .claude/
-  skills/          — Skill definitions (one SKILL.md per skill, output template embedded)
+  skills/          — Skill definitions (one SKILL.md per skill, output template embedded, optional assets/ subfolder)
   scripts/         — External model script (call-external.mjs)
   agents/          — Agent definitions (tester, future workflow agents)
 ```
@@ -27,25 +28,30 @@ A modular skill-based system for venture capital due diligence research. Each sk
 | `company-deep-dive` | Comprehensive company research — team, product, market, competition, traction, risks, thesis |
 | `financial-analysis` | Unit economics, burn rate, cap table, comparables, revenue quality |
 | `product-teardown` | Product architecture, moat, PMF signals, competitive comparison |
-| `first-principles` | Stress-tests claims — minimum viable version, kill-the-company, historical analogs, path to $1B+ |
 
-### People Analysis
+### People
 | Skill | What It Does |
 |-------|-------------|
 | `graham-duncan-eval` | Talent evaluation using Graham Duncan's framework (6 dimensions, qualitative ratings) |
 | `founder-market-fit` | Founder-market fit — domain expertise, network, timing, motivation, complementarity |
 
-### Critique
+### Assessment
 | Skill | What It Does |
 |-------|-------------|
-| `bear-case` | Strongest evidence-based case against the investment |
-| `ic-review` | IC partner perspective — returns math, fund fit, hard questions |
+| `assess-bear` | Strongest evidence-based case against the investment |
+| `assess-ic` | IC partner perspective — returns math, fund fit, hard questions |
+| `assess-first-principles` | Stress-tests claims — minimum viable version, kill-the-company, historical analogs, path to $1B+ |
+| `assess-general` | Deal-breakers, key assumptions, unknowns, section health |
 
 ### Synthesis
 | Skill | What It Does |
 |-------|-------------|
-| `assessment` | Synthesize research + critiques into deal-breakers / assumptions / unknowns |
 | `consolidated-report` | Investment memo merging all available artifacts |
+
+### Meeting Prep
+| Skill | What It Does |
+|-------|-------------|
+| `pre-meeting-read` | Quick research brief for meeting prep — company snapshot, financials, catalysts, risks, questions to ask |
 
 ### Due Diligence
 | Skill | What It Does |
@@ -88,13 +94,13 @@ User: "Get a second opinion from Gemini on the company research"
 
 Agent: Runs call-external.mjs gemini on company-deep-dive-acme-ai-v1.md
        → saves Gemini output as working file
-Agent: Runs first-principles with company-deep-dive + Gemini output as inputs
-       → produces first-principles-acme-ai-v1.md (cites [Gemini] where relevant)
+Agent: Runs assess-first-principles with company-deep-dive + Gemini output as inputs
+       → produces assess-first-principles-acme-ai-v1.md (cites [Gemini] where relevant)
 
 User: "Now run the bear case and IC review"
 
-Agent: Runs bear-case → bear-case-acme-ai-v1.md
-Agent: Runs ic-review → ic-review-acme-ai-v1.md
+Agent: Runs assess-bear → assess-bear-acme-ai-v1.md
+Agent: Runs assess-ic → assess-ic-acme-ai-v1.md
 
 User: "Let's also look at the founders"
 
@@ -103,8 +109,8 @@ Agent: Runs founder-market-fit → founder-market-fit-acme-ai-v1.md
 
 User: "Consolidate everything"
 
-Agent: Runs assessment (reads all research + critique artifacts)
-       → assessment-acme-ai-v1.md
+Agent: Runs assess-general (reads all research + assessment artifacts)
+       → assess-general-acme-ai-v1.md
 Agent: Runs consolidated-report (reads everything including assessment)
        → consolidated-report-acme-ai-v1.md
 ```
@@ -122,9 +128,9 @@ output/
   company-deep-dive/company-deep-dive-acme-ai-v2.md   # DD-corrected
   financial-analysis/financial-analysis-acme-ai-v1.md
   financial-analysis/financial-analysis-acme-ai-v2.md   # DD-corrected
-  first-principles/first-principles-acme-ai-v1.md
-  bear-case/bear-case-acme-ai-v1.md
-  assessment/assessment-acme-ai-v1.md
+  assess-first-principles/assess-first-principles-acme-ai-v1.md
+  assess-bear/assess-bear-acme-ai-v1.md
+  assess-general/assess-general-acme-ai-v1.md
   consolidated-report/consolidated-report-acme-ai-v1.md
 ```
 
@@ -154,6 +160,6 @@ Before writing, check `glob output/{skill}/{skill}-{slug}-v*.md`. Prior versions
 
 ## Conventions
 - **Slugs**: lowercase, hyphenated (e.g., `acme-ai`)
-- **Word cap**: ~3000 for research, ~2500 for first-principles, ~2000 for critiques/assessment/people analysis
+- **Word cap**: ~3000 for research/synthesis, ~2500 for assess-first-principles, ~2000 for assessment/people analysis, ~1500 for pre-meeting-read
 - **Timestamps**: ISO 8601 with SGT: `YYYY-MM-DDTHH:MM:SS+08:00`
 - **Context management**: Pass file paths to skills, not file contents. Skills read files themselves.

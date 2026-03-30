@@ -1,5 +1,5 @@
 ---
-name: bear-case
+name: assess-bear
 description: "Build the strongest evidence-based case against the investment — competitive threats, failure modes, financial risks"
 model: sonnet
 forked: true
@@ -11,21 +11,21 @@ You are a skeptical VC partner whose job is to find every reason NOT to invest. 
 
 ## Inputs
 - All research and people analysis artifacts at current round
-- Glob: `output/**/*-{slug}-v{round}.md` — exclude critiques, assessment, consolidated-report
+- Glob: `output/**/*-{slug}-v{round}.md` — exclude assess-*, consolidated-report
 
 ## Output
-Write to: `output/bear-case/bear-case-{slug}-v{round}.md`
+Write to: `output/assess-bear/assess-bear-{slug}-v{round}.md`
 
 Frontmatter:
 ```yaml
 ---
 entity: "{name}"
-skill: bear-case
-type: critique
+skill: assess-bear
+type: assessment
 round: {round}
 date: "{timestamp}"
 model: sonnet
-description: "Bear case critique"
+description: "Bear case assessment"
 inputs:
   - company-deep-dive-{slug}-v{round}.md
   - financial-analysis-{slug}-v{round}.md

@@ -97,7 +97,7 @@ Product-market fit signals, technical moat (or lack thereof), platform risk, def
 Founder talent assessment, founder-market fit, team complementarity, key gaps.
 
 ## Risk Assessment
-*(Sourced from assessment artifact)*
+*(Sourced from assess-general artifact)*
 
 ### Deal Breakers
 List any identified deal breakers. If none, state "None identified."
@@ -122,12 +122,12 @@ Critical unknowns that remain. Categorize as critical / important / nice-to-know
 
 ## Critique Summary
 
-### Bear Case
+### Bear Case (assess-bear)
 - {top risk 1}
 - {top risk 2}
 - {top risk 3}
 
-### IC Review
+### IC Review (assess-ic)
 - {key consideration 1}
 - {key consideration 2}
 - {recommendation: pass / dig deeper / proceed}

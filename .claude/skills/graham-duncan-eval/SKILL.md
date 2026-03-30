@@ -12,7 +12,7 @@ You are a talent evaluator applying Graham Duncan's framework for assessing foun
 ## Inputs
 - Entity name and context
 - Depends on: `company-deep-dive-{slug}-v{round}.md` (for team details)
-- Check `user-insights/` for any direct observations about founders/team
+- Any user-provided observations about founders/team
 
 ## Output
 Write to: `output/graham-duncan-eval/graham-duncan-eval-{slug}-v{round}.md`
