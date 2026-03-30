@@ -11,7 +11,7 @@ You are evaluating whether this specific founding team is uniquely positioned to
 
 ## Inputs
 - Entity name and context
-- Template: `.claude/templates/founder-market-fit.md`
+- Depends on: `company-deep-dive-{slug}-v{round}.md`
 - Check `user-insights/` for direct observations
 
 ## Output
@@ -32,57 +32,62 @@ inputs:
 ---
 ```
 
-## Process
+## Guidelines
+- **Specific to THIS market** — generic "they're experienced" isn't enough
+- **Comparative** — who else could do this? Why is this team better?
+- **Honest about gaps** — if fit is weak, say so clearly
+- **~2000 word cap**
 
-1. Read screen and company-deep-dive for company and team context
+## Process
+1. Read company-deep-dive for company and team context
 2. Read user insights if available
 3. Research founders' backgrounds in relation to the target market:
    - Prior roles in the same industry/space
    - Customer relationships and network
    - Technical expertise relevant to the problem
    - Public statements about motivation and vision
-4. Assess each dimension below
-5. Follow `.claude/templates/founder-market-fit.md` structure
+4. Assess each dimension in the template
+5. Write using the template below
 
-## Assessment Dimensions
+## Template
 
-### Domain Expertise
-- Have they worked in this space? How deep?
-- Do they understand the customer's pain from experience?
-- Have they built similar products before?
-- Rating: Strong / Moderate / Weak with evidence
+```markdown
+# Founder-Market Fit — {entity}
 
-### Network & Distribution
-- Do they have relationships with target customers?
-- Can they recruit domain experts?
-- Do they have investor relationships in this space?
-- Rating: Strong / Moderate / Weak with evidence
+## Fit Summary
+{2-3 sentences: how well does this team fit this market? Why them, why this, why now?}
 
-### Timing Insight
-- What do they understand about timing that others don't?
-- Why is this solvable now but wasn't before?
-- Are they ahead of the market or behind?
-- Rating: Strong / Moderate / Weak with evidence
+## Dimension Assessment
 
-### Motivation & Commitment
-- Is this a passion project or an opportunistic pivot?
-- How long have they been thinking about this problem?
-- What have they given up to pursue this?
-- Rating: Strong / Moderate / Weak with evidence
+| Dimension | Rating | Key Evidence |
+|-----------|--------|-------------|
+| Domain Expertise | Strong / Moderate / Weak | {1-line summary} |
+| Network & Distribution | Strong / Moderate / Weak | {1-line summary} |
+| Timing Insight | Strong / Moderate / Weak | {1-line summary} |
+| Motivation & Commitment | Strong / Moderate / Weak | {1-line summary} |
+| Team Complementarity | Strong / Moderate / Weak | {1-line summary} |
 
-### Team Complementarity
-- Do skills cover the key functions needed (technical, GTM, domain)?
-- Are there critical gaps in the team?
-- How long have founders worked together?
-- Rating: Strong / Moderate / Weak with evidence
+## Domain Expertise
+Have they worked in this space? How deep? Do they understand the customer's pain from experience? Have they built similar products before?
 
-### Unfair Advantages
-- What can this team do that no other team can?
-- Proprietary data, relationships, technology, or insights?
-- Is the advantage durable or temporary?
+## Network & Distribution
+Do they have relationships with target customers? Can they recruit domain experts? Do they have investor relationships in this space?
 
-## Quality Standards
-- **Specific to THIS market** — generic "they're experienced" isn't enough
-- **Comparative** — who else could do this? Why is this team better?
-- **Honest about gaps** — if fit is weak, say so clearly
-- **~2000 word cap**
+## Timing Insight
+What do they understand about timing that others don't? Why is this solvable now but wasn't before? Are they ahead of the market or behind?
+
+## Motivation & Commitment
+Is this a passion project or an opportunistic pivot? How long have they been thinking about this problem? What have they given up to pursue this?
+
+## Team Complementarity
+Do skills cover the key functions needed (technical, GTM, domain)? Are there critical gaps? How long have founders worked together?
+
+## Unfair Advantages
+What can this team do that no other team can? Proprietary data, relationships, technology, or insights? Is the advantage durable or temporary?
+
+## Comparative Assessment
+Who else could do this? Why is this team better or worse positioned?
+
+## Founder-Market Fit Verdict
+{1-2 paragraphs: overall fit assessment and what it means for the investment}
+```

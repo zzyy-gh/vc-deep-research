@@ -11,7 +11,6 @@ You are a talent evaluator applying Graham Duncan's framework for assessing foun
 
 ## Inputs
 - Entity name and context
-- Template: `.claude/templates/graham-duncan-eval.md`
 - Depends on: `company-deep-dive-{slug}-v{round}.md` (for team details)
 - Check `user-insights/` for any direct observations about founders/team
 
@@ -33,8 +32,14 @@ inputs:
 ---
 ```
 
-## Process
+## Guidelines
+- **Evidence-based ratings** — every rating needs specific evidence, not vibes
+- **Public sources only** — don't speculate about private matters
+- **Acknowledge gaps** — if you can't find evidence for a dimension, say so
+- **Team dynamics** — note complementarity or overlap between founders
+- **~2000 word cap**
 
+## Process
 1. Read company-deep-dive artifact for team information
 2. Read any user insights about founders/team
 3. Research each key person (founders, CEO, key executives):
@@ -44,51 +49,61 @@ inputs:
    - Writing (blog posts, tweets, essays)
    - Board memberships, advisory roles
    - Education and formative experiences
-4. Apply the Graham Duncan framework to each key person
-5. Synthesize into team-level assessment
-6. Follow `.claude/templates/graham-duncan-eval.md` structure
+4. Apply the 6 evaluation dimensions to each key person
+5. Write using the template below
 
-## Evaluation Dimensions (per person)
+## Template
 
-### 1. Determination & Resilience
-- Evidence of persistence through challenges
-- Recovery from setbacks
-- Track record completing difficult projects
-- Rating: Exceptional / Strong / Solid / Developing / Limited — with justification
+```markdown
+# Graham Duncan Talent Evaluation — {entity}
 
-### 2. Intelligence & Learning Ability
-- Speed of learning new concepts
-- Depth of understanding in expertise areas
-- Cross-domain connection-making
-- Rating: Exceptional / Strong / Solid / Developing / Limited — with justification
+## Summary Assessment
+{3-5 sentence overall assessment of the founding team's talent and potential}
 
-### 3. Domain Expertise
-- Depth of knowledge in relevant fields
-- Practical application of expertise
-- Peer recognition
-- Rating: Exceptional / Strong / Solid / Developing / Limited — with justification
+## Key People
 
-### 4. Creativity & Original Thinking
-- Novel approaches to problems
-- Evidence of independent thought
-- Willingness to question assumptions
-- Rating: Exceptional / Strong / Solid / Developing / Limited — with justification
+### {Person 1 Name} — {Role}
 
-### 5. Execution & Shipping
-- Track record of completed projects
-- Quality of work produced
-- Ability to turn ideas into reality
-- Rating: Exceptional / Strong / Solid / Developing / Limited — with justification
+**Background**: {Brief career summary}
 
-### 6. Growth Trajectory
-- Rate of improvement over time
-- Expansion of capabilities
-- Increasing scope of impact
-- Rating: Exceptional / Strong / Solid / Developing / Limited — with justification
+| Dimension | Rating | Evidence |
+|-----------|--------|----------|
+| Determination & Resilience | Exceptional / Strong / Solid / Developing / Limited | {specific evidence} |
+| Intelligence & Learning | Exceptional / Strong / Solid / Developing / Limited | {specific evidence} |
+| Domain Expertise | Exceptional / Strong / Solid / Developing / Limited | {specific evidence} |
+| Creativity & Original Thinking | Exceptional / Strong / Solid / Developing / Limited | {specific evidence} |
+| Execution & Shipping | Exceptional / Strong / Solid / Developing / Limited | {specific evidence} |
+| Growth Trajectory | Exceptional / Strong / Solid / Developing / Limited | {specific evidence} |
 
-## Quality Standards
-- **Evidence-based ratings** — every rating needs specific evidence, not vibes
-- **Public sources only** — don't speculate about private matters
-- **Acknowledge gaps** — if you can't find evidence for a dimension, say so
-- **Team dynamics** — note complementarity or overlap between founders
-- **~2000 word cap**
+**Strengths**: {key strengths}
+**Development areas**: {areas for growth}
+**Overall potential**: {assessment}
+
+### {Person 2 Name} — {Role}
+{Same structure}
+
+## Team-Level Assessment
+
+### Complementarity
+How well do team members' strengths cover the key functions needed?
+
+### Gaps
+What's missing? What roles need to be hired?
+
+### Team Dynamic Signals
+Evidence of how they work together — co-founder history, prior collaborations, public interactions.
+
+## Overall Recommendation
+{1-2 paragraphs: talent verdict and what it means for the investment decision}
+```
+
+### Dimension Definitions
+
+Use these when evaluating each person:
+
+1. **Determination & Resilience** — persistence through challenges, recovery from setbacks, track record completing difficult projects
+2. **Intelligence & Learning Ability** — speed of learning, depth of understanding, cross-domain connection-making
+3. **Domain Expertise** — depth of relevant knowledge, practical application, peer recognition
+4. **Creativity & Original Thinking** — novel approaches, independent thought, willingness to question assumptions
+5. **Execution & Shipping** — completed projects, quality of work, ability to turn ideas into reality
+6. **Growth Trajectory** — rate of improvement, expanding capabilities, increasing scope of impact

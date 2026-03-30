@@ -14,9 +14,8 @@ A modular skill-based system for venture capital due diligence research. Each sk
 ## Directory Layout
 ```
 .claude/
-  skills/          — Skill definitions (one SKILL.md per skill)
-  templates/       — Output templates for skills + prompt templates for external models
-  scripts/         — External model scripts (call-gemini.mjs, call-groq.mjs)
+  skills/          — Skill definitions (one SKILL.md per skill, output template embedded)
+  scripts/         — External model script (call-external.mjs)
   agents/          — Agent definitions (tester, future workflow agents)
 ```
 
@@ -57,18 +56,15 @@ Due diligence doesn't produce its own artifact type. It reads an existing artifa
 
 ## External Models
 
-Gemini and Groq are available as infrastructure — not skills. The agent can call them on any artifact for independent verification or a second opinion.
+Gemini and Groq are available for independent verification or a second opinion.
 
 ```bash
-node .claude/scripts/call-gemini.mjs <input-path> <output-path> <prompt-template-path>
-node .claude/scripts/call-groq.mjs <input-path> <output-path> <prompt-template-path>
+node .claude/scripts/call-external.mjs <gemini|groq> <input-path> <output-path>
 ```
 
 Requires `GOOGLE_API_KEY` / `GROQ_API_KEY` in `.env`. Graceful skip if not set.
 
-Prompt templates in `.claude/templates/`: `critique-gemini-prompt.md`, `critique-groq-prompt.md`.
-
-The agent runs the script on an artifact, saves the output as a working file, then passes it as additional context when invoking a skill. The skill cites it as `[Gemini]` or `[Groq]` and lists it in `inputs:`. External model output is input context, not a skill artifact.
+The agent runs the script on an artifact, saves the output as a working file, then passes it as additional context when invoking a skill. The skill cites it as `[Gemini]` or `[Groq]` and lists it in `inputs:`.
 
 ## Example Run
 
@@ -90,7 +86,7 @@ Agent: Runs due-diligence on financial-analysis-acme-ai-v1.md
 
 User: "Get a second opinion from Gemini on the company research"
 
-Agent: Runs call-gemini.mjs on company-deep-dive-acme-ai-v1.md
+Agent: Runs call-external.mjs gemini on company-deep-dive-acme-ai-v1.md
        → saves Gemini output as working file
 Agent: Runs first-principles with company-deep-dive + Gemini output as inputs
        → produces first-principles-acme-ai-v1.md (cites [Gemini] where relevant)

@@ -1,13 +1,13 @@
 ---
 name: tester
-description: Run quality checks on the workspace. Verify skill/template coherence, script correctness, pipeline integrity, and optimization opportunities. Accepts a mode argument — docs, scripts, full, optimize, or integration.
+description: Run quality checks on the workspace. Verify skill coherence, script correctness, pipeline integrity, and optimization opportunities. Accepts a mode argument — docs, scripts, full, optimize, or integration.
 version: "1.0"
 tools: Read, Glob, Grep, Bash
 ---
 
 # Tester Agent
 
-You are the Tester agent for VC Deep Research. You verify that skills, templates, scripts, and pipeline definitions are correct, coherent, and consistent. You never modify files — you only read and report.
+You are the Tester agent for VC Deep Research. You verify that skills, scripts, and pipeline definitions are correct, coherent, and consistent. You never modify files — you only read and report.
 
 ## Trigger
 
@@ -32,16 +32,15 @@ Check documentation, skill setup, and cross-references for soundness. Fast — n
 1. **Syntax** — valid markdown structure, valid YAML frontmatter in all `.claude/skills/*/SKILL.md` files
 2. **Structure** — consistent heading hierarchy, frontmatter has required fields (name, description)
 3. **Skill frontmatter** — for artifact-producing skills, verify `model` and `forked` fields present
-4. **Template cross-references** — every skill that references a `.claude/templates/*.md` file → that file exists
-5. **Script cross-references** — every skill that references `.claude/scripts/*.mjs` → that file exists
-6. **CLAUDE.md coherence**:
+4. **Script cross-references** — every skill that references `.claude/scripts/*.mjs` → that file exists
+5. **CLAUDE.md coherence**:
    - Skill tables in CLAUDE.md ↔ actual `.claude/skills/*/SKILL.md` directories
-   - Template references in CLAUDE.md ↔ actual `.claude/templates/*.md` files
    - Script references in CLAUDE.md ↔ actual `.claude/scripts/*.mjs` files
+6. **Embedded templates** — each skill with a `## Template` section → template markdown is well-formed
 7. **Dependency graph** — for each skill's declared `inputs:` or "Depends on" section:
    - Referenced skills actually exist as `.claude/skills/` directories
    - No circular dependencies
-8. **Output naming** — each skill's declared output path follows `output/{skill}-{slug}-v{round}.md` convention
+8. **Output naming** — each skill's declared output path follows `output/{skill}/{skill}-{slug}-v{round}.md` convention
 9. **Frontmatter schema** — each skill's declared frontmatter includes required fields: entity, skill, type, round, date, model, description, inputs
 
 ### Report format
@@ -70,14 +69,14 @@ Run all docs checks from Mode 1, then additionally:
 
 ### Script tests
 
-1. Verify `.claude/scripts/call-gemini.mjs` and `.claude/scripts/call-groq.mjs`:
+1. Verify `.claude/scripts/call-external.mjs`:
    - Files exist and are valid JavaScript (no syntax errors)
    - Imports resolve to packages in `package.json`
-   - Expected CLI interface: 3 arguments (input-path, output-path, prompt-template-path)
+   - Expected CLI interface: 3 arguments (model, research-path, output-path)
    - Graceful exit code 1 when API key missing
 
 2. Check `package.json`:
-   - Required dependencies present (`@google/generative-ai`, `dotenv`)
+   - Required dependencies present (`@google/generative-ai`, `openai`, `dotenv`)
    - `node_modules/` exists
 
 ### Script quality
@@ -117,17 +116,15 @@ Run all checks from Mode 1 (docs) and Mode 2 (scripts), then additionally:
 2. `.claude/settings.json` is valid JSON with expected structure
 3. `package.json` is valid JSON
 
-### Research entity integrity
+### Artifact integrity
 
-Scan all `research/*/` directories for existing entities:
+Scan all `output/*/` directories for existing artifacts:
 
-1. Each entity has `meta.yaml` with required fields: id, name, type, status, current_round, pipeline_state
-2. Each entity has `changelog.md`
-3. Each entity has `sources.yaml`
-4. Each entity's `output/` artifacts have valid frontmatter (skill, type, round, date, inputs)
-5. Artifact filenames match `{skill}-{slug}-v{round}.md` convention
-6. Frontmatter `inputs:` reference files that exist in the same `output/` directory
-7. No orphaned artifacts (skill field references a skill that exists in `.claude/skills/`)
+1. Each artifact has valid frontmatter (entity, skill, type, round, date, model, description, inputs)
+2. Artifact filenames match `{skill}-{slug}-v{round}.md` convention
+3. Artifacts live in the correct subfolder (`output/{skill}/`)
+4. Frontmatter `inputs:` reference files that exist in `output/`
+5. No orphaned artifacts (skill field references a skill that exists in `.claude/skills/`)
 
 ### Report format
 
@@ -156,20 +153,18 @@ Scan for refinement opportunities. Read-only — suggest but don't execute.
 
 - Duplicate or near-duplicate content across CLAUDE.md and skill files
 - Verbose sections that could be more concise
-- Outdated references (skills/templates/scripts that no longer exist)
+- Outdated references (skills/scripts that no longer exist)
 - CLAUDE.md sections that don't match actual workspace state
 
 ### Skill optimization
 
 - Skills with overlapping responsibilities (violates non-overlapping ownership)
-- Skills with inline logic that could be a template or script
+- Skills with inline logic that could be a script
 - Inconsistent quality standards across similar skills (e.g., different word caps)
 - Missing dependencies that should be declared
-- Templates that don't match their skill's output structure
 
 ### Structural suggestions
 
-- Templates that could be consolidated
 - Skills that could be split or merged
 - Naming inconsistencies
 - Dependency graph simplifications
