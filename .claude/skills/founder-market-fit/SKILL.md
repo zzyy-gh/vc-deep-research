@@ -29,10 +29,12 @@ model: opus
 description: "Founder-market fit assessment"
 inputs:
   - company-profile-{slug}-v{round}.md
+  # list all artifacts actually read
 ---
 ```
 
 ## Guidelines
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
 - **Specific to THIS market** — generic "they're experienced" isn't enough
 - **Comparative** — who else could do this? Why is this team better?
 - **Honest about gaps** — if fit is weak, say so clearly
@@ -61,11 +63,11 @@ inputs:
 
 | Dimension | Rating | Key Evidence |
 |-----------|--------|-------------|
-| Domain Expertise | Strong / Moderate / Weak | {1-line summary} |
-| Network & Distribution | Strong / Moderate / Weak | {1-line summary} |
-| Timing Insight | Strong / Moderate / Weak | {1-line summary} |
-| Motivation & Commitment | Strong / Moderate / Weak | {1-line summary} |
-| Team Complementarity | Strong / Moderate / Weak | {1-line summary} |
+| Domain Expertise | Exceptional / Strong / Solid / Developing / Limited | {1-line summary} |
+| Network & Distribution | Exceptional / Strong / Solid / Developing / Limited | {1-line summary} |
+| Timing Insight | Exceptional / Strong / Solid / Developing / Limited | {1-line summary} |
+| Motivation & Commitment | Exceptional / Strong / Solid / Developing / Limited | {1-line summary} |
+| Team Complementarity | Exceptional / Strong / Solid / Developing / Limited | {1-line summary} |
 
 ## Domain Expertise
 Have they worked in this space? How deep? Do they understand the customer's pain from experience? Have they built similar products before?

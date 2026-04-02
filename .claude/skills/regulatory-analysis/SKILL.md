@@ -36,6 +36,7 @@ refined_from: v{N-1}    # only if refining
 ```
 
 ## Guidelines
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
 - **Jurisdiction-specific** — regulations vary by geography; be specific about which jurisdictions matter
 - **Practical impact** — focus on how regulations affect the business, not just what they say
 - **Competitive lens** — regulations create advantages and disadvantages; assess both
@@ -101,12 +102,4 @@ For each major regulation/standard:
 - Are competitors better or worse positioned for regulatory compliance?
 - Geographic regulatory arbitrage opportunities or risks
 
-## What I Could Not Verify
-- List specific regulatory claims or compliance statuses that could not be independently confirmed
-
-## Sources
-List all sources used, with URLs and what each was used for. Label as primary/secondary.
 ```
-
-## Refinement
-When a prior version path is provided, read it first. Preserve what is accurate, update what has changed, address gaps from user directions or assessment feedback.

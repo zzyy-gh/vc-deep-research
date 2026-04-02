@@ -26,9 +26,7 @@ You are a VC analyst preparing a partner for a meeting with a company. Produce a
 Write markdown to: `output/pre-meeting-read/pre-meeting-read-{slug}-v{round}.md`
 Then convert to HTML: `output/pre-meeting-read/pre-meeting-read-{slug}-v{round}.html`
 
-Use `markdown` Python library to convert. Style with inline CSS so it renders correctly when pasted into an email body. The HTML version should not mention that it was synthesized from other artifacts or internal research — strip the frontmatter and any references to input artifacts.
-
-After conversion, post-process the HTML to make citation superscripts clickable: replace each `<sup>N</sup>` with `<a href="URL" style="color:inherit;text-decoration:none;"><sup>N</sup></a>`, linking to the corresponding reference URL. For compound citations like `<sup>1,3</sup>`, link each number individually.
+Write the HTML directly (no Python conversion). Style per `assets/style-html.md` with inline CSS so it renders correctly when pasted into an email body. The HTML version should not mention that it was synthesized from other artifacts or internal research — exclude the frontmatter and any references to input artifacts.
 
 Frontmatter:
 ```yaml
@@ -46,12 +44,12 @@ inputs:
 ```
 
 ## Guidelines
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
 - **Speed over completeness** — this is a 5-minute read, not a 30-minute report
 - **Meeting-aware** — tailor to who you're meeting and what format (1-on-1, group, pitch)
 - **Question-focused** — the most valuable output is sharp questions to ask
 - **Current** — prioritize recent news, latest round, last quarter's developments
 - **No info = say so** — if a data point isn't available, write "Not disclosed" or "Not found". Never pad with vague language or skip the field silently
-- **Cite everything** — superscript citations on each factual claim (e.g. `<sup>1</sup>`, `<sup>1,3</sup>`). Multiple facts can share the same citation. List all sources in a References section at the bottom. If a claim comes from an unreliable or biased source (e.g. company's own PR, paid media, outdated), flag it inline next to the claim — e.g. `[unverified]`, `[source: company PR]`. Use your judgement
 - **~1500 word cap** (excluding references)
 - **Flexible questions** — don't force-fit questions into template categories; ask what's most relevant to this company's stage, the meeting purpose, and what would actually change your view
 
@@ -159,7 +157,4 @@ _Useful angles to draw from: financials/unit economics, product/technology diffe
 4. {Question}
 5. {Question}
 
-## References
-1. {Source title/description} — {URL}
-2. {Source title/description} — {URL}
 ```

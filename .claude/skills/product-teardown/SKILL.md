@@ -32,6 +32,7 @@ refined_from: v{N-1}    # only if refining
 ```
 
 ## Guidelines
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
 - **Use the product virtually** — read docs, understand the actual UX
 - **Technical depth** — go beyond marketing to actual architecture
 - **Forward-looking** — job postings and recent activity suggest direction
@@ -114,12 +115,4 @@ _[Inferred from public information]_
 - Key product risk
 - What would make this product 10x better?
 
-## What I Could Not Verify
-- List specific technical claims that could not be independently confirmed
-
-## Sources
-List all sources used, with URLs and what each was used for. Label as primary/secondary.
 ```
-
-## Refinement
-When prior version provided, preserve accurate analysis, update with new findings, address gaps.

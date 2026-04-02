@@ -3,6 +3,15 @@ node_modules/
 *.log
 
 output/
+compare/
 docs/
 
+.claude/projects/
 settings.local.json
+*.stackdump
+
+# Binary assets (keep locally, don't commit)
+*.pptx
+*.jpg
+*.jpeg
+*.png

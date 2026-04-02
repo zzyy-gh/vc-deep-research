@@ -34,6 +34,7 @@ refined_from: v{N-1}    # only if refining
 ```
 
 ## Guidelines
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
 - **Go deeper than the pitch** — the company's one-liner is a marketing statement, not the answer
 - **Distinguish current from vision** — what they build today vs. where they say they're headed. Both are valid and important.
 - **Technology matters** — assess actual technical depth, not just claims
@@ -117,12 +118,4 @@ What must be true for their strategy to work?
 - Competitive assumptions (can they win against alternatives?)
 - Execution assumptions (can this team deliver?)
 
-## What I Could Not Verify
-- List specific claims about technology, strategy, or positioning that could not be independently confirmed
-
-## Sources
-List all sources used, with URLs and what each was used for. Label as primary/secondary.
 ```
-
-## Refinement
-When a prior version path is provided, read it first. Preserve what is accurate, update what has changed, address gaps from user directions or assessment feedback.

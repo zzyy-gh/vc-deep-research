@@ -28,6 +28,21 @@ Write to: `output/investment-memo/investment-memo-{slug}-v{round}.md`
 ### Step 2: Slide Advisory (always produced alongside slide spec)
 Write to: `output/investment-memo/investment-memo-{slug}-v{round}-advisory.md`
 
+Frontmatter:
+```yaml
+---
+entity: "{name}"
+skill: investment-memo
+type: slide-advisory
+round: {round}
+date: "{timestamp}"
+model: opus
+description: "Slide deck advisory — improvements, visuals, appendix proposals"
+inputs:
+  - investment-memo-{slug}-v{round}.md
+---
+```
+
 A companion document that advises how to strengthen the presentation. This is where the skill goes BEYOND the memo — suggesting improvements, flagging issues, recommending visuals, and proposing appendix content with research where needed. The slide spec stays faithful to the memo; the advisory is where critical thinking happens.
 
 ### Step 3: Rendered deck (if requested)
@@ -116,6 +131,8 @@ layout: title
 # Investment Opportunity: {Codename}
 _{Month Year}_
 ```
+
+- Include `assets/aiconic-logo.jpg` (firm logo) on the title slide
 
 ---
 
@@ -440,6 +457,18 @@ Each cell: 2-4 sentences synthesized from the memo. Do not add judgments beyond 
 
 ---
 
+### Unmapped Memo Sections
+
+After mapping memo content to the defined slide structure above, check for any remaining memo sections that weren't covered. For each:
+- Create a `content` slide with an appropriate layout pattern
+- Place it in the most logical position within the deck flow (e.g., a regulatory section after Market, a go-to-market section after Product)
+- Use the same formatting conventions (sentence-form titles, bold-lead bullets, source citations)
+- Tag with the closest matching section label, or create a descriptive tag if none fits
+
+These slides follow the same content rules as the rest of the deck — memo content only, no invented analysis.
+
+---
+
 ### Appendix (1 divider + 0-4 content slides)
 
 **S{N}: Appendix divider**
@@ -524,10 +553,14 @@ The skill produces the slide-spec markdown. Rendering to PPTX is done on the fly
 
 Style templates and example decks live in `assets/`:
 - `assets/style-pptx.md` — visual style config (colors, fonts, spacing, layout rules)
+- `assets/eBots_presentation.pptx` — reference deck (26 slides, eBots "Project Robot"). Read this to understand slide master layouts, theme colors, and visual conventions that `style-pptx.md` describes. The renderer should match this deck's look and feel.
+- `assets/aiconic-logo.jpg` — AIconic Ventures firm logo. Place on the title slide (top-left or per reference deck positioning).
 
 This separation means:
 - Changing content/structure → edit SKILL.md
 - Changing visual style → edit `assets/style-pptx.md`
+- Reference deck for visual conventions → `assets/eBots_presentation.pptx`
+- Firm logo → `assets/aiconic-logo.jpg`
 
 ## Process
 
@@ -536,7 +569,8 @@ This separation means:
 2. Extract all content and mentally map each piece to the slide structure
 3. Determine which optional slides have sufficient memo content to justify inclusion
 4. Write each slide block in the slide-spec format, following the sequence above
-5. **Verify**: every claim in the slides traces back to the memo — no invented content
+5. **Verify**: every memo section is accounted for — if any content doesn't map to the defined slide structure, create additional slides per the "Unmapped Memo Sections" rule
+6. **Verify**: every claim in the slides traces back to the memo — no invented content
 6. **Verify**: every slide title is sentence-form (except criteria + dividers)
 7. **Verify**: financial numbers match memo exactly (cross-check all figures)
 8. Write the slide-spec markdown file

@@ -34,6 +34,7 @@ refined_from: v{N-1}    # only if refining
 ```
 
 ## Guidelines
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
 - **Map dependencies, not just relationships** — focus on what the company can't control
 - **Geographic specificity** — name regions, countries, and specific concentration risks
 - **Quantify where possible** — % of revenue from top customer, # of alternative suppliers, etc.
@@ -128,12 +129,4 @@ Ranked by severity:
 - Partnership dependency risks
 For each: what it is, how likely, what mitigates it.
 
-## What I Could Not Verify
-- List specific claims about supply chain, customers, or partnerships that rely on single sources or could not be independently confirmed
-
-## Sources
-List all sources used, with URLs and what each was used for. Label as primary/secondary.
 ```
-
-## Refinement
-When a prior version path is provided, read it first. Preserve what is accurate, update what has changed, address gaps from user directions or assessment feedback.

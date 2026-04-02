@@ -36,6 +36,7 @@ refined_from: v{N-1}    # only if refining
 ```
 
 ## Guidelines
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
 - **Right layer** — identify competitors at the same value chain layer, not the umbrella category
 - **Evidence-based** — every claim about a competitor needs a source
 - **Fair comparison** — compare on metrics appropriate to the layer (don't compare a component company's revenue to a platform company's)
@@ -148,13 +149,4 @@ For the target company:
 - **Moat durability**: How sustainable is this advantage?
 - **Moat vulnerabilities**: How could competitors erode it?
 
-## What I Could Not Verify
-- List specific claims about competitors that rely on single sources or could not be independently confirmed
-- Note any competitors where data is particularly scarce
-
-## Sources
-List all sources used, with URLs and what each was used for. Label as primary/secondary.
 ```
-
-## Refinement
-When a prior version path is provided, read it first. Preserve what is accurate, update what has changed, address gaps from user directions or assessment feedback.

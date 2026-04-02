@@ -36,6 +36,7 @@ refined_from: v{N-1}    # only if refining
 ```
 
 ## Guidelines
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
 - **Value chain first** — always decompose the industry into layers before any sizing or dynamics analysis
 - **First-principles sizing** — TAM/SAM/SOM must be bottom-up (unit × price × customers), not just restating analyst figures
 - **Layer-specific** — size and analyze for the company's SPECIFIC layer, not the umbrella category
@@ -152,13 +153,4 @@ Cross-check the company's own claims and vision against what the independent ana
 - Does the company's vision/roadmap align with where the industry is heading?
 - Are there gaps between what the company claims and what the market data shows?
 
-## What I Could Not Verify
-- List specific sizing figures, dynamics claims, or layer boundaries that rely on single sources or could not be independently confirmed
-- Note any areas where data is stale (>12 months old)
-
-## Sources
-List all sources used, with URLs and what each was used for. Label as primary/secondary.
 ```
-
-## Refinement
-When a prior version path is provided, read it first. Preserve what is accurate, update what has changed, address gaps from user directions or assessment feedback.

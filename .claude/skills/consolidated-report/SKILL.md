@@ -9,8 +9,10 @@ forked: true
 
 You are producing the final investment memo that synthesizes all research, critiques, and assessment into one decision document. This is what gets shared with the investment committee.
 
+Your job is to tell the story of this investment opportunity with real substance behind it — what the company does, why the market matters, what the research found, what's interesting, what's risky, and what to do next. Pull decision-relevant findings from across all artifacts. Don't just summarize each skill — synthesize into a coherent picture. But DO include the important details that back up the narrative.
+
 ## Inputs
-- All available artifacts at current round — research, people analysis, critiques, assessment, due-diligence
+- All available artifacts at current round — research, people analysis, assessments, due-diligence
 
 Glob `output/**/*-{slug}-v{round}.md` to discover everything available. Work with whatever exists — not all skills may have been run.
 
@@ -33,144 +35,124 @@ inputs:
 ```
 
 ## Guidelines
-- **Scannable** — executive can get the picture in 2 minutes
-- **Decision-focused** — everything serves the invest/pass decision
-- **Honest** — don't paper over gaps or disagreements
-- **Graceful with missing data** — if some skills weren't run, note it and work with what's available
-- **~3000 word cap**
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
+- **Lead with the answer** — the reader should know the verdict within 30 seconds
+- **TL;DR is sacred** — short, accurate, completely honest. Convey the core meaning and the most insightful finding from the research. No hype, no hedging, no filler. Don't be interesting for the sake of it — be interesting because the research found something worth saying. If the research is inconclusive, say that.
+- **Substance over summary** — include the actual findings, numbers, and evidence, not just conclusions
+- **Surface what's interesting** — unexpected findings, non-obvious insights, surprising data points belong here. But only if they're real — don't manufacture intrigue.
+- **Narrative thread** — sections should build on each other, not feel like isolated summaries
+- **Honest** — don't paper over gaps or disagreements. Don't overpromise. If the evidence is thin, say so.
+- **Graceful with missing data** — if some skills weren't run, work with what's available without calling attention to every gap
+- **~4000 word cap**
 
 ## Process
 1. Glob and read all available artifacts at current round
-2. For each section, source from the relevant artifact — pull decision-moving insights, don't rehash everything
-3. Write using the template below
+2. Identify the most decision-relevant findings across all research
+3. Identify anything genuinely interesting or surprising
+4. Write using the template below — include real detail, not just top-level takes
 
 ## Template
 
 ```markdown
-# {Company Name} — Consolidated Investment Memo
+# {Company Name} — Investment Memo
 
 ## TL;DR
-3-4 sentences. What this company does, why it's interesting (or not), and the key tension in the investment decision.
 
-## Company Snapshot
+| | |
+|---|---|
+| **Company** | {what they do, in one line} |
+| **Stage / Sector** | {stage} · {sector} |
+| **Founded / HQ** | {year} · {location} |
+| **Funding** | {total raised, last round, key investors} |
+| **Team** | {key founders} |
+| **Key Metric** | {north star metric + value} |
+| **Verdict** | {IC recommendation — strong conviction / conditional interest / pass with optionality / clear pass} |
 
-| Dimension | Detail |
-|-----------|--------|
-| Stage | {seed/A/B/...} |
-| Sector | {sector} |
-| Founded | {year} |
-| HQ | {location} |
-| Funding | {total raised, last round} |
-| Team | {key founders, notable hires} |
-| Key Metric | {north star metric + value} |
+{2-3 sentences max. What this company does, the single most important insight from the research, and the honest verdict. No filler. If the most important insight is a risk, lead with that. If it's an opportunity, lead with that. Don't try to be balanced — be accurate.}
 
-## Investment Thesis
+## The Investment Case
 
-**Bull Case**
-- {bullet 1}
-- {bullet 2}
-- {bullet 3}
+### Why This Could Work
+{Draw from bull case, company analysis, industry analysis, product teardown. Not just bullets — explain the logic of why this wins. What's the insight that makes this non-obvious? What evidence supports the upside?}
 
-**Bear Case**
-- {bullet 1}
-- {bullet 2}
-- {bullet 3}
+### Why This Could Fail
+{Draw from bear case, competitive research, financial analysis. What are the real failure modes with evidence, not just theoretical risks?}
 
-## Key Findings
-### Company Overview
-*(Sourced from company facts)*
+### Where IC Lands
+{Draw from IC review. How do the hard questions resolve? What's the returns math? Does it fit the fund? What's the recommendation and why?}
 
-Core facts: what the company does, founding, product, business model, traction, team. The essential context for everything that follows.
+## Company & Product
+*(Sourced from company-profile, company-analysis, product-teardown)*
 
-### Strategic Analysis
-*(Sourced from company deep analysis, if assessed)*
+What the company actually builds, how it works, the product insight, technology depth, defensibility. Include: business model, go-to-market, current traction with specific numbers. Where is the product today vs. the vision? What's the strategic positioning logic?
 
-Vision, strategy, positioning logic, technology depth, current vs. future product. Skip if not assessed.
+{Include key traction/metrics in a compact table if data is available.}
 
-### Industry & Market
-*(Sourced from industry analysis, if assessed)*
+## Market & Industry
+*(Sourced from industry-analysis)*
 
-Value chain position, market sizing, industry dynamics, timing. Skip if not assessed.
+Value chain decomposition — which layer the company occupies, where value accrues. Layer-specific market sizing (TAM/SAM/SOM with the build-up logic, not just numbers). Key dynamics: growth drivers, headwinds, timing. Why now?
 
-### Competitive Landscape
-*(Sourced from competitor analysis, if assessed)*
+## Competitive Landscape
+*(Sourced from competitor-research)*
 
-Key competitors, positioning comparison, competitive threats and advantages. Skip if not assessed.
-
-### Ecosystem & Dependencies
-*(Sourced from ecosystem analysis, if assessed)*
-
-Supply chain, customers, partnerships, dependencies, geographic/geopolitical risks. Skip if not assessed.
-
-### Regulatory Environment
-*(Sourced from regulatory analysis, if assessed)*
-
-Applicable regulations, compliance burden, regulatory risks and tailwinds. Skip if not assessed.
+Key direct competitors at the same value chain layer — who they are, how they compare, what differentiates the target. Adjacent-layer threats. Moat assessment: what's the defensibility today and how durable is it? Include the comparison matrix if it adds clarity.
 
 ## Financial Picture
-*(Sourced from financial-analysis artifact)*
+*(Sourced from financial-analysis)*
 
-Unit economics, burn rate, revenue trajectory, capital efficiency. If pre-revenue, focus on burn and runway. Include key financial metrics in a compact table if data is available.
+Unit economics, burn rate, revenue trajectory, capital efficiency. Key financial metrics in a compact table. If pre-revenue, focus on burn, runway, and path to revenue. Revenue quality, customer concentration, and any red flags.
 
-## Product & Technology
-*(Sourced from product-teardown artifact)*
+## Team
+*(Sourced from graham-duncan-eval, founder-market-fit)*
 
-Technical architecture, depth, defensibility, developer experience, roadmap signals. What's the product insight and is it durable?
+Founder talent assessment — not just bios but evidence-based evaluation. Founder-market fit: why this team for this market? Key strengths, gaps, and team complementarity. If people analysis wasn't run, cover what's known from company-profile.
 
-## People Assessment
-*(Sourced from graham-duncan-eval and founder-market-fit artifacts, if available)*
+## Ecosystem & Dependencies
+*(Sourced from ecosystem-analysis, regulatory-analysis — skip if not assessed)*
 
-Founder talent assessment, founder-market fit, team complementarity, key gaps.
+Key dependencies: suppliers, platforms, customers, partnerships. Concentration risks. Regulatory environment if relevant — compliance burden, tailwinds/headwinds, competitive implications. Geographic and geopolitical exposure.
 
-## Risk Assessment
-*(Sourced from assess-general artifact)*
+## What's Interesting
+{The most surprising, non-obvious, or noteworthy findings from across all research. Things the reader wouldn't expect. Could be: an unexpected competitive dynamic, a counter-intuitive market insight, a team signal, an ecosystem dependency nobody talks about, a regulatory angle that changes the picture, a data point that reframes the opportunity.}
+
+## The Fundamentals
+*(Sourced from assess-first-principles)*
 
 ### Deal Breakers
-List any identified deal breakers. If none, state "None identified."
+{Any hard-stop flags. If none: "None identified."}
 
 ### Key Assumptions
-Top 3-5 assumptions the thesis depends on. For each: what it is, current validation status, how to test it.
+| # | Assumption | Status | Evidence |
+|---|-----------|--------|----------|
+| 1 | {assumption} | Validated / Partially Validated / Unvalidated / Contradicted | {evidence} |
 
-### Unknowns Inventory
-Critical unknowns that remain. Categorize as critical / important / nice-to-know.
+### Critical Unknowns
+{Things that could change the decision if we knew them. Include important unknowns too if space allows.}
+
+### Cross-Artifact Contradictions
+{If first-principles found conflicting claims across research, surface them here.}
 
 ## Section Health
 
-| Section | Health | Notes |
-|---------|--------|-------|
-| Team | {green/yellow/red} | {one-line rationale} |
-| Product | {green/yellow/red} | {one-line rationale} |
-| Market | {green/yellow/red} | {one-line rationale} |
-| Traction | {green/yellow/red} | {one-line rationale} |
-| Financials | {green/yellow/red} | {one-line rationale} |
-| Competition | {green/yellow/red} | {one-line rationale} |
-| Ecosystem | {green/yellow/red} | {N/A if not assessed} |
-| Regulatory | {green/yellow/red} | {N/A if not assessed} |
-| Risks | {green/yellow/red} | {one-line rationale} |
+| Section | Health | Note |
+|---------|--------|------|
+| Team | 🟢 / 🟡 / 🔴 | {one-line} |
+| Product | 🟢 / 🟡 / 🔴 | |
+| Market | 🟢 / 🟡 / 🔴 | |
+| Traction | 🟢 / 🟡 / 🔴 | |
+| Financials | 🟢 / 🟡 / 🔴 | |
+| Competition | 🟢 / 🟡 / 🔴 | |
+| Ecosystem | 🟢 / 🟡 / 🔴 | {N/A if not assessed} |
+| Regulatory | 🟢 / 🟡 / 🔴 | {N/A if not assessed} |
 
-## Critique Summary
+## What's Next
+*(Sourced from assess-next if available, otherwise from IC review)*
 
-### Bear Case (assess-bear)
-- {top risk 1}
-- {top risk 2}
-- {top risk 3}
-
-### IC Review (assess-ic)
-- {key consideration 1}
-- {key consideration 2}
-- {recommendation: pass / dig deeper / proceed}
-
-### External Reviews
-*(Include Gemini/Groq highlights if available)*
-
-## Recommended Next Steps
-Prioritized list of actions to derisk the investment or reach conviction.
-
-## Source Versions
-List all artifacts used to build this report, with their round and date.
+Priority actions to de-risk the investment or reach conviction. Include: diligence calls to make, questions for founders, areas to investigate, connections to build.
 
 ## Evolution Notes
 *(Round 2+ only — omit for round 1)*
 
-What changed since the previous round: new information discovered, assumptions validated or invalidated, risks that materialized or were mitigated.
+{What changed since previous round: new information, validated/invalidated assumptions, materialized/mitigated risks.}
 ```

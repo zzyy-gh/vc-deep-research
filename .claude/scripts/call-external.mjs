@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * External Model Critique Wrapper
- * Usage: node scripts/call-external.mjs <model> <research-path> <output-path>
+ * Usage: node .claude/scripts/call-external.mjs <model> <research-path> <output-path>
  *
  * Models: gemini, groq
  * Exit 0 on success, exit 1 on skip (with stderr message).
@@ -85,7 +85,7 @@ async function main() {
   const [modelName, researchPath, outputPath] = process.argv.slice(2);
 
   if (!modelName || !researchPath || !outputPath) {
-    console.error("Usage: node scripts/call-external.mjs <gemini|groq> <research-path> <output-path>");
+    console.error("Usage: node .claude/scripts/call-external.mjs <gemini|groq> <research-path> <output-path>");
     process.exit(1);
   }
 
@@ -119,12 +119,12 @@ async function main() {
   while (attempts < maxAttempts) {
     attempts++;
     try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS);
-
-      const content = await CALLERS[modelName](apiKey, config, research);
-
-      clearTimeout(timeout);
+      const content = await Promise.race([
+        CALLERS[modelName](apiKey, config, research),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("Timeout")), TIMEOUT_MS)
+        ),
+      ]);
 
       if (!content) {
         console.error(`${modelName} returned empty response`);
@@ -149,8 +149,8 @@ ${content}`;
       console.log(`${modelName} critique written to ${outputPath}`);
       process.exit(0);
     } catch (err) {
-      if (err.name === "AbortError") {
-        console.error(`${modelName} request timed out`);
+      if (err.message === "Timeout") {
+        console.error(`${modelName} request timed out after ${TIMEOUT_MS / 1000}s`);
         process.exit(1);
       }
       if (attempts < maxAttempts && (err.status === 429 || err.status >= 500)) {

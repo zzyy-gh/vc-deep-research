@@ -29,10 +29,12 @@ model: opus
 description: "Graham Duncan talent evaluation"
 inputs:
   - company-profile-{slug}-v{round}.md
+  # list all artifacts actually read
 ---
 ```
 
 ## Guidelines
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
 - **Evidence-based ratings** — every rating needs specific evidence, not vibes
 - **Public sources only** — don't speculate about private matters
 - **Acknowledge gaps** — if you can't find evidence for a dimension, say so

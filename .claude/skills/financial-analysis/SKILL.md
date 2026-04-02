@@ -32,7 +32,7 @@ refined_from: v{N-1}    # only if refining
 ```
 
 ## Guidelines
-- **Distinguish fact from estimate** — use [Confirmed], [Estimated], [User Insight] labels
+- Follow Research Standards in CLAUDE.md — citations, data integrity, situational awareness
 - **Show your math** — for any estimate, show the calculation
 - **Comparable data** — always include at least 3 comparable companies/rounds
 - **Conservative** — when estimating, err on conservative side
@@ -118,7 +118,5 @@ _[If fundraising data available]_
 - Any concerning patterns in the numbers
 - Data quality issues
 - Inconsistencies between claimed and estimated metrics
-```
 
-## Refinement
-When prior version provided, preserve accurate data, update with new findings, address gaps.
+```

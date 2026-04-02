@@ -1,6 +1,6 @@
 ---
 name: due-diligence
-description: "Verification and correction pass — verifies claims, checks logical soundness, reads the original skill definition, and produces a corrected version if needed"
+description: "Verification and correction pass — verifies claims, checks logical soundness, notes coverage gaps, reads the original skill definition. Corrections → new version; additions only → in-place update"
 model: sonnet
 forked: true
 ---
@@ -17,12 +17,13 @@ You respect the original skill's intent by reading its SKILL.md to understand wh
 - Optionally, other artifacts for cross-referencing
 
 ## Output
-If corrections are needed, write a new version of the target artifact:
-`output/{original-skill}/{original-skill}-{slug}-v{N+1}.md`
+DD produces one of three outcomes — it never flags issues to the user or asks for decisions. It handles everything itself.
 
-The new version keeps the same skill name, format, and structure as the original — it's a corrected version, not a different document. Set `refined_from: v{N}` in frontmatter.
+- **Corrections** (factual errors, logical issues, contradicted claims) → write a new version `v{N+1}` with `refined_from: v{N}` in frontmatter. Add `dd: true` to frontmatter.
+- **Additions only** (coverage gaps filled, missing caveats added, but no existing content changed) → update the current version in-place. Add `dd: true` to frontmatter. No new version.
+- **Clean pass** → report back to the agent that the artifact passed verification. No file written.
 
-If no corrections needed, report back to the agent that the artifact passed verification. No file written.
+If DD both corrects existing content *and* fills gaps, that's a correction — new version.
 
 ## Process
 
@@ -67,24 +68,36 @@ Check the artifact's reasoning:
 ### 5. Cross-Artifact Check
 If other artifacts exist for this entity, check for contradictions between them.
 
-### 6. Skill Compliance
-Compare the artifact against its skill definition:
+### 6. Skill Compliance & Coverage Gaps
+Compare the artifact against its skill definition and CLAUDE.md Research Standards:
 - Does it follow the template structure?
 - Does it meet the word cap?
 - Does it cover all required sections?
 - Does it meet the quality standards defined in the skill?
+- Does it follow CLAUDE.md Research Standards — superscript citations, confidence flags, verification gaps inline, references at end?
+- **Skill-spec gaps** — sections or dimensions the skill definition requires that the artifact treated superficially or skipped
+- **Evidence-raised gaps** — questions or angles the artifact's own research surfaced but left unaddressed (e.g., a customer mentioned but never analyzed, a risk acknowledged but not explored)
 
-### 7. Produce Corrected Version (if needed)
-If issues found:
-- Write a new version that preserves the original structure and content
+DD weaves gap notes directly into the artifact — brief inline remarks noting what's missing and why it matters, placed in the relevant sections. DD does not attempt to research or resolve the gaps. This is not "what else could be researched" — it's "what should be here based on the skill's spec and the artifact's own evidence, but isn't."
+
+### 7. Update the Artifact
+Apply findings based on severity:
+
+**Corrections needed** (factual errors, logical issues, contradicted claims):
+- Write a new version `v{N+1}` that preserves the original structure and content
 - Correct factual errors with proper sources
 - Fix logical issues
-- Add missing caveats
-- Mark corrections with `[DD-corrected]` inline so changes are traceable
+- Add missing caveats and gap notes
+- Add `dd: true` to frontmatter so changes are traceable
 - Keep everything the original got right — don't rewrite what doesn't need fixing
+
+**Additions only** (gap notes, missing caveats, but no existing content changed):
+- Update the current version in-place
+- Add `dd: true` to frontmatter
+- No new version needed
 
 ## Quality Standards
 - **Minimal intervention** — only correct what's actually wrong, don't rewrite for style
 - **Source corrections** — every correction must cite the source that proves it
-- **Traceable** — mark corrections with `[DD-corrected]` so the user can see what changed
+- **Traceable** — new versions and in-place updates both carry `dd: true` in frontmatter
 - **Respect the original** — maintain the skill's voice, structure, and intent
