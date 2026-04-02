@@ -48,17 +48,21 @@ compare/           — External model outputs (comparison only, never read by sk
 
 ## Agents
 
-Two research agents share the same pipeline — they differ only in the final output:
+Two research agents share the same pipeline — they differ only in the final output.
+
+**IMPORTANT — agent vs. skill routing:** When the user asks for "pre-meeting prep" or "full report" (or similar), run the **full pipeline** defined in the corresponding agent file (`.claude/agents/{agent}/AGENT.md`). Read the AGENT.md, then execute each phase by invoking skills via the Skill tool in the prescribed order, parallelizing where the workflow allows. Do NOT just invoke the final skill (`/pre-meeting-read` or `/consolidated-report`) alone — that skips all upstream research.
+
+Only run a single skill directly when the user explicitly names that specific skill (e.g., "run company-profile for X").
 
 ```
-Run the pre-meeting-prep agent for [Company Name]. Use parallel subagents to speed up independent skills.
+Run the pre-meeting-prep agent for [Company Name].
 ```
 
 ```
-Run the full-report agent for [Company Name]. Use parallel subagents to speed up independent skills.
+Run the full-report agent for [Company Name].
 ```
 
-**Pipeline:** L1 parallel (company-profile, product-teardown, financial-analysis) → DD → L2 company-analysis → DD → L3 sequential (industry → ecosystem → competitor → regulatory) → DD each → L4 parallel (graham-duncan-eval, founder-market-fit) → DD → L5 (bear + bull parallel → IC → first-principles → next) → final output: **pre-meeting-read** or **consolidated-report**
+**Pipeline:** L1 parallel (company-profile, product-teardown, financial-analysis) → L2 company-analysis → L3 sequential (industry → ecosystem → competitor → regulatory) → L4 parallel (graham-duncan-eval, founder-market-fit) → L5 (bear + bull parallel → IC → first-principles → next) → final output: **pre-meeting-read** or **consolidated-report** → DD on final output only
 
 **tester** — workspace quality checks (read-only). Modes: `docs`, `scripts`, `full`, `optimize`, `integration`.
 
@@ -74,7 +78,7 @@ Rules that govern how skills produce research. Apply to all skills.
 
 - **Layer sequence matters.** Each layer builds on prior layers — skipping weakens downstream analysis. Reuse existing artifacts rather than re-running.
 - **Same layer = parallel.** Sub-layers (a→b→c→d) run sequentially; each reads prior siblings' output.
-- **Due-diligence runs after each skill**, not batched to the end. Corrections produce a new version; additions update in-place.
+- **Due-diligence runs on the final synthesis artifact** (consolidated-report or pre-meeting-read), not after every individual skill. Corrections produce a new version; additions update in-place.
 - **Skip gracefully.** If a skill finds insufficient information, produce a shorter artifact noting what couldn't be found. The gap itself is signal for downstream skills.
 - **Self-sufficiency.** If expected input isn't available, the skill conducts its own lighter research rather than failing. Skills are always runnable standalone.
 - **Research covers, synthesis focuses.** Research skills cover all relevant items found. Synthesis skills touch on all but focus narrative on the crucial ones.
