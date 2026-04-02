@@ -48,7 +48,15 @@ For each claim, determine status:
 - **Contradicted** — independent source says otherwise
 - **Stale** — data is >12 months old
 
-### 3. Logical Soundness
+### 3. Analytical Rigor (Research & Analysis Artifacts Only)
+When the target artifact involves primary research or analysis (not final-stage synthesis or assessment), apply these checks:
+
+- **Decompose before comparing**: Identify distinct layers in the company's value chain or technology stack. Ask "where exactly does this company play?" before accepting any competitive, financial, or market framing. Treating a broad category (e.g., "optical interconnects," "semiconductors") as one market without decomposing the stack is a fundamental analytical error — it leads to wrong competitor sets, wrong funding comparisons, wrong TAM estimates, and wrong risk assessments.
+- **Search result bias**: Web searches and industry databases (Tracxn, CBInsights) are biased toward high-profile, heavily-funded companies. The actual relevant peers — especially smaller, layer-specific players — may not surface. Verify that the artifact's research went beyond surface-level search results to find the right comparisons at the right layer of the stack.
+- **Company messaging — vision vs. current state**: Companies often position themselves broadly (e.g., "scaling computing" vs. "quantum dot lasers"). This may reflect genuine strategic vision and future direction, not just marketing — don't dismiss it. But check whether the artifact distinguished between what the company ships today and where it aims to go. The current-state positioning determines the right competitive set and comparisons now; the vision matters for trajectory and TAM.
+- **Narrative anchoring**: Compelling-sounding framings (dramatic funding gaps, market share disparities) can anchor the entire analysis to the wrong reference class. Verify that comparative metrics are like-for-like — a component supplier's capital needs, margins, and go-to-market are fundamentally different from a platform integrator's, even in the same sector.
+
+### 4. Logical Soundness
 Check the artifact's reasoning:
 - Do the numbers add up? (e.g., stated ARR vs customer count x ACV)
 - Are conclusions supported by the evidence presented?
@@ -56,17 +64,17 @@ Check the artifact's reasoning:
 - Are important caveats missing?
 - Are there internal contradictions?
 
-### 4. Cross-Artifact Check
+### 5. Cross-Artifact Check
 If other artifacts exist for this entity, check for contradictions between them.
 
-### 5. Skill Compliance
+### 6. Skill Compliance
 Compare the artifact against its skill definition:
 - Does it follow the template structure?
 - Does it meet the word cap?
 - Does it cover all required sections?
 - Does it meet the quality standards defined in the skill?
 
-### 6. Produce Corrected Version (if needed)
+### 7. Produce Corrected Version (if needed)
 If issues found:
 - Write a new version that preserves the original structure and content
 - Correct factual errors with proper sources

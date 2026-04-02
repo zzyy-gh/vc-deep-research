@@ -18,8 +18,9 @@ You are a VC analyst preparing a partner for a meeting with a company. Produce a
 - Deck or materials shared by the company
 
 **From existing research** (optional — synthesize if available):
-- Existing artifacts: `company-deep-dive`, `financial-analysis`, `product-teardown`, etc.
+- Any existing research artifacts provided when invoking the skill
 - Any user-provided decks, notes, prior meeting notes
+- Product and technical architecture details, if available — useful for the Technology Primer
 
 ## Output
 Write markdown to: `output/pre-meeting-read/pre-meeting-read-{slug}-v{round}.md`
@@ -56,7 +57,7 @@ inputs:
 
 ## Template
 
-<!-- TODO: Add reference example asset path here. Remind user to specify if not provided in the prompt. -->
+**HTML reference**: See `assets/example-output.html` for a complete output example and `assets/style-html.md` for the CSS style guide. Match these styles when generating HTML output.
 
 ```markdown
 # {Company Name}
@@ -66,6 +67,17 @@ _{Meeting context: who, when, format}_
 
 ## Overview
 One dense paragraph: founding, product, technology, target market. No fluff.
+
+## Technology Primer
+_Optional — include only when the technology or industry is non-obvious and the reader needs context to understand the rest of the brief. Skip for straightforward software/SaaS companies._
+
+A short explainer (3-5 sentences max) with a simple ASCII diagram showing where the company sits in the technology stack or value chain. The goal is to introduce just enough terminology and context that the Financials, Catalysts, Risks, and Market Positioning sections make sense to a reader unfamiliar with the industry.
+
+Guidelines:
+- Use a simple ASCII flow or stack diagram — keep it to 3-5 lines
+- Bold key terms on first use that will appear later in the brief
+- Explain *how the technology works and why it matters* — don't repeat what the company does (that's the Overview)
+- One plain-language analogy if it helps
 
 ## Financials Snapshot
 
@@ -96,23 +108,37 @@ Short paragraph on the investment story, followed by 3-4 bullet catalysts (recen
 - {risk 2}
 - {risk 3}
 
-## Competitive Landscape
+## Market Positioning
 
 **{Company}'s key differentiation**: {1-2 lines — what makes their approach distinct. Be specific: name the technical or strategic wedge, not generic "AI-powered" claims.}
 
-**Direct competitors** _(up to 5 — closest match in value proposition)_
+_First identify where the company sits in the value chain, then map relevant players around it. Include whichever subsections are relevant — skip any that don't apply or where no research was found (say "Not found" explicitly). Use a labeled table for each subsection._
 
-| Company | How They Compete |
-|---------|-----------------|
-| {Competitor 1} | {one-line positioning relative to subject company's differentiation} |
-| {Competitor 2} | {one-line positioning} |
+Possible subsections (pick what fits, add others if needed):
 
-**Adjacent competitors** _(up to 3 — different primary product, plausible expansion threat)_
+**Competitors** — anyone competing for the same customer dollar, whether startup or incumbent. Distinguish inline (e.g. note funding stage, "established supplier") rather than splitting into separate tables.
+
+| Company | Stage/Type | How They Compete |
+|---------|-----------|-----------------|
+| {Name} | {e.g. Startup, $81M Series A / Established, public} | {one-line positioning relative to subject company} |
+
+**Adjacent competitors** — different primary product or technology today, but plausible expansion threat (e.g. different tech for the same problem, different stack layer that could vertically integrate, adjacent market player expanding in).
 
 | Company | Main Product | Expansion Vector |
 |---------|-------------|-----------------|
-| {Company A} | {what they do today} | {how they could compete} |
-| {Company B} | {what they do today} | {how they could compete} |
+| {Name} | {what they do today} | {how they could compete} |
+
+**Potential customers / partners** — companies that would buy from or integrate with the subject company.
+
+| Company | Relationship | Why It Matters |
+|---------|-------------|---------------|
+| {Name} | {e.g. potential buyer, integration partner} | {what they need from subject company} |
+
+**Supply chain dependencies** — key suppliers whose actions affect the company's position.
+
+| Supplier | What They Provide | Risk |
+|----------|------------------|------|
+| {Name} | {component/service} | {e.g. non-exclusive, single source, could supply competitors} |
 
 ## Sector Trends
 One paragraph, numbers-heavy: market size, growth, policy, adoption patterns.

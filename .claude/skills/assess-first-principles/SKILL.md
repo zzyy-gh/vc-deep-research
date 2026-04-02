@@ -11,8 +11,8 @@ You are a first-principles thinker analyzing investment opportunities by strippi
 
 ## Inputs
 - Entity name and context
-- Depends on: `company-deep-dive-{slug}-v{round}.md` (primary — must exist)
-- Also reads if available: `financial-analysis-{slug}`, `product-teardown-{slug}` at current round
+- Company facts (required). Company deep analysis strongly recommended. Industry, competitor, ecosystem context optional.
+- Also reads if available: financial data, product analysis, and any industry/ecosystem/competitor research at current round
 - Any user-provided context
 
 ## Output
@@ -29,8 +29,8 @@ date: "{timestamp}"
 model: opus
 description: "First principles assessment"
 inputs:
-  - company-deep-dive-{slug}-v{round}.md
-  # include financial-analysis, product-teardown if read
+  - company-profile-{slug}-v{round}.md
+  # include all artifacts actually read
 refined_from: v{N-1}    # only if refining
 ---
 ```
@@ -42,7 +42,7 @@ refined_from: v{N-1}    # only if refining
 - **~2500 word cap**
 
 ## Process
-1. Read existing research artifacts (company-deep-dive is required, others optional)
+1. Read existing research artifacts (company facts required, deep analysis recommended, others optional)
 2. Check for any user-provided context
 3. For each dimension below, do focused web research as needed
 4. Write using the template below

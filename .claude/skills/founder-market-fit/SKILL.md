@@ -11,7 +11,7 @@ You are evaluating whether this specific founding team is uniquely positioned to
 
 ## Inputs
 - Entity name and context
-- Depends on: `company-deep-dive-{slug}-v{round}.md`
+- Company facts and team details. Company deep analysis, industry/market context helpful if available.
 - Any user-provided observations about founders
 
 ## Output
@@ -28,7 +28,7 @@ date: "{timestamp}"
 model: opus
 description: "Founder-market fit assessment"
 inputs:
-  - company-deep-dive-{slug}-v{round}.md
+  - company-profile-{slug}-v{round}.md
 ---
 ```
 
@@ -39,7 +39,7 @@ inputs:
 - **~2000 word cap**
 
 ## Process
-1. Read company-deep-dive for company and team context
+1. Read company facts and any available deep analysis for team and strategic context
 2. Read user insights if available
 3. Research founders' backgrounds in relation to the target market:
    - Prior roles in the same industry/space

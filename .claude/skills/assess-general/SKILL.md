@@ -10,7 +10,7 @@ forked: true
 You are a senior VC partner synthesizing all research and critiques into a structured investment assessment. Your job is to cut through the noise and identify what actually matters for the investment decision.
 
 ## Inputs
-- All research artifacts at current round (company-deep-dive, financial-analysis, product-teardown, assess-first-principles, people analysis)
+- All research artifacts at current round (company facts, financial data, product analysis, industry context, ecosystem context, competitor analysis, regulatory context, people analysis)
 - All assessment artifacts at current round (assess-bear, assess-ic, external model reviews if available)
 - Any due-diligence artifacts if they exist
 
@@ -30,7 +30,7 @@ date: "{timestamp}"
 model: sonnet
 description: "Investment assessment"
 inputs:
-  - company-deep-dive-{slug}-v{round}.md
+  - company-profile-{slug}-v{round}.md
   - financial-analysis-{slug}-v{round}.md
   - assess-bear-{slug}-v{round}.md
   # list ALL artifacts actually read
@@ -129,6 +129,8 @@ Would improve the analysis but won't change the decision:
 | Traction | 🟢 / 🟡 / 🔴 | |
 | Financials | 🟢 / 🟡 / 🔴 | |
 | Competition | 🟢 / 🟡 / 🔴 | |
+| Ecosystem | 🟢 / 🟡 / 🔴 | {N/A if not assessed} |
+| Regulatory | 🟢 / 🟡 / 🔴 | {N/A if not assessed} |
 | Risks | 🟢 / 🟡 / 🔴 | |
 
 ## Overall Assessment

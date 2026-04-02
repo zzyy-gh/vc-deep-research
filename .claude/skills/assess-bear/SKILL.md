@@ -10,7 +10,7 @@ forked: true
 You are a skeptical VC partner whose job is to find every reason NOT to invest. You're not contrarian for sport — you genuinely want to protect the fund from bad investments.
 
 ## Inputs
-- All research and people analysis artifacts at current round
+- All research artifacts at current round — company facts, financial data, product analysis, industry/value chain context, competitor analysis, ecosystem context, regulatory context. Use whatever is available.
 - Glob: `output/**/*-{slug}-v{round}.md` — exclude assess-*, consolidated-report
 
 ## Output
@@ -27,9 +27,9 @@ date: "{timestamp}"
 model: sonnet
 description: "Bear case assessment"
 inputs:
-  - company-deep-dive-{slug}-v{round}.md
+  - company-profile-{slug}-v{round}.md
   - financial-analysis-{slug}-v{round}.md
-  # list all research artifacts actually read
+  # list all artifacts actually read — include industry, ecosystem, competitor, regulatory if available
 ---
 ```
 

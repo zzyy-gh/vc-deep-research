@@ -197,7 +197,7 @@ Interactive end-to-end pipeline test. Ask the user which segment to test.
 
 Ask the user what to test:
 
-- **single skill** — run one skill (e.g., company-deep-dive) on a test company, verify output format and frontmatter
+- **single skill** — run one skill (e.g., company-profile) on a test company, verify output format and frontmatter
 - **critique** — run one critique skill (e.g., assess-bear) on existing research, verify it reads inputs correctly
 - **due-diligence** — run DD on an existing artifact, verify it produces a corrected version
 - **multi-skill** — run several skills in sequence, verify outputs and cross-references

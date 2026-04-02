@@ -77,9 +77,35 @@ inputs:
 - {bullet 3}
 
 ## Key Findings
-*(Sourced from company-deep-dive artifact)*
+### Company Overview
+*(Sourced from company facts)*
 
-Synthesize the most important findings from core research. Focus on what matters for the investment decision — market position, traction, differentiation, team quality. Not a summary of everything, but the findings that move the needle.
+Core facts: what the company does, founding, product, business model, traction, team. The essential context for everything that follows.
+
+### Strategic Analysis
+*(Sourced from company deep analysis, if assessed)*
+
+Vision, strategy, positioning logic, technology depth, current vs. future product. Skip if not assessed.
+
+### Industry & Market
+*(Sourced from industry analysis, if assessed)*
+
+Value chain position, market sizing, industry dynamics, timing. Skip if not assessed.
+
+### Competitive Landscape
+*(Sourced from competitor analysis, if assessed)*
+
+Key competitors, positioning comparison, competitive threats and advantages. Skip if not assessed.
+
+### Ecosystem & Dependencies
+*(Sourced from ecosystem analysis, if assessed)*
+
+Supply chain, customers, partnerships, dependencies, geographic/geopolitical risks. Skip if not assessed.
+
+### Regulatory Environment
+*(Sourced from regulatory analysis, if assessed)*
+
+Applicable regulations, compliance burden, regulatory risks and tailwinds. Skip if not assessed.
 
 ## Financial Picture
 *(Sourced from financial-analysis artifact)*
@@ -89,7 +115,7 @@ Unit economics, burn rate, revenue trajectory, capital efficiency. If pre-revenu
 ## Product & Technology
 *(Sourced from product-teardown artifact)*
 
-Product-market fit signals, technical moat (or lack thereof), platform risk, defensibility. What's the product insight and is it durable?
+Technical architecture, depth, defensibility, developer experience, roadmap signals. What's the product insight and is it durable?
 
 ## People Assessment
 *(Sourced from graham-duncan-eval and founder-market-fit artifacts, if available)*
@@ -118,6 +144,8 @@ Critical unknowns that remain. Categorize as critical / important / nice-to-know
 | Traction | {green/yellow/red} | {one-line rationale} |
 | Financials | {green/yellow/red} | {one-line rationale} |
 | Competition | {green/yellow/red} | {one-line rationale} |
+| Ecosystem | {green/yellow/red} | {N/A if not assessed} |
+| Regulatory | {green/yellow/red} | {N/A if not assessed} |
 | Risks | {green/yellow/red} | {one-line rationale} |
 
 ## Critique Summary

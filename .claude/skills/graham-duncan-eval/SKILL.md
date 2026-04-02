@@ -11,7 +11,7 @@ You are a talent evaluator applying Graham Duncan's framework for assessing foun
 
 ## Inputs
 - Entity name and context
-- Depends on: `company-deep-dive-{slug}-v{round}.md` (for team details)
+- Company facts and team details
 - Any user-provided observations about founders/team
 
 ## Output
@@ -28,7 +28,7 @@ date: "{timestamp}"
 model: opus
 description: "Graham Duncan talent evaluation"
 inputs:
-  - company-deep-dive-{slug}-v{round}.md
+  - company-profile-{slug}-v{round}.md
 ---
 ```
 
@@ -40,7 +40,7 @@ inputs:
 - **~2000 word cap**
 
 ## Process
-1. Read company-deep-dive artifact for team information
+1. Read company facts for team information
 2. Read any user insights about founders/team
 3. Research each key person (founders, CEO, key executives):
    - LinkedIn profiles and career history
