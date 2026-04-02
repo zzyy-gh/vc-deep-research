@@ -18,18 +18,22 @@ You are transforming a VC investment memo into presentation slides for the inves
 **Optional:**
 - Additional notes or supplementary materials from user
 - Custom investment criteria framework (defaults to standard 6-criteria scorecard)
-- Rendering target: `markdown-only` | `pptx` | `canva` (default: `markdown-only`)
+- Rendering target: `markdown-only` | `pptx` (default: `markdown-only`)
 
 ## Output
 
 ### Step 1: Slide Spec (always produced)
 Write to: `output/investment-memo/investment-memo-{slug}-v{round}.md`
 
-### Step 2: Rendered deck (if requested)
+### Step 2: Slide Advisory (always produced alongside slide spec)
+Write to: `output/investment-memo/investment-memo-{slug}-v{round}-advisory.md`
+
+A companion document that advises how to strengthen the presentation. This is where the skill goes BEYOND the memo — suggesting improvements, flagging issues, recommending visuals, and proposing appendix content with research where needed. The slide spec stays faithful to the memo; the advisory is where critical thinking happens.
+
+### Step 3: Rendered deck (if requested)
+<!-- TODO: style guidelines and example decks to be added in assets/ -->
 - PPTX: `output/investment-memo/investment-memo-{slug}-v{round}.pptx`
-  - Run: `python .claude/skills/investment-memo/render-pptx.py <slide-spec-path> <output-path>`
-  - Renderer reads style from: `.claude/skills/investment-memo/assets/style-pptx.md`
-- Canva: via Canva MCP (future), style from `assets/style-canva.md`
+  - Renderer reads style and examples from `assets/`
 
 Frontmatter:
 ```yaml
@@ -520,17 +524,15 @@ The skill produces the slide-spec markdown. Rendering to PPTX/Canva/etc is handl
 1. The slide-spec markdown (content + structure)
 2. A style template from `assets/` (visual styling — fonts, colors, sizes, layout rules)
 
-Style templates are renderer-specific markdown files in `assets/`:
-- `assets/style-pptx.md` — PPTX rendering style (python-pptx)
-- `assets/style-canva.md` — Canva rendering style (future)
+Style templates and example decks live in `assets/`.
 
 This separation means:
 - Changing content/structure → edit SKILL.md
 - Changing visual style → edit the style template in assets/
-- Adding a new output format → add a new renderer + style template
 
 ## Process
 
+### Slide Spec
 1. Read the memo file (handle PDF, DOCX, MD, HTML input)
 2. Extract all content and mentally map each piece to the slide structure
 3. Determine which optional slides have sufficient memo content to justify inclusion
@@ -539,9 +541,70 @@ This separation means:
 6. **Verify**: every slide title is sentence-form (except criteria + dividers)
 7. **Verify**: financial numbers match memo exactly (cross-check all figures)
 8. Write the slide-spec markdown file
-9. If rendering requested, run the appropriate renderer script
+
+### Slide Advisory
+9. Review the slide spec critically — as an experienced IC presenter, not just a formatter
+10. For each slide, assess: does the audience understand THIS before moving to the NEXT?
+11. Identify where visuals (charts, diagrams, matrices) would replace or strengthen text
+12. Flag potential IC questions that the deck doesn't address
+13. Propose appendix items — research independently where needed (this is the one place the skill goes beyond the memo)
+14. Write the advisory file
+
+### Rendering
+15. If rendering requested, run the appropriate renderer
+
+## Slide Advisory Template
+
+```markdown
+# {Company Name} — Slide Advisory
+
+## Narrative Flow Assessment
+How well does the deck build the IC's understanding slide by slide?
+- Does the story arc work? (problem → solution → proof → ask)
+- Where might the audience lose the thread?
+- Which slides could be reordered for better impact?
+- Are there logical leaps that need bridging slides?
+
+## Visual Enhancement Recommendations
+For each slide where a visual would strengthen the message:
+- **S{N}: {slide title}**
+  - Current: {what's there now — text, bullets, table}
+  - Recommended: {chart type / diagram / visual and why}
+  - Example: {brief description of what the visual would show}
+
+Common opportunities:
+- Market sizing → waterfall or funnel chart (TAM → SAM → SOM)
+- Revenue trajectory → line chart with projections
+- Competitive positioning → 2x2 matrix or radar chart
+- Timeline/milestones → horizontal timeline graphic
+- Unit economics → stacked bar or bridge chart
+- Team → headshot grid with key credentials
+
+## Potential IC Questions & Gaps
+Questions an IC member might ask that the deck doesn't address:
+- {Question} — which slide should address this, what's missing
+- {Question} — ...
+
+## Content Strengthening
+Specific slides where the argument could be stronger:
+- **S{N}: {slide title}** — {what's weak and how to fix it}
+- ...
+
+## Appendix Recommendations
+Additional slides that would strengthen the deck. Research independently where the memo doesn't provide the data:
+- **Proposed: {slide title}** — {what it would contain, why it matters}
+  - Source: {memo section / independent research needed}
+- ...
+
+## Data Accuracy Flags
+Any numbers, claims, or assertions in the memo that seem inconsistent, outdated, or need verification:
+- {claim} — {concern}
+- ...
+```
 
 ## Quality Checklist
+
+### Slide Spec
 - [ ] Every content slide title is sentence-form takeaway (not a label)
 - [ ] No content invented beyond the memo
 - [ ] All section tags are consistent with the tag vocabulary
@@ -552,3 +615,10 @@ This separation means:
 - [ ] Executive summary is self-contained (readable as a standalone one-pager)
 - [ ] Source citations present on slides with external data claims
 - [ ] Investment criteria assessments sourced only from memo content
+
+### Slide Advisory
+- [ ] Narrative flow assessment considers audience perspective, not just content completeness
+- [ ] Visual recommendations are specific (chart type, what data to show), not generic ("add a chart")
+- [ ] IC questions are realistic (things a partner would actually ask)
+- [ ] Appendix recommendations include research where the memo has gaps
+- [ ] Data accuracy flags cite specific numbers/claims, not vague concerns
