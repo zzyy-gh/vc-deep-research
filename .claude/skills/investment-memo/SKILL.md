@@ -31,9 +31,9 @@ Write to: `output/investment-memo/investment-memo-{slug}-v{round}-advisory.md`
 A companion document that advises how to strengthen the presentation. This is where the skill goes BEYOND the memo — suggesting improvements, flagging issues, recommending visuals, and proposing appendix content with research where needed. The slide spec stays faithful to the memo; the advisory is where critical thinking happens.
 
 ### Step 3: Rendered deck (if requested)
-<!-- TODO: style guidelines and example decks to be added in assets/ -->
 - PPTX: `output/investment-memo/investment-memo-{slug}-v{round}.pptx`
-  - Renderer reads style and examples from `assets/`
+- **On-the-fly rendering**: No pre-built script. The agent reads the slide-spec markdown + `assets/style-pptx.md` and writes a tailored python-pptx script for the specific deck, then runs it. This adapts to each deck's content and layout patterns rather than relying on a rigid parser.
+- Style guide and example decks in `assets/` inform the agent's rendering decisions.
 
 Frontmatter:
 ```yaml
@@ -520,15 +520,14 @@ If the memo is short or lacks detail for certain sections:
 
 ## Rendering
 
-The skill produces the slide-spec markdown. Rendering to PPTX/Canva/etc is handled by separate renderer scripts that read:
-1. The slide-spec markdown (content + structure)
-2. A style template from `assets/` (visual styling — fonts, colors, sizes, layout rules)
+The skill produces the slide-spec markdown. Rendering to PPTX is done on the fly — the agent reads the slide-spec + style guide from `assets/` and writes a tailored python-pptx script for each deck.
 
-Style templates and example decks live in `assets/`.
+Style templates and example decks live in `assets/`:
+- `assets/style-pptx.md` — visual style config (colors, fonts, spacing, layout rules)
 
 This separation means:
 - Changing content/structure → edit SKILL.md
-- Changing visual style → edit the style template in assets/
+- Changing visual style → edit `assets/style-pptx.md`
 
 ## Process
 
@@ -551,7 +550,7 @@ This separation means:
 14. Write the advisory file
 
 ### Rendering
-15. If rendering requested, run the appropriate renderer
+15. If rendering requested, read `assets/style-pptx.md`, write a tailored python-pptx script for this deck, and run it
 
 ## Slide Advisory Template
 
