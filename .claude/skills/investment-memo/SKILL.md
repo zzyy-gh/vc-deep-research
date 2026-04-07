@@ -7,49 +7,41 @@ forked: true
 
 # Investment Memo to Slides
 
-You are transforming a VC investment memo into presentation slides for the investment committee. The memo is the **single source of truth** — no additional research, no new analysis. Extract, restructure, and present what's in the memo.
+Transform a VC investment memo into IC presentation slides. The memo is the **single source of truth** — extract and restructure, don't research or invent.
 
-**Generalization over reproduction.** The guide and reference slides capture the **structural logic** of each layout — not deal-specific details. When applying them, extract the reusable pattern (two-column comparison, data table with callout) and adapt it to the current memo's content. Don't try to reproduce the reference deck pixel-by-pixel. Find the right level of constraint: too loose → inconsistent output, too tight → only works for one deal. Simplify iteratively until the pattern reliably produces correct, professional slides for any memo.
+The guide and reference deck capture the **structural logic** of each layout, not deal-specific details. Adapt the patterns to the memo's content; don't reproduce the reference pixel-by-pixel.
 
 ## Inputs
 
-**Required:**
-- Investment memo file (PDF, DOCX, MD, or HTML) — provided by user
-- Entity name and deal codename (e.g., "eBots", "Project Robot")
+- Investment memo file (PDF, DOCX, MD, HTML)
+- Entity name and deal codename
+- Optional: supplementary notes, custom criteria framework
 
-**Optional:**
-- Additional notes or supplementary materials from user
-- Custom investment criteria framework (defaults to standard 6-criteria scorecard)
+## Assets
 
-## Architecture
+| File                      | Role                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `assets/guide.md`         | Single reference for building a deck — global config, design principles, per-slide specs, narrative arc, checklists |
+| `assets/reference.pptx`   | Slide templates cloned by the renderer                                                                              |
+| `assets/examples/`        | Reference source materials — example memo and reference decks the templates were derived from                       |
+| `assets/aiconic-logo.jpg` | Firm logo embedded in title slide                                                                                   |
 
-| File | Role | What to expect |
-|------|------|----------------|
-| **`assets/guide.md`** | Slide guide | Everything about what to present and how. Global config, design principles, per-slide specs (content handling + design rules + shape mapping), narrative arc, checklists. The single reference for building a deck. |
-| **`assets/reference.pptx`** | Slide templates | 14 slides: 4 structural (title, exec summary, divider, appendix) + 1 S4 base + 8 S4 patterns + 1 investment criteria. The renderer clones slides from this file by index. |
-| **`assets/eBots_presentation.pptx`** | Example output | Complete 26-slide eBots deck. Visual reference of a finished deck. Not used by the renderer. |
-| **`assets/aiconic-logo.jpg`** | Firm logo | Embedded in reference.pptx title slide. |
-| **`assets/examples/`** | Worked examples | Source memo → slide spec pairs showing the complete input→output transformation. |
+## Outputs
 
-## Output
+The skill always produces a PPTX. The slide-spec markdown is an intermediate observability artifact — generated so the deck composition can be reviewed, diffed, and corrected before the PPTX is built. It also doubles as the agent's thinking surface while planning.
 
-The skill always produces a PPTX as its final output. The slide-spec markdown (Step 1) is an intermediate artifact written *with the PPTX in mind* — it scaffolds the content and pattern decisions that the renderer needs. The advisory (Step 2) and the final PPTX (Step 3) all flow from it.
+1. **Slide spec** → `output/investment-memo/investment-memo-{slug}-v{round}.md` — structured markdown listing each slide with its reference template, pattern choice, design plan, content, and notes. For observability and as the agent's planning record.
+2. **Advisory** → `output/investment-memo/investment-memo-{slug}-v{round}-advisory.md` — companion doc that goes BEYOND the memo: narrative critique, visual recommendations, IC question gaps, appendix proposals, data flags. The spec stays faithful; the advisory is where critical thinking happens.
+3. **PPTX** (final) → `output/investment-memo/investment-memo-{slug}-v{round}.pptx` — built using `document-skills:pptx` techniques to clone slides from `assets/reference.pptx` and fill them per the slide spec.
 
-### Step 1: Slide Spec (intermediate)
-Write to: `output/investment-memo/investment-memo-{slug}-v{round}.md`
+Advisory frontmatter:
 
-A structured markdown file mapping each slide of the deck — its reference template, content, pattern, and shape fills. Generated to drive PPTX rendering, not as a standalone deliverable.
-
-### Step 2: Slide Advisory
-Write to: `output/investment-memo/investment-memo-{slug}-v{round}-advisory.md`
-
-Frontmatter:
 ```yaml
 ---
 entity: "{name}"
 skill: investment-memo
 type: slide-advisory
-round: {round}
+round: { round }
 date: "{timestamp}"
 model: opus
 description: "Slide deck advisory — improvements, visuals, appendix proposals"
@@ -58,127 +50,102 @@ inputs:
 ---
 ```
 
-A companion document that advises how to strengthen the presentation. This is where the skill goes BEYOND the memo — suggesting improvements, flagging issues, recommending visuals, and proposing appendix content with research where needed. The slide spec stays faithful to the memo; the advisory is where critical thinking happens.
-
-### Step 3: PPTX (final output)
-- PPTX: `output/investment-memo/investment-memo-{slug}-v{round}.pptx`
-- The agent invokes `document-skills:pptx` to clone slides from `assets/reference.pptx` and fill them per the slide spec from Step 1. See [Rendering](#rendering) for details.
-
 ## Slide Spec Format
 
-Each slide is a block starting with `## S{N}: {slide_title}` and containing metadata in a `<!-- slide -->` comment, followed by the slide content in markdown.
+The slide spec is an **observability artifact** — for the human reviewer to see what the agent decided and for the agent itself to think on paper. It captures three things per slide: what reference slide is being used, what content goes on it, and what the agent was thinking (design choices, partial data, handoffs, reframing decisions).
+
+Each slide is a `## S{N}: {title}` block with a `<!-- slide -->` metadata comment, followed by **Design plan**, **Content**, and (optional) **Notes**.
 
 ```
-## S1: Investment Memo: Project Robot
-<!-- slide
-slide: S1
--->
-
-# Investment Memo: Project Robot
-_March 2025_
-```
-
-### Metadata fields
-
-- `slide` — Which reference slide to clone: `S1`, `S2`, `S3`, `S4`, `S5`, `S6`. See guide.md for what each does.
-- `pattern` — For S4 content slides only. Which body layout to use: `standard-content`, `two-column`, `highlights`, `testimonials`, `sidebar`, `timeline`, `matrix`, `data-table`. See guide.md for when to use each.
-- `tag` — Section pill badge (e.g., "Market", "Company"). See tag vocabulary in guide.md.
-- `source` — Source citation line. Use numbered references: `/1 description /2 description`
-- `note` — Footnote line
-
-Example:
-```
+## S7: Market Dynamics
 <!-- slide
 slide: S4
 pattern: two-column
-tag: "Market"
-source: "/1 Global Workforce Crisis report"
 -->
+
+**Design plan:**
+Two-column reframe of the memo's flat driver list — supply-side constraints
+left (icon-text x3), demand-side pull right (chart-caption with TAM growth).
+
+**Content:**
+
+- Title: "Labor supply is shrinking while demand for fulfillment is accelerating"
+- Left pill: SUPPLY CONSTRAINTS
+  - Aging warehouse workforce (avg age 46, +8 yrs since 2010)
+  - 70% turnover in fulfillment roles
+  - Immigration tightening in key US/EU markets
+- Right pill: DEMAND PULL
+  - Chart: e-commerce fulfillment volume 2020→2030 (+12% CAGR)
+  - Caption: "Fulfillment volume in billion units"
+
+**Notes:**
+
+- Reframed three flat memo bullets into supply/demand to make the dynamic explicit
+- Source numbers from memo §2.1 and §2.3
 ```
+
+**Metadata fields:**
+
+- `slide` — reference slide to clone (`S1`–`S6`)
+- `pattern` — for S4 only; either a named pattern from guide.md's Reference Slide Index, or a short freeform description if the agent is composing something new (e.g. `pattern: custom — chevron flow above a comparison table`). The agent has design autonomy; new patterns are valid.
+
+The full vocabulary for `slide` and the named patterns lives in `assets/guide.md` — guide.md is the source of truth, this skill file just describes the spec format.
+
+**Section purposes:**
+
+- **Design plan** — one or two sentences on _what shape_ the slide takes and _why_ (pattern choice, reframe, composition decisions). Helps the reviewer (and the agent itself) see the decision before reading the content.
+- **Content** — the actual slide content the renderer will fill in: title, bullets, table rows, captions, headers. Concrete, ready to drop into the PPTX.
+- **Notes** _(optional)_ — anything else worth recording: partial data and what was left as a handoff template, sources within the memo, things the agent considered and rejected, gaps it had to neutral-language around.
 
 ## Process
 
-Read `assets/guide.md` before starting.
+Read `assets/guide.md` first — it's the lens for everything below.
 
-### Step A: Preparation
+1. **Read the memo fully.** First pass: structure and emphasis. Second pass: match each section to a slide and (for S4) a pattern.
+2. **Assess density.** Thin → fold into adjacent slide. Normal → one slide. Dense → split or use a high-density pattern.
+3. **Compose the deck.** S1 first, S2 second, S5 near end, S6 last. Group content per the narrative arc in guide.md, with S3 dividers between sections. Pick S4 patterns by content shape. Fallback: S4 `standard-content`.
+4. **Verify.** Run the checklist in guide.md.
+5. **Build the PPTX.** Using `document-skills:pptx` techniques, clone slides from `assets/reference.pptx` and fill the shapes per the slide spec. Cross-reference the guide and memo as needed for full content — the spec is the planning overview, not an exhaustive transcript.
 
-Read the guide. Understand what slides exist (S1-S6), what content each handles, and the available S4 patterns. This is the lens through which you'll read the memo.
-
-### Step B: Memo Analysis
-
-Read the memo fully. With the guide in mind, match memo content to slides:
-
-1. **First pass** — read without mapping. Note section structure, key data points, where depth vs. brevity signals importance.
-2. **Second pass** — match content to slides. For each section or topic in the memo, identify which slide (and for S4, which pattern) best presents it. Some content maps directly (deal terms → S4 data-table). Some is synthesized from scattered fragments (timeline from dates throughout the memo, competitive matrix from descriptions across sections).
-3. **Assess density** — thin content (1-2 points): fold into an adjacent slide. Normal (3-6 points): one slide. Dense (7+ points): split across slides or use a high-density pattern.
-
-### Step C: Deck Composition
-
-1. Place structural slides in fixed positions: S1 first, S2 second, S5 near end, S6 last.
-2. Group matched content into sections per the narrative arc in guide.md. Add S3 divider slides before each section.
-3. For each S4 content slide, pick the pattern that matches the content's shape (guide.md describes what each pattern handles and when to use it).
-4. Handle unmatched content — use S4 `standard-content` as fallback, pick the closest tag, place logically in the arc.
-
-### Step D: Verification
-
-Run the checklist in guide.md (content, design, and process sections).
-
-## Slide Advisory Template
+## Advisory Template
 
 ```markdown
-# {Company Name} — Slide Advisory
+# {Company} — Slide Advisory
 
-## Narrative Flow Assessment
-How well does the deck build the IC's understanding slide by slide?
-- Does the story arc work? (problem → solution → proof → ask)
-- Where might the audience lose the thread?
-- Which slides could be reordered for better impact?
-- Are there logical leaps that need bridging slides?
+## Narrative Flow
 
-## Visual Enhancement Recommendations
-For each slide where a visual would strengthen the message:
-- **S{N}: {slide title}**
-  - Current: {what's there now — text, bullets, table}
-  - Recommended: {chart type / diagram / visual and why}
-  - Example: {brief description of what the visual would show}
+Story arc, where the audience might lose the thread, reorder suggestions, missing bridges.
 
-## Potential IC Questions & Gaps
-Questions an IC member might ask that the deck doesn't address:
-- {Question} — which slide should address this, what's missing
+## Visual Enhancements
+
+- **S{N}: {title}** — Current: {what's there}. Recommended: {visual + why}.
+
+## IC Questions & Gaps
+
+- {question} — which slide should address it, what's missing.
 
 ## Content Strengthening
-Specific slides where the argument could be stronger:
-- **S{N}: {slide title}** — {what's weak and how to fix it}
 
-## Appendix Recommendations
-Additional slides that would strengthen the deck:
-- **Proposed: {slide title}** — {what it would contain, why it matters}
-  - Source: {memo section / independent research needed}
+- **S{N}: {title}** — what's weak and how to fix it.
 
-## Data Accuracy Flags
-Numbers, claims, or assertions that seem inconsistent, outdated, or need verification:
-- {claim} — {concern}
+## Appendix Proposals
+
+- **{title}** — what it contains, why it matters, source.
+
+## Data Flags
+
+- {claim} — concern.
 ```
 
-## Rendering
+## Building the PPTX
 
-The skill produces the slide-spec markdown. Rendering to PPTX is delegated to **`document-skills:pptx`** — Claude's official PPTX skill, which knows how to clone slides, manipulate shapes, preserve theme/layout inheritance, and avoid the common corruption pitfalls (duplicate IDs, broken rels, missing namespaces).
+The agent works on the PPTX directly using `document-skills:pptx` techniques — cloning slides, filling shapes, preserving layout inheritance, and handling the OOXML edge cases (auto_size, duplicate cNvPr IDs, layout rels, font inheritance). Both skills sit in the same context; there is no handoff.
 
-**How it works:**
-1. The agent reads the slide spec, `assets/guide.md`, and `assets/reference.pptx`
-2. The agent invokes `document-skills:pptx` with the task: clone the appropriate reference slide for each deck slide, fill the editable shapes per the slide spec, then remove the original 17 reference slides from the output file
-3. The agent saves the resulting PPTX to `output/investment-memo/investment-memo-{slug}-v{round}.pptx`
+Working materials, all available throughout:
 
-**Why delegate to document-skills:pptx:** It is maintained by Claude, handles the OOXML edge cases that this skill kept hitting (auto_size text frames, duplicate cNvPr IDs, layout rel retargeting, font size inheritance), and frees this skill to focus on the *content* mapping rather than the *file format* mechanics.
+- `assets/reference.pptx` — clone slides from this
+- `assets/guide.md` — pattern vocabulary, design config, narrative arc
+- The memo — source content
+- The slide spec md — the planning overview, written first as the deck's blueprint
 
-**What this skill provides as input to document-skills:pptx:**
-- `assets/reference.pptx` — the template to clone from
-- `assets/guide.md` — global config (colors, font sizes, spacing), shape positions, pattern descriptions
-- The slide spec markdown — the per-slide content and pattern selection
-
-**What document-skills:pptx is responsible for:**
-- Opening reference.pptx and cloning slides by index
-- Filling editable shapes (placeholders, text boxes, tables) with content
-- Preserving theme, layout inheritance, and shape styling
-- Producing a clean PPTX that opens in PowerPoint without repair prompts
-
+For each spec entry, clone the right reference slide, fill the editable shapes (cross-referencing the guide for pattern detail and the memo for full content where the spec is just an overview), remove the original 17 reference slides at the end, and save to `output/investment-memo/investment-memo-{slug}-v{round}.pptx`.
