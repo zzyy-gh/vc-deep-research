@@ -21,7 +21,6 @@ Transform a VC investment memo into IC presentation slides. The memo is the **si
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `assets/guide.md`         | Single reference for building a deck — global config, design principles, per-slide specs, narrative arc, checklists                                                       |
 | `assets/reference.pptx`   | Slide templates cloned by the renderer                                                                                                                                    |
-| `assets/clone_slide.py`   | Post-save safety net — `validate_pptx_rels(path)` raises if any slide rId is dangling. Read-only, never modifies anything. Render scripts must call it after `prs.save()` |
 | `assets/examples/`        | Reference source materials — example memo and reference decks the templates were derived from                                                                             |
 | `assets/aiconic-logo.jpg` | Firm logo embedded in title slide                                                                                                                                         |
 
@@ -30,7 +29,7 @@ Transform a VC investment memo into IC presentation slides. The memo is the **si
 The PPTX is the deliverable. Everything else is the agent's working trail. All artifacts live in `output/investment-memo/`, produced in this order:
 
 1. **Slide spec** → `investment-memo-{slug}-v{round}.md` — content brief for the renderer: takeaway story + facts per slide. Written first.
-2. **PPTX** → `investment-memo-{slug}-v{round}.pptx` — the deliverable. Designed and built by `document-skills:pptx` per Process step 5. Must pass `validate_pptx_rels` before the round closes.
+2. **PPTX** → `investment-memo-{slug}-v{round}.pptx` — the deliverable. Designed and built by `document-skills:pptx` per Process step 5.
 3. **Advisory** → `investment-memo-{slug}-v{round}-advisory.md` — written _after_ the deck exists, as a handoff to the human reviewer. Critical thinking _beyond_ the memo: narrative flow, IC question gaps, content strengthening, data flags, appendix proposals.
 
 Advisory frontmatter:
@@ -57,7 +56,6 @@ The spec is a **content brief** for the renderer: *what story each slide must te
 ## S7: Market Dynamics
 <!-- slide
 slide: S4
-pattern: two-column
 -->
 
 **Story:** Labor supply is shrinking while demand for fulfillment accelerates — the squeeze is the "why now."
@@ -81,10 +79,9 @@ pattern: two-column
 
 **Metadata fields:**
 
-- `slide` — reference slide to clone (`S1`–`S6`)
-- `pattern` — for S4 only; an *advisory* hint at the content's shape, drawn from guide.md's Reference Slide Index (e.g. `two-column`, `matrix`, `pipeline`) or a short freeform description (e.g. `pattern: custom — chevron flow above a comparison table`). The renderer is free to override based on visual judgment.
+- `slide` — reference slide type to clone (`S1`–`S6`). For body content, use `S4` and let the renderer pick the pattern.
 
-The full vocabulary for `slide` and the named patterns lives in `assets/guide.md` — guide.md is the source of truth, this skill file just describes the spec format.
+The spec does not prescribe S4 patterns — pattern selection is owned by the renderer in step 5. The vocabulary for `slide` lives in `assets/guide.md`.
 
 **Section purposes:**
 
@@ -98,37 +95,23 @@ Read `assets/guide.md` first — it's the lens for everything below.
 
 1. **Read the memo fully.** First pass: structure and emphasis. Second pass: match each section to a slide and decide its takeaway story.
 2. **Assess density.** Thin → fold into adjacent slide. Normal → one slide. Dense → split. Flag dense slides in Notes so the renderer can re-split if needed.
-3. **Compose the deck.** S1 first, S2 second, S5 near end, S6 last. Group content per the narrative arc in guide.md, with S3 dividers between sections. Suggest an S4 `pattern:` hint per slide based on content shape — the renderer can override.
+3. **Compose the deck.** S1 first, S2 second, S5 near end, S6 last. Group content per the narrative arc in guide.md, with S3 dividers between sections. **S3 section names come verbatim from the Narrative Arc** — do not paraphrase the existing names. New section names may be *added* if the memo's structure genuinely needs one the arc doesn't cover. Pattern selection for S4 is the renderer's job, not the spec-writer's — leave it to step 5.
 4. **Sanity-check the spec.** Run the checklist in guide.md before handing off. Story sentences are takeaways, not topics.
-5. **Hand off to `document-skills:pptx` as the designer.** The renderer owns visual composition of S4. Pass it the spec md, the original memo, and `assets/` (reference.pptx, guide.md, clone_slide.py) — let it design freely. Two rules are non-negotiable: **fixed slides (S1, S2, S3, S5, S6) clone the reference exactly**; **S4 is an open canvas** where the renderer can override the spec's `pattern:` hint, generate charts, and lift components from any reference slide. Validate with `validate_pptx_rels(OUT)` before closing.
-6. **Write the advisory.** _After_ the PPTX exists, read the rendered deck and write `investment-memo-{slug}-v{round}-advisory.md`. Focus on narrative flow, IC question gaps, content strengthening, data flags, and appendix proposals — not on second-guessing the renderer's visual choices.
+5. **Hand off to `document-skills:pptx`** with the spec md, the memo, and `assets/`. The renderer owns build and QA, but must read and respect `assets/guide.md` as the design contract.
+6. **Write the advisory.** _After_ the PPTX exists, read the rendered deck and write `investment-memo-{slug}-v{round}-advisory.md`. Two sections: deck-wide observations (Overall) and per-slide notes (Per Slide) — not a place to second-guess the renderer's visual choices.
 
 ## Advisory Template
 
 ```markdown
 # {Company} — Slide Advisory
 
-## Narrative Flow
+## Overall
 
-Story arc, where the audience might lose the thread, reorder suggestions, missing bridges.
+Deck-wide observations: narrative flow, where the audience might lose the thread, reorder suggestions, cross-slide IC questions, and proposed new slides (appendix items, missing bridges, anything not yet in the deck).
 
-## Slide Critique
+## Per Slide
 
-- **S{N}: {title}** — where the *rendered slide* needs a human-finishing visual pass (layout, spacing, chart styling). Skip if the renderer nailed it.
+One block per slide that needs attention. Cover content, design, and data flags together. Skip slides that nailed it.
 
-## IC Questions & Gaps
-
-- {question} — which slide should address it, what's missing.
-
-## Content Strengthening
-
-- **S{N}: {title}** — where the *content itself* is weak (bullet doesn't hit hard, number lacks context, argument needs sharpening). Distinct from Slide Critique: this is about what the slide says, not how it looks.
-
-## Appendix Proposals
-
-- **{title}** — what it contains, why it matters, source.
-
-## Data Flags
-
-- {claim} — concern.
+- **S{N}: {title}** — what's weak or worth flagging. Mix freely: content sharpening, layout/visual finishing notes, data concerns, bolder framing, missing context.
 ```

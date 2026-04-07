@@ -173,7 +173,7 @@ section: "{section name}"
 
 **Good for:** Section transitions inside the deck. Use one before each major section (Market, Product, Team, etc.). Typically 3-5 times per deck. Skip if a section has only 1-2 content slides — fold those into an adjacent section instead.
 
-**Content structure:** Section names come from the narrative arc groupings (e.g., "Market", "Product, Traction & Revenue Model", "Team, Financials & Valuation").
+**Content structure:** Section names are taken **verbatim** from the Narrative Arc groupings — "Market", "Product", "Team", "Deal". Do not paraphrase. New section names may be added if the memo's structure needs one the arc doesn't cover.
 
 ---
 
@@ -181,11 +181,11 @@ section: "{section name}"
 
 **Type:** adaptive
 
-S4 is the body of the deck — where most memo content lands. It provides a title bar and a free body area; the agent picks one of the patterns below as the starting shape.
+S4 is the body of the deck — where most memo content lands. It provides a title bar and a free body area; the renderer picks one of the patterns below at render time based on the content's shape.
 
-**Slide spec metadata:** Always `slide: S4` plus a `pattern:` field naming the reference slide to clone.
+**Slide spec metadata:** `slide: S4`. The spec does not pre-assign a pattern — pattern selection is the renderer's call, made by reading the content brief and consulting the Content Catalog and Reference Slide Index below.
 
-The Content Catalog below is an extension of S4 — it organizes memo content by type and tells you what to extract for each. Pattern selection is the agent's call based on the content's shape.
+The Content Catalog below is an extension of S4 — it organizes memo content by type and tells the renderer what to extract for each.
 
 ---
 
@@ -600,7 +600,8 @@ How slides compose into a deck:
 Title → Executive Summary
   Divider: Market         → market slides
   Divider: Product        → product, traction, competitive, timeline slides
-  Divider: Team & Deal    → team, financials, valuation, cap table, terms slides
+  Divider: Team           → team
+  Divider: Deal           → financials, valuation, cap table, terms slides
 Investment Criteria
 Appendix (optional)       → comps, overflow
 ```
