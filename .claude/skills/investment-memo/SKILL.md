@@ -20,7 +20,6 @@ You are transforming a VC investment memo into presentation slides for the inves
 **Optional:**
 - Additional notes or supplementary materials from user
 - Custom investment criteria framework (defaults to standard 6-criteria scorecard)
-- Rendering target: `markdown-only` | `pptx` (default: `markdown-only`)
 
 ## Architecture
 
@@ -34,10 +33,14 @@ You are transforming a VC investment memo into presentation slides for the inves
 
 ## Output
 
-### Step 1: Slide Spec (always produced)
+The skill always produces a PPTX as its final output. The slide-spec markdown (Step 1) is an intermediate artifact written *with the PPTX in mind* — it scaffolds the content and pattern decisions that the renderer needs. The advisory (Step 2) and the final PPTX (Step 3) all flow from it.
+
+### Step 1: Slide Spec (intermediate)
 Write to: `output/investment-memo/investment-memo-{slug}-v{round}.md`
 
-### Step 2: Slide Advisory (always produced alongside slide spec)
+A structured markdown file mapping each slide of the deck — its reference template, content, pattern, and shape fills. Generated to drive PPTX rendering, not as a standalone deliverable.
+
+### Step 2: Slide Advisory
 Write to: `output/investment-memo/investment-memo-{slug}-v{round}-advisory.md`
 
 Frontmatter:
@@ -57,10 +60,9 @@ inputs:
 
 A companion document that advises how to strengthen the presentation. This is where the skill goes BEYOND the memo — suggesting improvements, flagging issues, recommending visuals, and proposing appendix content with research where needed. The slide spec stays faithful to the memo; the advisory is where critical thinking happens.
 
-### Step 3: Render script + PPTX (if requested)
-- Script: `output/investment-memo/render-{slug}-v{round}.py`
+### Step 3: PPTX (final output)
 - PPTX: `output/investment-memo/investment-memo-{slug}-v{round}.pptx`
-- The agent writes a tailored python-pptx script for this specific deck, saves it to output, then runs it. The script is a first-class artifact — it can be re-run, debugged, or tweaked by the user. See [Rendering](#rendering) for details.
+- The agent invokes `document-skills:pptx` to clone slides from `assets/reference.pptx` and fill them per the slide spec from Step 1. See [Rendering](#rendering) for details.
 
 ## Slide Spec Format
 
@@ -160,29 +162,23 @@ Numbers, claims, or assertions that seem inconsistent, outdated, or need verific
 
 ## Rendering
 
-The skill produces the slide-spec markdown. Rendering to PPTX is done **on the fly** — the agent reads the slide spec + guide.md + reference.pptx and writes a tailored python-pptx script for this specific deck. The script is saved as a first-class artifact alongside the slide spec, then executed to produce the PPTX.
+The skill produces the slide-spec markdown. Rendering to PPTX is delegated to **`document-skills:pptx`** — Claude's official PPTX skill, which knows how to clone slides, manipulate shapes, preserve theme/layout inheritance, and avoid the common corruption pitfalls (duplicate IDs, broken rels, missing namespaces).
 
 **How it works:**
-1. The agent reads the slide spec and guide.md (global config, shape mapping, pattern specs)
-2. The agent opens reference.pptx to study the exact shapes, positions, fonts, and colors
-3. The agent writes a python-pptx script (`output/investment-memo/render-{slug}-v{round}.py`) that: opens reference.pptx as a base (inheriting theme), clones the appropriate reference slide for each deck slide, fills content, removes the original 14 reference slides, and saves
-4. The agent runs the script to produce the PPTX
+1. The agent reads the slide spec, `assets/guide.md`, and `assets/reference.pptx`
+2. The agent invokes `document-skills:pptx` with the task: clone the appropriate reference slide for each deck slide, fill the editable shapes per the slide spec, then remove the original 17 reference slides from the output file
+3. The agent saves the resulting PPTX to `output/investment-memo/investment-memo-{slug}-v{round}.pptx`
 
-**Why on-the-fly:** The guide provides strong constraints (slide types, patterns, shape positions, font sizes, color palette), so output is consistent across runs. But each deck's content is unique — table dimensions, bullet counts, text lengths all vary. A tailored script handles this adaptation while the guide prevents drift.
+**Why delegate to document-skills:pptx:** It is maintained by Claude, handles the OOXML edge cases that this skill kept hitting (auto_size text frames, duplicate cNvPr IDs, layout rel retargeting, font size inheritance), and frees this skill to focus on the *content* mapping rather than the *file format* mechanics.
 
-**Why save the script:** The render script is reproducible (re-run to regenerate the PPTX), debuggable (inspect what went wrong), and tweakable (user can adjust fonts, spacing, or content without re-running the full skill). It also serves as a worked example for future decks.
+**What this skill provides as input to document-skills:pptx:**
+- `assets/reference.pptx` — the template to clone from
+- `assets/guide.md` — global config (colors, font sizes, spacing), shape positions, pattern descriptions
+- The slide spec markdown — the per-slide content and pattern selection
 
-```
-Slide Spec (.md) + guide.md + reference.pptx
-              ↓
-    Agent writes render-{slug}-v{round}.py
-              ↓
-    Script runs → .pptx
-```
+**What document-skills:pptx is responsible for:**
+- Opening reference.pptx and cloning slides by index
+- Filling editable shapes (placeholders, text boxes, tables) with content
+- Preserving theme, layout inheritance, and shape styling
+- Producing a clean PPTX that opens in PowerPoint without repair prompts
 
-**Resources the script should use:**
-- `assets/reference.pptx` — open as base to inherit theme/layouts. Pre-cleaned: every slide has zero non-layout relationships. All images (logos) live on slide layouts and are inherited automatically. Safe to clone and delete any slide via pure XML deep-copy.
-- `assets/guide.md` — global config (colors, fonts, spacing), shape positions, pattern specs
-- `assets/eBots_presentation.pptx` — visual reference for how a finished deck should look
-
-**Cloning reference slides:** The script clones slides from reference.pptx by deep-copying shape XML elements from the source slide's spTree into a new slide created from the same layout. No special handling needed — all shapes (text boxes, tables, groups, connectors) copy cleanly. After building all deck slides, remove the original 14 reference slides from the presentation.
