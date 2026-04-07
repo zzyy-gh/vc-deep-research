@@ -55,7 +55,7 @@ slide: { 13.3in × 7.5in, 16:9 }
 
 ### Content Discipline
 
-The memo is the source of facts — never invent numbers, names, or claims. But the agent isn't limited to the memo's *structure*: if a slide would strengthen the deck and its content lives in another file or with a human (returns table, deal terms, a comparison the memo skipped), propose it anyway. Fill what the memo supports, leave a labelled template (table skeleton, chart frame, empty shape) for the rest, and mark the handoff. A half-filled slide flagged as a handoff beats no slide — or an invented one. State gaps in neutral language, same font as normal content — never blank, never "N/A", never grayed.
+The memo is the source of facts — never invent numbers, names, or claims. But the agent isn't limited to the memo's _structure_: if a slide would strengthen the deck and its content lives in another file or with a human (returns table, deal terms, a comparison the memo skipped), propose it anyway. Fill what the memo supports, leave a labelled template (table skeleton, chart frame, empty shape) for the rest, and mark the handoff. A half-filled slide flagged as a handoff beats no slide — or an invented one. State gaps in neutral language, same font as normal content — never blank, never "N/A", never grayed.
 
 ### Design Discipline
 
@@ -131,7 +131,7 @@ Components can also be lifted from any fixed or adaptive slide — pill headers 
 
 **Good for:** The opening slide of every deck. Used once per deck, always first. The only variables are the nickname and date.
 
-**Content structure:** Entity name / codename from user input. Date from memo or current date. Format: "Investment Memo: {agenda nickname}" and "{Month Year}".
+**Content structure:** Entity name / codename from user input, else ask for it. Date from memo or current date. Format: "Investment Memo: {agenda nickname}" and "{Month Year}".
 
 ---
 
@@ -321,16 +321,16 @@ The Content Catalog below is an extension of S4 — it organizes memo content by
 
 **Content structure:** For each criterion row, write 2-4 sentences synthesizing what the memo says about that topic. Draw from all relevant sections. Do not add judgments beyond what the memo states.
 
-| Row | Key factors for Assessment (keep) | Comments (replace) |
-|-----|-----------------------------------|-------------------|
-| 0 | Strategic Fit | How investment fits fund thesis/pillars |
-| 1 | Attractiveness of Investment | (section header — leave empty) |
-| 2 | 1. Market size and scalability | Market size, growth drivers, scalability |
-| 3 | 2. Competitive edge | Moat, IP, technical differentiation |
-| 4 | 3. Team experience | Founder credentials, track record, composition |
-| 5 | 4. Revenue / profit potential | Traction proof, revenue model, growth trajectory |
-| 6 | 5. Valuation / Exit & Return | Valuation reasonableness, expected IRR/COC, exit prospects |
-| 7 | 6. Risk Mitigants | Top risks + corresponding mitigants |
+| Row | Key factors for Assessment (keep) | Comments (replace)                                         |
+| --- | --------------------------------- | ---------------------------------------------------------- |
+| 0   | Strategic Fit                     | How investment fits fund thesis/pillars                    |
+| 1   | Attractiveness of Investment      | (section header — leave empty)                             |
+| 2   | 1. Market size and scalability    | Market size, growth drivers, scalability                   |
+| 3   | 2. Competitive edge               | Moat, IP, technical differentiation                        |
+| 4   | 3. Team experience                | Founder credentials, track record, composition             |
+| 5   | 4. Revenue / profit potential     | Traction proof, revenue model, growth trajectory           |
+| 6   | 5. Valuation / Exit & Return      | Valuation reasonableness, expected IRR/COC, exit prospects |
+| 7   | 6. Risk Mitigants                 | Top risks + corresponding mitigants                        |
 
 A custom criteria framework can replace the default if the user provides one.
 
@@ -354,7 +354,7 @@ A custom criteria framework can replace the default if the user provides one.
 
 The Content Catalog is an **extension of S4**. While the Slides section above tells you which patterns exist, this section organizes memo content by type. When filling an S4 content slide, find the matching content type below and follow its guidance. Pattern selection is the agent's call based on the content's shape — guided by the Slides section.
 
-Each entry has two parts: **Content** (the variations that may appear in the memo and what to pull from each) and **How to convey** (multiple ways to render it on a slide). Both lists are non-exhaustive — pick what fits the memo at hand and adapt.
+Each entry has two parts: **Content** (what to pull from the memo) and **How to convey** (suggestions for rendering — pick, ignore, or invent freely). The only hard rules are the Design Principles above.
 
 ---
 
@@ -646,4 +646,3 @@ Follow the principles. Dumping the points into `standard-content` is the last sa
 - 17 slides total. Layouts: Custom (S1), Divider (S3), Content (S4 + S5), Blank (S2 + S6).
 - Content layout defines the title placeholder (position + 22pt accent2). Per-slide titles inherit; do not override geometry or font size.
 - Divider layout's text placeholder bakes no-bullet / right-align / white / 32pt into `<a:lstStyle>` so new divider slides inherit the style.
-- `.claude/scripts/clean_reference.py` removes OLE cruft and orphan rels. Run after manual edits to reference.pptx.
