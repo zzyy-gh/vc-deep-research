@@ -59,7 +59,7 @@ The memo is the source of facts — never invent numbers, names, or claims. But 
 
 ### Design Discipline
 
-The agent has full autonomy to redesign any slide to fit the content — rearrange components, change layouts, generate new visuals (charts, icons, diagrams) whenever that serves the message better than the reference. Every shape in the reference slides is a reusable component; prefer assembling from existing components first so the visual vocabulary stays consistent, but don't force content into a pattern that doesn't fit. The text inside reference shapes is a guide to the pattern's intent, not literal content; replace it with the memo's. Anything new — rearranged, generated, or freshly composed — must match the deck's colors, typography, and style so it looks like it belongs.
+Visual composition of S4 slides is owned by the renderer (`document-skills:pptx`) — investment-memo provides the story and content, then steps back. The renderer has full autonomy to redesign any slide to fit the content — rearrange components, change layouts, generate new visuals (charts, icons, diagrams) whenever that serves the message better than the reference. Every shape in the reference slides is a reusable component; prefer assembling from existing components first so the visual vocabulary stays consistent, but don't force content into a pattern that doesn't fit. The text inside reference shapes is a guide to the pattern's intent, not literal content; replace it with the memo's. Anything new — rearranged, generated, or freshly composed — must match the deck's colors, typography, and style so it looks like it belongs.
 
 ### One Message Per Slide
 
