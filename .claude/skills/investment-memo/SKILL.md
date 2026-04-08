@@ -19,9 +19,8 @@ Transform a VC investment memo into IC presentation slides.
 
 | File                    | Role                                                                                     |
 | ----------------------- | ---------------------------------------------------------------------------------------- |
-| `assets/guide.md`       | Design contract — global config, principles, slide types, content catalog, narrative arc |
-| `assets/reference.pptx` | Slide templates the renderer clones                                                      |
-| `assets/examples/`      | Example memo and source decks the templates were derived from                            |
+| `assets/guide.md`       | Design contract — theme, constraints, ship states, slide definitions, content catalog, narrative arc |
+| `assets/reference.pptx` | 6 barebones slides: the 5 fixed templates (S1, S2, S3, S5, S6) + a blank S4 canvas       |
 
 ## Outputs
 
@@ -53,16 +52,16 @@ slide: S4
 **Notes:** Reframed flat memo bullets into supply/demand. Numbers from memo §2.1 / §2.3.
 ```
 
-`slide` metadata is the reference type to clone (`S1`–`S6`). For body content, use `S4` and let the renderer pick the pattern. Pattern vocabulary lives in `guide.md`.
+`slide` metadata is one of `S1`–`S6`. Fixed slides (`S1`, `S2`, `S3`, `S5`, `S6`) are cloned from `reference.pptx` with text swapped. `S4` is a body slide — the renderer builds it from a blank canvas, designing the composition that lands the takeaway.
 
 ## Process
 
-`assets/guide.md` is the binding authority on everything about the slides — content, structure, theme, patterns, narrative arc. Read it first and treat it as the source of truth for every decision below; the steps here only sequence the work.
+`assets/guide.md` is the binding authority on everything about the slides — theme, constraints, ship states, slide definitions, content catalog, narrative arc. Read it first and treat it as the source of truth for every decision below; the steps here only sequence the work.
 
 1. **Read the memo fully.** Match each section to a slide; decide its takeaway story.
-2. **Compose the deck.** S1 first, S2 second, S5 near end, S6 last. Group content per the narrative arc in guide.md, with S3 dividers between sections.
-3. **Sanity-check the spec** against guide.md's checklist. Story sentences are takeaways, not topics.
-4. **Hand off to `document-skills:pptx`.** It owns build and QA mechanics, but `assets/guide.md` remains the contract for what appears on each slide and how — the renderer must read it and follow it. The spec is equally binding: every slide in it ships, none dropped because a reference layout is awkward. Within those, the renderer has full creative freedom on adaptive slides — pick patterns, recompose, or build from scratch — as long as the deck's visual language stays coherent and fixed slides are followed strictly.
+2. **Compose the deck.** S1 first, S2 second, S5 near end, S6 last. Group content per the narrative arc in guide.md, with S3 dividers between sections. S4 body slides are designed from scratch — no pattern to pick.
+3. **Sanity-check the spec** against guide.md's constraints and ship states. Story sentences are takeaways, not topics.
+4. **Hand off to `document-skills:pptx`.** It owns build and QA mechanics, but `assets/guide.md` remains the contract for the core principles and constraints. The renderer must read it to know where to follow strictly and where it has creative freedom. The spec is equally binding: every slide in it ships, none dropped because a reference layout is awkward.
 5. **Write the advisory.** After the PPTX exists, read the rendered deck and write `investment-memo-{slug}-v{round}-advisory.md`.
 
 ## Advisory Template

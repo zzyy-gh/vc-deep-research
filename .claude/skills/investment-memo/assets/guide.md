@@ -4,7 +4,9 @@ The reference for the investment-memo skill — what to present, how to present 
 
 ---
 
-## Global Config
+## Theme
+
+The visual contract. Constant across every slide in every deck.
 
 ### Slide Dimensions
 
@@ -47,77 +49,31 @@ slide: { 13.3in × 7.5in, 16:9 }
 
 ---
 
-## Design Principles
+## Constraints
 
-### Content Discipline
+Four things don't bend. Everything else is creative freedom.
 
-- **Memo is the single source of truth** — never invent numbers, names, or claims; every fact must land somewhere in the deck soundly.
-- **Beyond the memo's structure is fair game.** If a slide would strengthen the deck and its content lives in another file or with a human (returns table, deal terms, a comparison the memo skipped), propose it anyway.
-- **Half-filled beats missing or invented.** Fill what the memo supports, leave a labelled template (table skeleton, chart frame, empty shape) for the rest, and mark the handoff.
-- **State gaps plainly.** Neutral language, same font as normal content — never blank, never "N/A", never grayed.
+1. **Fixed slides** — S1, S2, S3, S5, S6 clone from `reference.pptx`. Swap text; layout stays.
+2. **Theme** — colors, typography, spacing above. Constant on every slide.
+3. **Hygiene** — no overlaps, no overflow, font sizes ≥ the typography minimums, clean spacing. A slide that fails hygiene doesn't ship.
+4. **Spec content** — every fact traces back to the memo via the spec. Nothing invented, nothing dropped.
 
-### Design Discipline
+---
 
-- **Renderer owns visual composition of S4 slides.** `investment-memo` provides story and content, then steps back. The renderer has full autonomy to rearrange components, change layouts, or generate new visuals (charts, icons, diagrams) whenever that serves the message better than the reference.
-- **Reference shapes are a component library.** Every shape is a reusable building block; prefer assembling from existing components first so the visual vocabulary stays consistent, but don't force content into a pattern that doesn't fit.
-- **Reference text is pattern intent, not literal content.** Replace it with the memo's.
-- **New visuals must belong.** Anything rearranged, generated, or freshly composed must match the deck's colors, typography, and style so it looks native.
+## Ship States
 
-### One Message Per Slide
+Two allowed states:
 
-- **The title IS the message**, not a label — a sentence stating the takeaway beats a topic word.
-- **One takeaway per slide.** If there are two, make two slides.
-- **Evidence sits with its claim** on the same slide.
+- **Ship-ready** — complete, final, presentable as-is.
+- **Half-done, hand-off-clean** — missing pieces (data not in the memo, photos, logos, external assets) are labeled placeholders a non-designer fills in under a minute in PowerPoint. Flagged in the advisory.
 
-### Visual Density (Space)
+**Forbidden: hidden gaps.** Empty image shapes with no label, placeholder data that looks real, layouts needing designer finishing, flattened or scripted visuals a human can't edit in PowerPoint.
 
-- **Three tiers of hierarchy:** title (the takeaway), primary content (the evidence), supporting content (labels and notes — present but quiet). Bold key numbers and names.
-- **Whitespace matters** — when in doubt, split rather than cram. Content must fit without overlapping or running off-screen; if a topic needs more room, split across slides or push detail to the appendix.
-- **Never shrink fonts** below the typography minimums; **never drop memo content** to fit.
-
-### Content Density (Distillation)
-
-- **Distill, don't transcribe.** Reframe flat lists into structured comparisons when a comparison reveals more than the list; synthesize scattered facts into coherent shapes.
-- **Select for the thesis.** Pick the points that make the case; leave the rest for the advisory or appendix. Density is a judgment call: enough to make the case, few enough to read.
-- **Never invent** — every fact on a slide must trace back to the memo.
+**When ambition and finishability collide, finishability wins.** Design down to a cleaner composition that ships — don't leave a half-broken ambitious slide behind.
 
 ---
 
 ## Slides
-
-### Slide Types
-
-**Fixed** (S1, S2, S3, S5, S6) — layout and shapes don't change. The agent fills content into existing shapes, used as-is.
-
-**Adaptive** (S4 content slides) — the agent adjusts layout to fit the content. The reference slides show the _typical_ layout, not a rigid mold. Adapt intelligently: more or fewer bullets, adjust column balance, combine thin or split dense content, switch patterns if the content's shape changes.
-
-**Component** — small reusable visual units that aren't full slides on their own but can be cloned and embedded into any slide. Slides 5 and 6 are dedicated component reference slides, but components can also be lifted from any other slide — pill headers from slide 7, chevrons from slide 10, the founder photo block from slide 12.
-
-### Reference Slide Index
-
-The renderer clones slides from reference.pptx by index.
-
-| Ref # | Pattern name             | Type      | Description                                          |
-| ----- | ------------------------ | --------- | ---------------------------------------------------- |
-| 1     | `S1` title               | fixed     | Deck title + date                                    |
-| 2     | `S2` exec-summary        | fixed     | One-pager investment summary                         |
-| 3     | `S3` divider             | fixed     | Section transition with teal panel                   |
-| 4     | `standard-content`       | adaptive  | Title + free body area (baseline fallback)           |
-| 5     | `chart-caption`          | component | Chart/picture + caption label                        |
-| 6     | `icon-text`              | component | Icon + text block                                    |
-| 7     | `two-column`             | adaptive  | Two pill headers + two parallel blocks               |
-| 8     | `matrix`                 | adaptive  | 2x2 grid with labeled axes                           |
-| 9     | `comparison-table`       | adaptive  | Row-based comparison (label rows + entity columns)   |
-| 10    | `pipeline`               | adaptive  | Chevron process flow + summary bar                   |
-| 11    | `timeline`               | adaptive  | Horizontal timeline with year markers + event groups |
-| 12    | `team`                   | adaptive  | Founding team + BoD/advisors with photos             |
-| 13    | `financials`             | adaptive  | Chart (with trend arrow) + supporting table          |
-| 14    | `cap-table`              | adaptive  | Full-width data table                                |
-| 15    | `key-terms`              | adaptive  | 2-column term/detail table                           |
-| 16    | `S5` investment-criteria | fixed     | 8-row criteria assessment table                      |
-| 17    | `S6` appendix            | fixed     | Appendix divider                                     |
-
----
 
 ### S1: Title Slide
 
@@ -140,35 +96,17 @@ Bold key terms (company name, founder names, dollar figures, customer names). If
 
 `slide: S3` with an extra `section: "{name}"` field in the metadata. Full-bleed dark teal panel with the section name as large white right-aligned text. No body. Section names are taken **verbatim** from the Narrative Arc — "Market", "Product", "Team", "Deal". Do not paraphrase. New section names may be added if the memo's structure needs one the arc doesn't cover. Skip if a section has only 1-2 content slides — fold those into an adjacent section instead.
 
-### S4: Content Slides
+### S4: Body Slides
 
-S4 is the body of the deck — where most memo content lands. `slide: S4`. The renderer picks a pattern from the index below at render time based on the content's shape. The Content Catalog (further down) tells the renderer _what_ to extract for each topic; the patterns below tell it _how_ the slide can be shaped.
+`slide: S4`. The blank canvas where memo content lives. Build from scratch — no template to fill, no pattern to pick. For each slide, design the composition that lands the takeaway story: choose the one visual move, build around it, stay in theme.
 
-#### Patterns
+The reference file gives you a blank S4 with a pre-positioned title placeholder (22pt accent2, layout-defined). Everything below the title is yours.
 
-**`standard-content`** (slide 4) — Title + free body. No fixed body shapes; the agent lays out text and optionally clones components. **Use as** the baseline for a claim with a handful of evidence points without an obvious comparison/sequence/table structure. The fallback when no other pattern fits.
+**Aim high.** Slides should look like a designer touched them, not like a form was filled. Pick one deliberate visual move per slide — a stat callout, a structured comparison, a matrix, a diagram, a chart, a custom layout — then compose around it. Bold the numbers and names that matter.
 
-**`chart-caption`** (slide 5, component) — Caption above a chart/picture block, sized to fit ~half a slide. **Use for** content with one visual anchor. Standalone when the visual is the message, or embedded inside another pattern.
+**Vary across the deck.** If three consecutive body slides use the same layout, you're template-filling, not designing. Mix shapes across the deck.
 
-**`icon-text`** (slide 6, component) — Icon + multi-line text block. Sized as one block within a larger slide; typically 3-4 instances in a row or grid. **Use as** a building block inside other patterns, rarely standalone.
-
-**`two-column`** (slide 7) — Two pill headers above two composable parallel blocks. The pill headers are the only fixed elements; each column body can hold any component (chart, icon-text, bullets, mix). **Use for** parallel halves where side-by-side reveals the dynamic — problem/solution, supply/demand, before/after, two named variants. Avoid when one side is much heavier.
-
-**`matrix`** (slide 8) — 2x2 grid with HIGH/LOW labels on two axes; one entry typically highlighted. **Use for** items positioned on two dimensions where the arrangement is the insight. Avoid when positioning needs more than two dimensions.
-
-**`comparison-table`** (slide 9) — Row-based table; rows are attributes, columns are entities. Cells hold prose, not single numbers. Header cells can carry icons. **Use for** qualitative comparison across a handful of named entities and attributes, where each cell needs a sentence rather than a number.
-
-**`pipeline`** (slide 10) — Horizontal flow of 3-5 chevrons with labels and a summary/value-prop row below. Each step can carry an image above it. **Use for** sequential content where each stage feeds the next and the order is meaningful.
-
-**`timeline`** (slide 11) — Horizontal timeline with year markers; supports parallel tracks (e.g. historical above, forward below). The rightmost marker often represents "current and forward". **Use for** chronological content with several dated events, especially when scattered across the memo.
-
-**`team`** (slide 12) — Two-section layout: larger founder block on the left, narrower BoD/advisor block on the right. Pill-style section headers. **Use for** people-centric content split into two tiers, where each person has a photo, name/title, and short descriptor.
-
-**`financials`** (slide 13) — Chart at the top (typically with trend arrow + percent callout) + supporting data table below. **Use for** multi-period numeric content where the trend shape is the headline and underlying numbers are the proof.
-
-**`cap-table`** (slide 14) — Full-width data table optimized for many rows × columns; one row typically highlighted. **Use for** dense tabular numeric content needing both many line items and many columns.
-
-**`key-terms`** (slide 15) — Compact 2-column table; label/term left, longer explanation right (right column wider). Typically 6-10 rows. **Use for** named items with longer descriptions — term sheets, definitions, assumption tables.
+**Use the Content Catalog** below to decide what to extract for each topic. The Catalog tells you _what_ to pull and _how_ to think about conveying it — composition is your judgment.
 
 ### S5: Investment Criteria
 
@@ -189,13 +127,13 @@ A custom criteria framework can replace the default if the user provides one.
 
 ### S6: Appendix
 
-`slide: S6`. Minimalist divider with "Appendix" centered. Used exactly once per deck — only if at least one appendix content slide follows. Skip entirely if the deck has no appendix material. Appendix slides that follow use S4 patterns (typically `comparison-table` or `cap-table`).
+`slide: S6`. Minimalist divider with "Appendix" centered. Used exactly once per deck — only if at least one appendix content slide follows. Skip entirely if the deck has no appendix material. Appendix content that follows uses S4 body slides or entirely blank slides, as the content demands.
 
 ---
 
 ## Content Catalog
 
-Extension of S4 — organizes memo content by type. For each S4 slide, find the matching content type and follow its guidance. Each entry: **Pull** (what to extract from the memo) and **Convey** (how to render it). Pattern selection is the renderer's call.
+Extension of S4 — organizes memo content by type. For each body slide, find the matching content type and follow its guidance. Each entry: **Pull** (what to extract from the memo) and **Convey** (how to think about rendering it). Composition is the renderer's call.
 
 ### Market
 
@@ -233,7 +171,7 @@ What the company builds, how it works, what makes it defensible.
 - Distinguish current vs. future product clearly — don't conflate
 - Quantify capability claims — concrete specs over vague adjectives
 - Bold headline metrics on first mention
-- Show architecture or pipeline as a diagram when structure is the point
+- Show architecture or flow as a diagram when structure is the point
 - Compare side-by-side against alternatives using exact specs
 
 ### Traction / Validation
@@ -348,7 +286,7 @@ Legal and economic terms of the proposed investment.
 - Use the memo's exact legal language — don't paraphrase
 - Make any non-standard term visually prominent (bold, separate row, callout)
 - Separate economic terms from governance terms
-- Use a `key-terms` table when long, a bulleted callout when short
+- A compact 2-column term/detail table reads well when there are many terms; a bulleted callout when there are few
 
 ### Risks & Mitigants
 
@@ -405,7 +343,7 @@ How the company positions against alternatives.
 
 - Pick the two dimensions that reveal the company's advantage
 - Highlight the subject company in the winning position
-- Use a `matrix` when positioning is the insight, a `comparison-table` when specs are
+- A 2×2 matrix works when positioning is the insight; a row-based comparison table works when specs are
 - Use real named companies only — never invent
 - Use exact numbers from each competitor when comparing specs
 
@@ -426,47 +364,15 @@ Content slides  → team
 Divider: Deal
 Content slides  → financials, valuation, cap table, terms slides
 Investment Criteria
-Appendix (optional)       → comps, overflow
+Appendix (optional)       → overflow
 ```
 
-A Divider and Content slides form a section. If the section does not have any content, it can be removed/ ignored. If there is new content, weave into the existing sections or create new sections. The arc is not a constraint but it is our preferred structure. The main goal is to make sure the flow is sound and coherent, especially when new content is considered.
-
----
-
-## Handling Unexpected Content
-
-Follow the principles. Dumping the points into `standard-content` is the last safe resort.
-
----
-
-## Checklist
-
-**Content**
-
-- [ ] Every memo section mapped to a slide, or explicitly excluded
-- [ ] No content invented beyond what the memo states
-- [ ] Numbers match the memo exactly
-- [ ] Structural slides present where required; gaps stated, never blank
-
-**Design**
-
-- [ ] Titles are sentence-form takeaways, not labels
-- [ ] Key numbers and names bolded
-- [ ] One message per slide, evidence on the same slide
-- [ ] Pattern selections match the content shape
-- [ ] Generated visuals coherent with the deck's color and style
-
-**Process**
-
-- [ ] Guide read before starting; memo read fully before mapping
-- [ ] Section ordering follows narrative arc (or has clear rationale for deviation)
-- [ ] Advisory produced alongside slide spec
+A Divider and Content slides form a section. If a section has no content, drop it. If there is new content, weave it into the existing sections or create new sections. The arc is a preferred structure, not a constraint — the goal is a sound, coherent flow.
 
 ---
 
 ## Notes
 
-- reference.pptx is derived from the **eBots** and **Corintis** decks, simplified manually. Source decks live in `assets/examples/`.
-- 17 slides total. Layouts: Custom (S1), Divider (S3), Content (S4 + S5), Blank (S2 + S6).
-- Content layout defines the title placeholder (position + 22pt accent2). Per-slide titles inherit; do not override geometry or font size.
-- Divider layout's text placeholder bakes no-bullet / right-align / white / 32pt into `<a:lstStyle>` so new divider slides inherit the style.
+- `reference.pptx` contains 6 slides: the 5 fixed templates (S1 title, S2 exec-summary, S3 divider, S5 investment-criteria, S6 appendix) + a blank S4 canvas.
+- The S4 blank inherits its title placeholder (position + 22pt accent2) from its layout; don't override geometry or font size on per-slide titles.
+- The Divider layout bakes no-bullet / right-align / white / 32pt into `<a:lstStyle>` so new divider slides inherit the style.
