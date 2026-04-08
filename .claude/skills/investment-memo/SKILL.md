@@ -7,7 +7,7 @@ forked: true
 
 # Investment Memo to Slides
 
-Transform a VC investment memo into IC presentation slides. The memo is the **single source of truth** — extract and restructure, don't research or invent.
+Transform a VC investment memo into IC presentation slides.
 
 ## Inputs
 
@@ -17,11 +17,11 @@ Transform a VC investment memo into IC presentation slides. The memo is the **si
 
 ## Assets
 
-| File                    | Role                                                                                      |
-| ----------------------- | ----------------------------------------------------------------------------------------- |
+| File                    | Role                                                                                     |
+| ----------------------- | ---------------------------------------------------------------------------------------- |
 | `assets/guide.md`       | Design contract — global config, principles, slide types, content catalog, narrative arc |
-| `assets/reference.pptx` | Slide templates the renderer clones                                                       |
-| `assets/examples/`      | Example memo and source decks the templates were derived from                             |
+| `assets/reference.pptx` | Slide templates the renderer clones                                                      |
+| `assets/examples/`      | Example memo and source decks the templates were derived from                            |
 
 ## Outputs
 
@@ -33,7 +33,7 @@ All artifacts in `output/investment-memo/`, in order:
 
 ## Slide Spec Format
 
-The spec is a content brief: *what story each slide must tell and what facts go on it*. Each slide is a `## S{N}: {title}` block with a `<!-- slide -->` metadata comment, followed by **Story**, **Content**, and (optional) **Notes**.
+The spec is a content brief: _what story each slide must tell and what facts go on it_. Each slide is a `## S{N}: {title}` block with a `<!-- slide -->` metadata comment, followed by **Story**, **Content**, and (optional) **Notes**.
 
 **Story is the takeaway, not the topic** — one sentence stating what the slide must convince the IC of.
 
@@ -57,12 +57,12 @@ slide: S4
 
 ## Process
 
-Read `assets/guide.md` first — it's the lens for everything below.
+`assets/guide.md` is the binding authority on everything about the slides — content, structure, theme, patterns, narrative arc. Read it first and treat it as the source of truth for every decision below; the steps here only sequence the work.
 
 1. **Read the memo fully.** Match each section to a slide; decide its takeaway story.
 2. **Compose the deck.** S1 first, S2 second, S5 near end, S6 last. Group content per the narrative arc in guide.md, with S3 dividers between sections.
 3. **Sanity-check the spec** against guide.md's checklist. Story sentences are takeaways, not topics.
-4. **Hand off to `document-skills:pptx`.** It takes over with full authority over build, design, and QA — must read and respect `assets/guide.md` as the design contract.
+4. **Hand off to `document-skills:pptx`.** It owns build and QA mechanics, but `assets/guide.md` remains the contract for what appears on each slide and how — the renderer must read it and follow it. The spec is equally binding: every slide in it ships, none dropped because a reference layout is awkward. Within those, the renderer has full creative freedom on adaptive slides — pick patterns, recompose, or build from scratch — as long as the deck's visual language stays coherent and fixed slides are followed strictly.
 5. **Write the advisory.** After the PPTX exists, read the rendered deck and write `investment-memo-{slug}-v{round}-advisory.md`.
 
 ## Advisory Template

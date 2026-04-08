@@ -1,6 +1,6 @@
 # Slide Guide
 
-The reference for the investment-memo skill — what to present, how to present it, how to arrange it. Read this, then the memo. Pick a slide for each memo section, consult the Content Catalog for what to extract, arrange per the Narrative Arc, write the slide spec.
+The reference for the investment-memo skill — what to present, how to present it, how to arrange it. Read this first before starting for a thorough understanding of the task.
 
 ---
 
@@ -51,23 +51,35 @@ slide: { 13.3in × 7.5in, 16:9 }
 
 ### Content Discipline
 
-The memo is the source of facts — never invent numbers, names, or claims. But the agent isn't limited to the memo's _structure_: if a slide would strengthen the deck and its content lives in another file or with a human (returns table, deal terms, a comparison the memo skipped), propose it anyway. Fill what the memo supports, leave a labelled template (table skeleton, chart frame, empty shape) for the rest, and mark the handoff. A half-filled slide flagged as a handoff beats no slide — or an invented one. State gaps in neutral language, same font as normal content — never blank, never "N/A", never grayed.
+- **Memo is the single source of truth** — never invent numbers, names, or claims; every fact must land somewhere in the deck soundly.
+- **Beyond the memo's structure is fair game.** If a slide would strengthen the deck and its content lives in another file or with a human (returns table, deal terms, a comparison the memo skipped), propose it anyway.
+- **Half-filled beats missing or invented.** Fill what the memo supports, leave a labelled template (table skeleton, chart frame, empty shape) for the rest, and mark the handoff.
+- **State gaps plainly.** Neutral language, same font as normal content — never blank, never "N/A", never grayed.
 
 ### Design Discipline
 
-Visual composition of S4 slides is owned by the renderer (`document-skills:pptx`) — investment-memo provides the story and content, then steps back. The renderer has full autonomy to redesign any slide to fit the content — rearrange components, change layouts, generate new visuals (charts, icons, diagrams) whenever that serves the message better than the reference. Every shape in the reference slides is a reusable component; prefer assembling from existing components first so the visual vocabulary stays consistent, but don't force content into a pattern that doesn't fit. The text inside reference shapes is a guide to the pattern's intent, not literal content; replace it with the memo's. Anything new — rearranged, generated, or freshly composed — must match the deck's colors, typography, and style so it looks like it belongs.
+- **Renderer owns visual composition of S4 slides.** `investment-memo` provides story and content, then steps back. The renderer has full autonomy to rearrange components, change layouts, or generate new visuals (charts, icons, diagrams) whenever that serves the message better than the reference.
+- **Reference shapes are a component library.** Every shape is a reusable building block; prefer assembling from existing components first so the visual vocabulary stays consistent, but don't force content into a pattern that doesn't fit.
+- **Reference text is pattern intent, not literal content.** Replace it with the memo's.
+- **New visuals must belong.** Anything rearranged, generated, or freshly composed must match the deck's colors, typography, and style so it looks native.
 
 ### One Message Per Slide
 
-Every slide answers one question and the title states the answer. The title IS the message, not a label — a sentence stating the takeaway beats a topic word. One takeaway per slide; if there are two, make two slides. Every claim has its evidence on the same slide.
+- **The title IS the message**, not a label — a sentence stating the takeaway beats a topic word.
+- **One takeaway per slide.** If there are two, make two slides.
+- **Evidence sits with its claim** on the same slide.
 
 ### Visual Density (Space)
 
-Three tiers of hierarchy: title (the takeaway), primary content (the evidence), supporting content (labels and notes — present but quiet). Bold key numbers and names. Whitespace matters — when in doubt, split rather than cram. Content must fit without overlapping or running off-screen; if a topic needs more room, split across slides or push detail to the appendix. Never shrink fonts below the typography minimums; never drop memo content to fit.
+- **Three tiers of hierarchy:** title (the takeaway), primary content (the evidence), supporting content (labels and notes — present but quiet). Bold key numbers and names.
+- **Whitespace matters** — when in doubt, split rather than cram. Content must fit without overlapping or running off-screen; if a topic needs more room, split across slides or push detail to the appendix.
+- **Never shrink fonts** below the typography minimums; **never drop memo content** to fit.
 
 ### Content Density (Distillation)
 
-Distill, don't transcribe. Reframe flat lists into structured comparisons when a comparison reveals more than the list. Synthesize scattered facts into coherent shapes. Select the points that support the thesis; leave the rest for the advisory or appendix. Density is a judgment call: enough to make the case, few enough to read. Never invent — every fact on a slide must trace back to the memo.
+- **Distill, don't transcribe.** Reframe flat lists into structured comparisons when a comparison reveals more than the list; synthesize scattered facts into coherent shapes.
+- **Select for the thesis.** Pick the points that make the case; leave the rest for the advisory or appendix. Density is a judgment call: enough to make the case, few enough to read.
+- **Never invent** — every fact on a slide must trace back to the memo.
 
 ---
 
@@ -130,7 +142,7 @@ Bold key terms (company name, founder names, dollar figures, customer names). If
 
 ### S4: Content Slides
 
-S4 is the body of the deck — where most memo content lands. `slide: S4`. The renderer picks a pattern from the index below at render time based on the content's shape. The Content Catalog (further down) tells the renderer *what* to extract for each topic; the patterns below tell it *how* the slide can be shaped.
+S4 is the body of the deck — where most memo content lands. `slide: S4`. The renderer picks a pattern from the index below at render time based on the content's shape. The Content Catalog (further down) tells the renderer _what_ to extract for each topic; the patterns below tell it _how_ the slide can be shaped.
 
 #### Patterns
 
@@ -160,7 +172,7 @@ S4 is the body of the deck — where most memo content lands. `slide: S4`. The r
 
 ### S5: Investment Criteria
 
-`slide: S5`. Full-width 8-row × 2-column table; left column lists the firm's standard assessment criteria as fixed labels, right column holds 2-4 sentences synthesizing what the memo says about that criterion (draw from all relevant sections; do not add judgments beyond what the memo states). The fixed-label structure makes every memo deck directly comparable — its power is *consistency*. Used exactly once per deck, near the end. Do not modify the row labels even if a memo is thin on a criterion — leave the row in place and state the gap professionally.
+`slide: S5`. Full-width 8-row × 2-column table; left column lists the firm's standard assessment criteria as fixed labels, right column holds 2-4 sentences synthesizing what the memo says about that criterion (draw from all relevant sections; do not add judgments beyond what the memo states). The fixed-label structure makes every memo deck directly comparable — its power is _consistency_. Used exactly once per deck, near the end. Do not modify the row labels even if a memo is thin on a criterion — leave the row in place and state the gap professionally.
 
 | Row | Key factors for Assessment (keep) | Comments (replace)                                         |
 | --- | --------------------------------- | ---------------------------------------------------------- |
@@ -190,6 +202,7 @@ Extension of S4 — organizes memo content by type. For each S4 slide, find the 
 The size, shape, and dynamics of the market the company plays in.
 
 **Pull:**
+
 - Sizing — TAM/SAM/SOM with horizon, CAGR with timeframe
 - Problem framing — pain points, inefficiencies, unmet needs
 - Drivers — single-sided tailwinds or two-sided supply/demand dynamics
@@ -197,6 +210,7 @@ The size, shape, and dynamics of the market the company plays in.
 - Segmentation — vertical, geographic, or customer-tier breakdowns
 
 **Convey:**
+
 - Lead with the headline number ("US$ XB market growing at Y% CAGR")
 - Reframe a flat driver list as a structured comparison when a dynamic exists
 - Anchor on a single visual (size over time, or a quadrant of unmet needs)
@@ -207,6 +221,7 @@ The size, shape, and dynamics of the market the company plays in.
 What the company builds, how it works, what makes it defensible.
 
 **Pull:**
+
 - Product overview — what it is, who uses it, headline capabilities
 - Technical depth — architecture, key algorithms, engineering moats
 - Capability specs — yield, speed, accuracy, capacity (with units)
@@ -214,6 +229,7 @@ What the company builds, how it works, what makes it defensible.
 - Roadmap — current state, near-term releases, long-term vision with dates
 
 **Convey:**
+
 - Distinguish current vs. future product clearly — don't conflate
 - Quantify capability claims — concrete specs over vague adjectives
 - Bold headline metrics on first mention
@@ -225,6 +241,7 @@ What the company builds, how it works, what makes it defensible.
 Evidence that customers want or are buying the product.
 
 **Pull:**
+
 - Customer logos — named accounts, tier-1 validation
 - Quantitative metrics — revenue, units, pilots, retention, yield, with units and timeframes
 - Case studies — specific customer stories with measurable outcomes
@@ -232,6 +249,7 @@ Evidence that customers want or are buying the product.
 - Testimonials — quotes with name + title + company
 
 **Convey:**
+
 - Lead with the strongest proof point (biggest named customer or largest number)
 - Preserve customer names exactly as in the memo
 - For pilots, include paid vs. unpaid, duration, and scope inline
@@ -243,14 +261,16 @@ Evidence that customers want or are buying the product.
 The founders, key hires, board, and advisors.
 
 **Pull:**
+
 - Founding team — names, titles, one-line credentials
 - Extended team — key engineers, operators, GTM leads
 - Board and advisors — investors, independent directors, domain experts
 - Founder-market fit — concrete reasons why these specific people for this market
 
 **Convey:**
+
 - Bold every person name on first mention
-- Lead with credentials that matter for *this* business (prior exits, named operator roles, deep domain experience)
+- Lead with credentials that matter for _this_ business (prior exits, named operator roles, deep domain experience)
 - Separate founders from advisors visually
 - For founder-market fit, be specific ("co-founded prior company in same vertical"), never generic
 - Photos help when available; otherwise use clean text blocks
@@ -260,6 +280,7 @@ The founders, key hires, board, and advisors.
 Revenue, burn, unit economics, forward projections.
 
 **Pull:**
+
 - Historical financials — revenue, growth, burn, runway by period
 - Forward projections — revenue forecast, breakeven year, cash need
 - Unit economics — CAC, LTV, margin, payback (with definitions)
@@ -267,6 +288,7 @@ Revenue, burn, unit economics, forward projections.
 - Scenarios — base / bull / bear projections
 
 **Convey:**
+
 - Label periods inline ("2024A", "2025E", "2026F")
 - Pair any dramatic growth claim with the assumption that drives it
 - Lead with the headline trend (chart) and back it with the precise table
@@ -278,12 +300,14 @@ Revenue, burn, unit economics, forward projections.
 Deal economics: pricing, expected returns, exit scenarios.
 
 **Pull:**
+
 - Valuation comparables — public and private comps with multiples
 - Expected returns — IRR, cash-on-cash, exit multiple
 - Scenario returns — bear/base/bull exit scenarios
 - Ownership and dilution — current and post-money stake
 
 **Convey:**
+
 - Be explicit about base case vs. bull case in the labels
 - Bold the returns metric that drives the recommendation (IRR, CoC)
 - Show the assumption stack alongside the returns — never present a return without its inputs
@@ -294,12 +318,14 @@ Deal economics: pricing, expected returns, exit scenarios.
 Ownership structure before and after the proposed round.
 
 **Pull:**
+
 - Pre-money cap table — current shareholders and stakes
 - Post-money cap table — pro-forma after proposed round
 - Fully diluted view — option pool, convertibles, warrants
 - Investment amount, option pool treatment, stapled terms
 
 **Convey:**
+
 - Bold the proposing firm's resulting stake row
 - Show pre and post side-by-side when space allows
 - Label the view clearly ("fully diluted" vs. "as-issued")
@@ -310,6 +336,7 @@ Ownership structure before and after the proposed round.
 Legal and economic terms of the proposed investment.
 
 **Pull:**
+
 - Security type (preferred series, SAFE, convertible)
 - Liquidation preference, anti-dilution mechanism
 - Board composition, protective provisions
@@ -317,6 +344,7 @@ Legal and economic terms of the proposed investment.
 - Any non-standard preferences, governance, or protective provisions
 
 **Convey:**
+
 - Use the memo's exact legal language — don't paraphrase
 - Make any non-standard term visually prominent (bold, separate row, callout)
 - Separate economic terms from governance terms
@@ -327,6 +355,7 @@ Legal and economic terms of the proposed investment.
 What could go wrong and how the company addresses it.
 
 **Pull:**
+
 - Market risks — TAM wrong, timing wrong, substitute products
 - Technical risks — doesn't work at scale, regulatory blocks
 - Execution risks — key person, hiring, GTM
@@ -335,6 +364,7 @@ What could go wrong and how the company addresses it.
 - Each risk with severity (deal-breaker vs. watch item) and its specific mitigant
 
 **Convey:**
+
 - Pair every risk with its mitigant on the same line or in parallel columns
 - State risks without mitigants honestly — don't hide them
 - Avoid generic startup risks — focus on company-specific
@@ -345,12 +375,14 @@ What could go wrong and how the company addresses it.
 Company history and forward milestones.
 
 **Pull:**
+
 - Founding history — incorporation, pivots, key hires
 - Product milestones — first prototype, first customer, GA launch
 - Funding history — rounds, investors, valuations
 - Forward roadmap — planned releases, hiring, geographic expansion
 
 **Convey:**
+
 - Use a horizontal timeline with year markers
 - Keep each event to 1-2 sentences
 - Use softer phrasing for forward items ("plans to", "targeting")
@@ -362,6 +394,7 @@ Company history and forward milestones.
 How the company positions against alternatives.
 
 **Pull:**
+
 - Direct competitors — companies doing the same thing
 - Indirect competitors / substitutes — alternative ways to solve the problem
 - Positioning framework — relevant dimensions for comparison
@@ -369,6 +402,7 @@ How the company positions against alternatives.
 - Funding / traction of key competitors for context
 
 **Convey:**
+
 - Pick the two dimensions that reveal the company's advantage
 - Highlight the subject company in the winning position
 - Use a `matrix` when positioning is the insight, a `comparison-table` when specs are
@@ -383,15 +417,19 @@ How slides compose into a deck:
 
 ```
 Title → Executive Summary
-  Divider: Market         → market slides
-  Divider: Product        → product, traction, competitive, timeline slides
-  Divider: Team           → team
-  Divider: Deal           → financials, valuation, cap table, terms slides
+Divider: Market
+Content slides  → market
+Divider: Product
+Content slides  → product, traction, competitive, timeline slides
+Divider: Team
+Content slides  → team
+Divider: Deal
+Content slides  → financials, valuation, cap table, terms slides
 Investment Criteria
 Appendix (optional)       → comps, overflow
 ```
 
-Each section gets a divider only if it has at least one content slide. Risk content goes wherever it best fits. The arc is a guide, not a constraint — reorder to match the memo's emphasis (lead with team if the team is the story, lead with the deal if the deal is the story).
+A Divider and Content slides form a section. If the section does not have any content, it can be removed/ ignored. If there is new content, weave into the existing sections or create new sections. The arc is not a constraint but it is our preferred structure. The main goal is to make sure the flow is sound and coherent, especially when new content is considered.
 
 ---
 
