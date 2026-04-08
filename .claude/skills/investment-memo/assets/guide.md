@@ -30,20 +30,19 @@ background: "#FFFFFF"
 ### Typography
 
 ```yaml
-title_slide: { size: 24pt }
-divider: { size: 32pt, color: white, align: right }
+divider: { size: 32pt, color: white, align: right } # layout-defined
 content_title: { size: 22pt, color: accent2 } # layout-defined, do not override
 content_body: { size: 14pt }
 subheader: { size: 16pt, bold: true }
-table_header: { size: 12pt, bold: true }
-table_cell: { size: 12pt }
 ```
+
+Title slide and criteria table sizing are owned by `reference.pptx` (slide1 and slide5) — the renderer clones the shapes, never composes them, so no guide-level rule applies.
 
 ### Spacing
 
 ```yaml
 content_title: { L: 0.67in, T: 0.18in, W: 9.80in, H: 0.96in } # layout-defined
-content_body: { top: 1.20in, bottom: 0.80in }
+content_body: starts below title placeholder, leaves breathing room from slide bottom
 slide: { 13.3in × 7.5in, 16:9 }
 ```
 
@@ -55,12 +54,12 @@ slide: { 13.3in × 7.5in, 16:9 }
 
 1. **Fixed templates.** S1, S2, S3, S5, S6 clone from `reference.pptx` — swap text, layout stays. S4 keeps the layout-defined title placeholder; everything below the title is free composition.
 2. **Theme.** Colors, typography, spacing above. Constant on every slide.
-3. **Hygiene.** No overlaps, no overflow, font sizes ≥ the typography minimums. A slide that fails hygiene doesn't ship.
+3. **Hygiene.** No overlaps, no overflow, font sizes ≥ the typography minimums. A slide that fails hygiene doesn't ship. **Exception:** on fixed slides the container is prescribed — if tightening wording isn't enough, prefer overflow over dropping facts and flag it in the advisory. S4 has no exception; redesign instead.
 4. **Spec content.** Every fact traces back to the memo via the spec. Nothing invented, nothing dropped.
 
 ### S4 body design
 
-The fixed slides are solved by the reference. S4 is where design work happens — these principles govern that free composition.
+The fixed slides' layouts are solved by the reference. S4 is where composition work happens — these principles govern that free composition.
 
 - **Land the impact.** Every S4 slide exists to deliver one reader impact. Pick the composition that best lands it — charts, diagrams, and custom compositions are fair game; text-in-boxes is rarely the strongest answer for data-rich content. Slides should look like a designer touched them, not like a form was filled.
 - **Vary across the deck.** Three consecutive body slides with the same layout means you're template-filling, not designing.
@@ -87,7 +86,7 @@ Two allowed states:
 
 ### S2: Executive Summary
 
-`slide: S2`. A single dense prose block organized as ~7 paragraphs covering company background, team, traction, and the investment opportunity. The "Investment Opportunity" line acts as a visual section break inside the prose. The "if you only read one slide, read this" page — used exactly once, immediately after S1.
+`slide: S2`. Title + pre-positioned body text box. Title carries the nickname — "Executive Summary: {nickname}". Body holds the summary as flat paragraphs, one point per paragraph, no bullets. Modify the text box's paragraphs in place; do not restructure or replace it with custom shapes. The "if you only read one slide, read this" page — used exactly once, immediately after S1.
 
 Synthesize from the memo's opening and deal-terms sections:
 
@@ -96,7 +95,7 @@ Synthesize from the memo's opening and deal-terms sections:
 3. **Key traction** — strongest proof point with metrics
 4. **Investment Opportunity** (always present) — prior round, current round, proposed investment
 
-Bold key terms (company name, founder names, dollar figures, customer names). If the memo lacks explicit deal terms, synthesize from fragments. If truly absent, state the gap professionally.
+Bold key terms inline (company name, founder names, dollar figures, customer names). If the memo lacks explicit deal terms, synthesize from fragments. If truly absent, state the gap professionally.
 
 ### S3: Divider
 
@@ -104,11 +103,13 @@ Bold key terms (company name, founder names, dollar figures, customer names). If
 
 ### S4: Body Slides
 
-`slide: S4`. The blank canvas where memo content lives. Build from scratch — no template to fill. The reference file gives you a blank S4 with a pre-positioned title placeholder (22pt accent2, layout-defined); everything below the title is yours. See **Core Principles → S4 body design** for how to compose, and the **Content Catalog** below for what to extract per topic.
+`slide: S4`. The blank canvas where memo content lives. Build from scratch — no template to fill. The reference file gives you a blank S4 with a layout-defined title placeholder; everything below the title is yours. See **Core Principles → S4 body design** for how to compose, and the **Content Catalog** below for what to extract per topic.
 
 ### S5: Investment Criteria
 
-`slide: S5`. Full-width 8-row × 2-column table; left column lists the firm's standard assessment criteria as fixed labels, right column holds 2-4 sentences synthesizing what the memo says about that criterion (draw from all relevant sections; do not add judgments beyond what the memo states). The fixed-label structure makes every memo deck directly comparable — its power is _consistency_. Used exactly once per deck, near the end. Do not modify the row labels even if a memo is thin on a criterion — leave the row in place and state the gap professionally.
+`slide: S5`. Full-width 8-row × 2-column table; left column lists the firm's standard assessment criteria as fixed labels, right column holds the per-criterion synthesis. The fixed-label structure makes every memo deck directly comparable — its power is _consistency_. Used exactly once per deck, near the end. Do not modify the row labels even if a memo is thin on a criterion — leave the row in place and state the gap professionally.
+
+**Self-contained.** A reader who sees only S5 should walk away with the full crux and nuances of the memo — thesis, hard numbers, named customers, founder pedigree, deal math, concrete risks and mitigants. Pull liberally from every section of the memo: specific metrics, named accounts, dollar figures, dates. Do not merely gesture at topics — land them. Do not add judgments or claims beyond what the memo states; density comes from more of the memo's facts, not invented commentary. Bold the load-bearing facts so each cell can be skimmed as well as read.
 
 | Row | Key factors for Assessment (keep) | Comments (replace)                                         |
 | --- | --------------------------------- | ---------------------------------------------------------- |
@@ -226,7 +227,7 @@ Ownership structure before and after the proposed round.
 - Fully diluted view — option pool, convertibles, warrants
 - Investment amount, option pool treatment, stapled terms
 
-**Impact:** the reader should see ownership before and after at a glance and find the proposing firm's resulting stake immediately. Exact share counts and percentages matter — never round.
+**Impact:** the reader should see ownership before and after at a glance and find the proposing firm's resulting stake immediately.
 
 ### Deal Terms
 
@@ -235,12 +236,12 @@ Legal and economic terms of the proposed investment.
 **Pull:**
 
 - Security type (preferred series, SAFE, convertible)
-- Liquidation preference, anti-dilution mechanism
-- Board composition, protective provisions
+- **Investor rights** (must mention, leave blank if none) — liquidation preference, anti-dilution, pro-rata, protective provisions
+- Board composition
 - Use of proceeds
-- Any non-standard preferences, governance, or protective provisions
+- Any non-standard preferences or governance
 
-**Impact:** the reader should grasp the economic and governance shape of the deal quickly, with any non-standard term jumping out unmistakably. Use the memo's exact legal language — don't paraphrase.
+**Impact:** the reader should grasp the economic and governance shape of the deal at a glance, with investor rights visible — listed if the memo states them, blank if not.
 
 ### Risks & Mitigants
 
@@ -282,7 +283,7 @@ How the company positions against alternatives.
 - Value chain position — where they sit in the stack
 - Funding / traction of key competitors for context
 
-**Impact:** the reader should see where the company wins and against whom — the advantage should be unmistakable. Use real named companies only, never invented ones, and comparisons should rest on exact numbers where specs are the point.
+**Impact:** the reader should see where the company wins and against whom — the advantage should be unmistakable.
 
 ---
 
