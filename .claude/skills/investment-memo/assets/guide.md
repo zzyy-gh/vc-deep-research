@@ -49,18 +49,24 @@ slide: { 13.3in × 7.5in, 16:9 }
 
 ---
 
-## Constraints
+## Core Principles
 
-Four things don't bend. Everything else is creative freedom.
+### Hard constraints
 
-1. **Fixed slides** — S1, S2, S3, S5, S6 clone from `reference.pptx`. Swap text; layout stays.
-2. **Theme** — colors, typography, spacing above. Constant on every slide.
-3. **Hygiene** — no overlaps, no overflow, font sizes ≥ the typography minimums, clean spacing. A slide that fails hygiene doesn't ship.
-4. **Spec content** — every fact traces back to the memo via the spec. Nothing invented, nothing dropped.
+1. **Fixed templates.** S1, S2, S3, S5, S6 clone from `reference.pptx` — swap text, layout stays. S4 keeps the layout-defined title placeholder; everything below the title is free composition.
+2. **Theme.** Colors, typography, spacing above. Constant on every slide.
+3. **Hygiene.** No overlaps, no overflow, font sizes ≥ the typography minimums. A slide that fails hygiene doesn't ship.
+4. **Spec content.** Every fact traces back to the memo via the spec. Nothing invented, nothing dropped.
 
----
+### S4 body design
 
-## Ship States
+The fixed slides are solved by the reference. S4 is where design work happens — these principles govern that free composition.
+
+- **Land the impact.** Every S4 slide exists to deliver one reader impact. Pick the composition that best lands it — charts, diagrams, and custom compositions are fair game; text-in-boxes is rarely the strongest answer for data-rich content. Slides should look like a designer touched them, not like a form was filled.
+- **Vary across the deck.** Three consecutive body slides with the same layout means you're template-filling, not designing.
+- **Breathing room.** Compose with deliberate whitespace between adjacent blocks — every pair should read as clearly separated at a glance. Position each block with a visible gap from its neighbour, not flush against it.
+
+### Ship states
 
 Two allowed states:
 
@@ -98,15 +104,7 @@ Bold key terms (company name, founder names, dollar figures, customer names). If
 
 ### S4: Body Slides
 
-`slide: S4`. The blank canvas where memo content lives. Build from scratch — no template to fill, no pattern to pick. For each slide, design the composition that lands the takeaway story: choose the one visual move, build around it, stay in theme.
-
-The reference file gives you a blank S4 with a pre-positioned title placeholder (22pt accent2, layout-defined). Everything below the title is yours.
-
-**Aim high.** Slides should look like a designer touched them, not like a form was filled. Pick one deliberate visual move per slide — a stat callout, a structured comparison, a matrix, a diagram, a chart, a custom layout — then compose around it. Bold the numbers and names that matter.
-
-**Vary across the deck.** If three consecutive body slides use the same layout, you're template-filling, not designing. Mix shapes across the deck.
-
-**Use the Content Catalog** below to decide what to extract for each topic. The Catalog tells you _what_ to pull and _how_ to think about conveying it — composition is your judgment.
+`slide: S4`. The blank canvas where memo content lives. Build from scratch — no template to fill. The reference file gives you a blank S4 with a pre-positioned title placeholder (22pt accent2, layout-defined); everything below the title is yours. See **Core Principles → S4 body design** for how to compose, and the **Content Catalog** below for what to extract per topic.
 
 ### S5: Investment Criteria
 
@@ -133,7 +131,7 @@ A custom criteria framework can replace the default if the user provides one.
 
 ## Content Catalog
 
-Extension of S4 — organizes memo content by type. For each body slide, find the matching content type and follow its guidance. Each entry: **Pull** (what to extract from the memo) and **Convey** (how to think about rendering it). Composition is the renderer's call.
+Extension of S4 — organizes memo content by type. For each body slide, find the matching content type. Each entry: **Pull** (what to extract from the memo) and **Impact** (what the reader should walk away feeling or understanding). Composition is entirely the renderer's call — pick the form that lands the impact.
 
 ### Market
 
@@ -147,12 +145,7 @@ The size, shape, and dynamics of the market the company plays in.
 - Gap framing — what current solutions miss, white space being addressed
 - Segmentation — vertical, geographic, or customer-tier breakdowns
 
-**Convey:**
-
-- Lead with the headline number ("US$ XB market growing at Y% CAGR")
-- Reframe a flat driver list as a structured comparison when a dynamic exists
-- Anchor on a single visual (size over time, or a quadrant of unmet needs)
-- Pair the size figure with one supporting cause for "why now"
+**Impact:** the reader should feel the market is both large and moving — size and momentum land together, not one without the other. Any "why now" cause should feel inseparable from the size figure.
 
 ### Product / Technology
 
@@ -166,13 +159,7 @@ What the company builds, how it works, what makes it defensible.
 - Differentiation — vs. named real alternatives
 - Roadmap — current state, near-term releases, long-term vision with dates
 
-**Convey:**
-
-- Distinguish current vs. future product clearly — don't conflate
-- Quantify capability claims — concrete specs over vague adjectives
-- Bold headline metrics on first mention
-- Show architecture or flow as a diagram when structure is the point
-- Compare side-by-side against alternatives using exact specs
+**Impact:** the reader should walk away understanding what is actually built today (vs. promised for later) and why it's hard to replicate. Capability claims should land as numbers, not adjectives.
 
 ### Traction / Validation
 
@@ -186,13 +173,7 @@ Evidence that customers want or are buying the product.
 - Pipeline — LOIs, signed contracts, qualified opportunities, by stage
 - Testimonials — quotes with name + title + company
 
-**Convey:**
-
-- Lead with the strongest proof point (biggest named customer or largest number)
-- Preserve customer names exactly as in the memo
-- For pilots, include paid vs. unpaid, duration, and scope inline
-- Use a logo strip when many recognizable customers exist
-- Quantify everything — avoid vague phrases like "strong interest"
+**Impact:** the reader should believe real customers care — the strongest proof point should hit first and feel specific, not general. Vague enthusiasm should never stand in for a number or a name.
 
 ### Team
 
@@ -205,13 +186,7 @@ The founders, key hires, board, and advisors.
 - Board and advisors — investors, independent directors, domain experts
 - Founder-market fit — concrete reasons why these specific people for this market
 
-**Convey:**
-
-- Bold every person name on first mention
-- Lead with credentials that matter for _this_ business (prior exits, named operator roles, deep domain experience)
-- Separate founders from advisors visually
-- For founder-market fit, be specific ("co-founded prior company in same vertical"), never generic
-- Photos help when available; otherwise use clean text blocks
+**Impact:** the reader should feel this is the right team for this specific market — credentials framed for their relevance to the thesis, not a résumé dump. Founder-market fit should land as a concrete reason, not a generic claim.
 
 ### Financials / Projections
 
@@ -225,13 +200,7 @@ Revenue, burn, unit economics, forward projections.
 - Cost structure — COGS breakdown, R&D intensity, sales efficiency
 - Scenarios — base / bull / bear projections
 
-**Convey:**
-
-- Label periods inline ("2024A", "2025E", "2026F")
-- Pair any dramatic growth claim with the assumption that drives it
-- Lead with the headline trend (chart) and back it with the precise table
-- State breakeven year and cash-out milestone explicitly
-- Bold the headline metric (CAGR, breakeven year, runway months)
+**Impact:** the reader should see the shape of the business — trajectory, burn, breakeven, runway — and trust the assumptions behind any dramatic number. Actuals, estimates, and forecasts should never blur.
 
 ### Valuation / Returns
 
@@ -244,12 +213,7 @@ Deal economics: pricing, expected returns, exit scenarios.
 - Scenario returns — bear/base/bull exit scenarios
 - Ownership and dilution — current and post-money stake
 
-**Convey:**
-
-- Be explicit about base case vs. bull case in the labels
-- Bold the returns metric that drives the recommendation (IRR, CoC)
-- Show the assumption stack alongside the returns — never present a return without its inputs
-- For comparables, use real named companies with concrete numbers
+**Impact:** the reader should understand the return on offer and the assumptions it rests on — a return without its inputs is incomplete. Base case and bull case should never be mistaken for each other.
 
 ### Cap Table
 
@@ -262,12 +226,7 @@ Ownership structure before and after the proposed round.
 - Fully diluted view — option pool, convertibles, warrants
 - Investment amount, option pool treatment, stapled terms
 
-**Convey:**
-
-- Bold the proposing firm's resulting stake row
-- Show pre and post side-by-side when space allows
-- Label the view clearly ("fully diluted" vs. "as-issued")
-- Preserve exact share counts and percentages — do not round
+**Impact:** the reader should see ownership before and after at a glance and find the proposing firm's resulting stake immediately. Exact share counts and percentages matter — never round.
 
 ### Deal Terms
 
@@ -281,12 +240,7 @@ Legal and economic terms of the proposed investment.
 - Use of proceeds
 - Any non-standard preferences, governance, or protective provisions
 
-**Convey:**
-
-- Use the memo's exact legal language — don't paraphrase
-- Make any non-standard term visually prominent (bold, separate row, callout)
-- Separate economic terms from governance terms
-- A compact 2-column term/detail table reads well when there are many terms; a bulleted callout when there are few
+**Impact:** the reader should grasp the economic and governance shape of the deal quickly, with any non-standard term jumping out unmistakably. Use the memo's exact legal language — don't paraphrase.
 
 ### Risks & Mitigants
 
@@ -301,12 +255,7 @@ What could go wrong and how the company addresses it.
 - Financial risks — burn, dilution, customer concentration
 - Each risk with severity (deal-breaker vs. watch item) and its specific mitigant
 
-**Convey:**
-
-- Pair every risk with its mitigant on the same line or in parallel columns
-- State risks without mitigants honestly — don't hide them
-- Avoid generic startup risks — focus on company-specific
-- A two-column Risks/Mitigants layout reads cleanly when both sides exist
+**Impact:** the reader should feel risks are named honestly and company-specific, with mitigants that sound thought-through rather than sanitized. Risks without mitigants should be stated as such, not hidden.
 
 ### Timeline / Milestones
 
@@ -319,13 +268,7 @@ Company history and forward milestones.
 - Funding history — rounds, investors, valuations
 - Forward roadmap — planned releases, hiring, geographic expansion
 
-**Convey:**
-
-- Use a horizontal timeline with year markers
-- Keep each event to 1-2 sentences
-- Use softer phrasing for forward items ("plans to", "targeting")
-- Visually separate historical from forward when both are present
-- Gather dates from across the memo — timeline content is rarely in one place
+**Impact:** the reader should see the arc of the company — where it has been and where it is going — at a single glance. Historical commitments and forward plans should read differently; the future should feel forecast, not fact.
 
 ### Competitive Landscape
 
@@ -339,13 +282,7 @@ How the company positions against alternatives.
 - Value chain position — where they sit in the stack
 - Funding / traction of key competitors for context
 
-**Convey:**
-
-- Pick the two dimensions that reveal the company's advantage
-- Highlight the subject company in the winning position
-- A 2×2 matrix works when positioning is the insight; a row-based comparison table works when specs are
-- Use real named companies only — never invent
-- Use exact numbers from each competitor when comparing specs
+**Impact:** the reader should see where the company wins and against whom — the advantage should be unmistakable. Use real named companies only, never invented ones, and comparisons should rest on exact numbers where specs are the point.
 
 ---
 
@@ -374,5 +311,4 @@ A Divider and Content slides form a section. If a section has no content, drop i
 ## Notes
 
 - `reference.pptx` contains 6 slides: the 5 fixed templates (S1 title, S2 exec-summary, S3 divider, S5 investment-criteria, S6 appendix) + a blank S4 canvas.
-- The S4 blank inherits its title placeholder (position + 22pt accent2) from its layout; don't override geometry or font size on per-slide titles.
 - The Divider layout bakes no-bullet / right-align / white / 32pt into `<a:lstStyle>` so new divider slides inherit the style.
