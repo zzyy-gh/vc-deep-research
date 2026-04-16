@@ -31,8 +31,8 @@ Run in order (each reads prior siblings):
 - `/competitor-research`
 - `/regulatory-analysis` *(skip if unregulated sector)*
 
-### Phase 4 — People (parallel)
-Launch 2 subagents in parallel:
+### Phase 4 — People (sequential)
+Run in order (founder-market-fit reads the talent eval):
 - `/graham-duncan-eval` for {company}
 - `/founder-market-fit` for {company}
 
@@ -53,16 +53,9 @@ Then sequentially:
 - `/consolidated-report` for {company}
 - `/due-diligence` on the consolidated report
 
-### Parallelization Rules
-- **Within a phase**: independent skills run as parallel subagents
-- **Between phases**: sequential — later phases need earlier artifacts on disk
-
 ### Adapting the Flow
 - If user provides a deck or notes, place in `docs/` first
 - If the company is in an unregulated sector, skip regulatory-analysis
 - If specific artifacts already exist on disk, skip those skills
 - Report progress briefly after each phase completes
 
-## Constraints
-- All output goes to `output/{skill}/` — standard naming conventions
-- DD runs only on the final synthesis artifact, not on individual skills — this keeps the pipeline efficient while still catching errors before delivery

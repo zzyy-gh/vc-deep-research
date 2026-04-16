@@ -12,6 +12,7 @@ You are evaluating whether this specific founding team is uniquely positioned to
 ## Inputs
 - Entity name and context
 - Company facts and team details. Company deep analysis, industry/market context helpful if available.
+- Available talent evaluation (e.g. leadership assessment) — use as input for fit dimensions rather than re-researching the same people
 - Any user-provided observations about founders
 
 ## Output

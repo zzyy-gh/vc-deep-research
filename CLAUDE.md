@@ -34,8 +34,8 @@ compare/           — External model outputs (comparison only, never read by sk
 | 3b    | `ecosystem-analysis`      | Supply chain, customers, partnerships, dependencies, geopolitical risks                                                                                                                                    |
 | 3c    | `competitor-research`     | Competitors at correct value chain layer, comparison, moat assessment                                                                                                                                      |
 | 3d    | `regulatory-analysis`     | Regulations, compliance burden, regulatory risks/tailwinds, competitive implications                                                                                                                       |
-| 4     | `graham-duncan-eval`      | Talent evaluation using Graham Duncan's framework (6 dimensions, qualitative ratings)                                                                                                                      |
-| 4     | `founder-market-fit`      | Founder-market fit — domain expertise, network, timing, motivation, complementarity                                                                                                                        |
+| 4a    | `graham-duncan-eval`      | Talent evaluation using Graham Duncan's framework (6 dimensions, qualitative ratings)                                                                                                                      |
+| 4b    | `founder-market-fit`      | Founder-market fit — domain expertise, network, timing, motivation, complementarity                                                                                                                        |
 | 5     | `recent-signals`          | Narrative deltas — what shifted in the last ~90 days, where concern is spiking, where excitement is building. Stage-adaptive sources (earnings calls, hiring, founder posts, etc.). Runs first in L5 so bear/bull can leverage it |
 | 5a    | `assess-bear`             | Worst case — failure modes, competitive threats, market/financial/timing risks                                                                                                                             |
 | 5a    | `assess-bull`             | Best case — upside scenarios, moat strength, tailwinds, why this could be a fund-returner                                                                                                                  |
@@ -51,7 +51,7 @@ compare/           — External model outputs (comparison only, never read by sk
 
 Two research agents share the same pipeline — they differ only in the final output.
 
-**IMPORTANT — agent vs. skill routing:** When the user asks for "pre-meeting prep" or "full report" (or similar), run the **full pipeline** defined in the corresponding agent file (`.claude/agents/{agent}/AGENT.md`). Read the AGENT.md, then execute each phase by invoking skills via the Skill tool in the prescribed order, parallelizing where the workflow allows. Do NOT just invoke the final skill (`/pre-meeting-read` or `/consolidated-report`) alone — that skips all upstream research.
+**IMPORTANT — agent vs. skill routing:** When the user asks for "pre-meeting prep" or "full report" (or similar), run the **full pipeline** defined in the corresponding agent file (`.claude/agents/{agent}/AGENT.md`). Read the AGENT.md, then execute each phase in the prescribed order. Do NOT just invoke the final skill (`/pre-meeting-read` or `/consolidated-report`) alone — that skips all upstream research.
 
 Only run a single skill directly when the user explicitly names that specific skill (e.g., "run company-profile for X").
 
@@ -63,7 +63,9 @@ Run the pre-meeting-prep agent for [Company Name].
 Run the full-report agent for [Company Name].
 ```
 
-**Pipeline:** L1 parallel (company-profile, product-teardown, financial-analysis) → L2 company-analysis → L3 sequential (industry → ecosystem → competitor → regulatory) → L4 parallel (graham-duncan-eval, founder-market-fit) → L5 (recent-signals → bear + bull parallel → IC → first-principles → next) → final output: **pre-meeting-read** or **consolidated-report** → DD on final output only
+**Pipeline:** L1 parallel (company-profile, product-teardown, financial-analysis) → L2 company-analysis → L3 sequential (industry → ecosystem → competitor → regulatory) → L4 sequential (graham-duncan-eval → founder-market-fit) → L5 (recent-signals → bear + bull parallel → IC → first-principles → next) → final output: **pre-meeting-read** or **consolidated-report** → DD on final output only
+
+**Execution rule:** Every skill runs in its own subagent — never invoke a skill directly in the orchestrator's context. Parallel skills launch as multiple Agent calls in a single message; sequential skills launch one at a time. Each subagent returns a short summary (path, 2-3 lines, gaps). Disk is the interface between skills, not conversation context.
 
 **tester** — workspace quality checks (read-only). Modes: `docs`, `scripts`, `full`, `optimize`, `integration`.
 
@@ -78,7 +80,7 @@ Rules that govern how skills produce research. Apply to all skills.
 ### Process
 
 - **Layer sequence matters.** Each layer builds on prior layers — skipping weakens downstream analysis. Reuse existing artifacts rather than re-running.
-- **Same layer = parallel.** Sub-layers (a→b→c→d) run sequentially; each reads prior siblings' output.
+- **Layer ordering follows the pipeline definition.** Sub-layers (a→b→c→d) run sequentially; each reads prior siblings' output. Skills at the same layer run parallel unless the pipeline specifies otherwise.
 - **Due-diligence runs on the final synthesis artifact** (consolidated-report or pre-meeting-read), not after every individual skill. Corrections produce a new version; additions update in-place.
 - **Skip gracefully.** If a skill finds insufficient information, produce a shorter artifact noting what couldn't be found. The gap itself is signal for downstream skills.
 - **Self-sufficiency.** If expected input isn't available, the skill conducts its own lighter research rather than failing. Skills are always runnable standalone.
@@ -102,7 +104,7 @@ Rules that govern how skills produce research. Apply to all skills.
 
 **Verification gaps:** Note what you looked for but *couldn't find* — data you expected to exist, claims you wanted to confirm but had no sources for, areas where research came up empty. Weave these into the relevant section where the gap matters, not in a separate section at the end. This is a research discipline like situational awareness.
 
-**References:** Every artifact ends with a numbered references list:
+**References:** Every artifact ends with a numbered references list. References cite external facts only — each entry must have a real URL. Never cite other pipeline artifacts as sources; analysis borrowed from earlier skills needs no citation. If a factual claim originates in an earlier artifact, trace it back to the original external URL.
 
 ```
 ## References

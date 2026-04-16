@@ -37,9 +37,9 @@ Run in order (each reads prior siblings):
 - `/competitor-research`
 - `/regulatory-analysis` _(skip if unregulated sector)_
 
-### Phase 4 — People (parallel)
+### Phase 4 — People (sequential)
 
-Launch 2 subagents in parallel:
+Run in order (founder-market-fit reads the talent eval):
 
 - `/graham-duncan-eval` for {company}
 - `/founder-market-fit` for {company}
@@ -67,11 +67,6 @@ Then sequentially:
 - `/due-diligence` on the pre-meeting-read
 - Generate html from the markdown, based on `/pre-meeting-read` specification for html output.
 
-### Parallelization Rules
-
-- **Within a phase**: independent skills run as parallel subagents
-- **Between phases**: sequential — later phases need earlier artifacts on disk
-
 ### Adapting the Flow
 
 - If user provides a deck or notes, place in `docs/` first
@@ -79,7 +74,3 @@ Then sequentially:
 - If specific artifacts already exist on disk, skip those skills
 - Report progress briefly after each phase completes
 
-## Constraints
-
-- All output goes to `output/{skill}/` — standard naming conventions
-- DD runs only on the final synthesis artifact, not on individual skills — this keeps the pipeline efficient while still catching errors before delivery
