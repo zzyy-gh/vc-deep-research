@@ -46,7 +46,11 @@ Launch 2 subagents in parallel:
 
 ### Phase 5 — Assessment
 
-Launch bear + bull in parallel:
+First:
+
+- `/recent-signals` for {company}
+
+Then launch bear + bull in parallel:
 
 - `/assess-bear` for {company}
 - `/assess-bull` for {company}

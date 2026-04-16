@@ -48,6 +48,7 @@ refined_from: v{N-1}    # only if refining
    - "{company} competitors funding" (for comps)
    - Crunchbase, PitchBook summaries
    - Job postings (headcount → burn estimate)
+   - For public/late-stage: latest earnings call transcripts and investor decks for ARR, margins, guidance, segment splits
 3. Use WebFetch on Crunchbase pages, pricing pages, detailed articles
 4. Build estimates where direct data isn't available:
    - Headcount x average comp = burn estimate

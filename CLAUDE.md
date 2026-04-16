@@ -36,6 +36,7 @@ compare/           — External model outputs (comparison only, never read by sk
 | 3d    | `regulatory-analysis`     | Regulations, compliance burden, regulatory risks/tailwinds, competitive implications                                                                                                                       |
 | 4     | `graham-duncan-eval`      | Talent evaluation using Graham Duncan's framework (6 dimensions, qualitative ratings)                                                                                                                      |
 | 4     | `founder-market-fit`      | Founder-market fit — domain expertise, network, timing, motivation, complementarity                                                                                                                        |
+| 5     | `recent-signals`          | Narrative deltas — what shifted in the last ~90 days, where concern is spiking, where excitement is building. Stage-adaptive sources (earnings calls, hiring, founder posts, etc.). Runs first in L5 so bear/bull can leverage it |
 | 5a    | `assess-bear`             | Worst case — failure modes, competitive threats, market/financial/timing risks                                                                                                                             |
 | 5a    | `assess-bull`             | Best case — upside scenarios, moat strength, tailwinds, why this could be a fund-returner                                                                                                                  |
 | 5b    | `assess-ic`               | IC partner perspective — weighs bear vs. bull, returns math, fund fit, hard questions                                                                                                                      |
@@ -62,7 +63,7 @@ Run the pre-meeting-prep agent for [Company Name].
 Run the full-report agent for [Company Name].
 ```
 
-**Pipeline:** L1 parallel (company-profile, product-teardown, financial-analysis) → L2 company-analysis → L3 sequential (industry → ecosystem → competitor → regulatory) → L4 parallel (graham-duncan-eval, founder-market-fit) → L5 (bear + bull parallel → IC → first-principles → next) → final output: **pre-meeting-read** or **consolidated-report** → DD on final output only
+**Pipeline:** L1 parallel (company-profile, product-teardown, financial-analysis) → L2 company-analysis → L3 sequential (industry → ecosystem → competitor → regulatory) → L4 parallel (graham-duncan-eval, founder-market-fit) → L5 (recent-signals → bear + bull parallel → IC → first-principles → next) → final output: **pre-meeting-read** or **consolidated-report** → DD on final output only
 
 **tester** — workspace quality checks (read-only). Modes: `docs`, `scripts`, `full`, `optimize`, `integration`.
 
@@ -86,6 +87,7 @@ Rules that govern how skills produce research. Apply to all skills.
 
 ### Data Integrity
 
+- **Search, don't recall.** Every factual claim must come from a fetched source — never model weights. Model knowledge has a cutoff; live search is required even for things you "know." Reasoning and analysis on top of fetched facts is fine at any layer.
 - Corroborate every material claim with 2-3 independent sources of different types (e.g., filing + report + news). Flag single-source claims.
 - Prefer primary sources (filings, patents, direct data) over secondary (news, analyst reports).
 - If a number, date, or fact can't be sourced, say so — never invent plausible-sounding data.

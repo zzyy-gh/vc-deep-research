@@ -103,15 +103,13 @@ Guidelines:
 - **{Driver 2}**: one-line description
 - **{Driver 3}**: one-line description
 
-## Narrative & Catalysts
-
-Short paragraph on the investment story, followed by 3-4 bullet catalysts (recent events, launches, endorsements).
-
 ## Upside Catalysts
 
-- {catalyst 1}
-- {catalyst 2}
-- {catalyst 3}
+Things that move or could move the story up — recent positive events (launches, customer wins, partnerships, endorsements) plus forward-looking catalysts (upcoming releases, regulatory decisions, contract awards, hiring milestones). Note timing where known. Order by impact, not chronology.
+
+- {catalyst — what, when, why it matters}
+- {catalyst}
+- {catalyst}
 
 ## Downside Risks
 
@@ -154,6 +152,12 @@ Possible subsections (pick what fits, add others if needed):
 ## Sector Trends
 
 One paragraph, numbers-heavy: market size, growth, policy, adoption patterns.
+
+## Narrative
+
+Synthesis of everything above — the story this company is telling right now and how the market is receiving it. Where is conviction building, where is it eroding? Weave in narrative deltas from the last ~90 days: sentiment shifts, concern and excitement spikes, quiet signals (expected announcements that didn't land, founders going dark) that don't fit cleanly into other sections.
+
+Keep to 1-2 short paragraphs. Don't restate the bullets above — frame the picture they collectively paint, and surface the central tension a partner should be alert to in the meeting.
 
 ## Key Questions to Ask
 
