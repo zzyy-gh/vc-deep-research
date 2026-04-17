@@ -1,7 +1,7 @@
 ---
 name: pre-meeting-read
 description: "Quick focused research to prepare for a company meeting — who, what, why it matters, what to ask"
-model: opus
+model: sonnet
 forked: true
 ---
 
@@ -40,7 +40,7 @@ skill: pre-meeting-read
 type: meeting-prep
 round: { round }
 date: "{timestamp}"
-model: opus
+model: sonnet
 description: "Pre-meeting research brief"
 inputs:
   # list any existing artifacts read

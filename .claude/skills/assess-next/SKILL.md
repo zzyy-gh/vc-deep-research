@@ -1,7 +1,7 @@
 ---
 name: assess-next
 description: "Actionable next steps — diligence calls, founder questions, areas to investigate, connections to build, creative angles"
-model: sonnet
+model: opus
 forked: true
 ---
 

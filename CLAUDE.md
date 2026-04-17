@@ -8,7 +8,7 @@ A modular, agent-assisted system for VC due diligence research — designed so a
 
 **Skills** are the building blocks — each is a self-contained research task with its own persona, process, and quality standards. Each artifact belongs to one skill, but a skill can produce multiple artifacts (e.g., markdown + HTML rendering, slide spec + advisory). No skill calls another skill.
 
-**Agents** orchestrate skills into workflows (e.g., "full-report" runs company-profile → company-analysis → industry-analysis → … → consolidated-report). Agents don't produce their own artifacts — all output is skill-owned.
+**Agents** orchestrate skills into workflows (e.g., the research agent runs company-profile → company-analysis → … → consolidated-report). Agents don't produce their own artifacts — all output is skill-owned.
 
 **Disk is the interface.** All data flows through files, never conversation context. Skills receive inputs as file paths and read them directly. Inputs are flexible — some skills read prior artifacts, others work from web research alone.
 
@@ -16,9 +16,13 @@ A modular, agent-assisted system for VC due diligence research — designed so a
 docs/              — User-provided materials (decks, notes, data)
 .claude/
   skills/          — Skill definitions (one SKILL.md per skill, output template embedded, optional assets/ subfolder)
-  scripts/         — External model scripts (call-external.mjs, run-skill-external.mjs)
-  agents/          — Agent definitions (tester, pre-meeting-prep, full-report)
-output/            — Skill artifacts ({skill}/{skill}-{slug}-v{round}.md)
+  scripts/         — Helper scripts (cache-page.mjs, call-external.mjs, run-skill-external.mjs)
+  agents/          — Agent definitions (research, tester)
+output/
+  {skill}/         — Skill artifacts ({skill}-{slug}-v{round}.md)
+  .research/{slug}/ — Research cache (state.md + pages/)
+    state.md       — Lightweight map of artifacts & cached pages
+    pages/         — Full cached web pages as markdown
 compare/           — External model outputs (comparison only, never read by skills)
 ```
 
@@ -26,9 +30,9 @@ compare/           — External model outputs (comparison only, never read by sk
 
 | Layer | Skill                     | What It Does                                                                                                                                                                                               |
 | ----- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1     | `company-profile`         | Company facts — team, product, traction, business model, funding history                                                                                                                                   |
-| 1     | `product-teardown`        | Product and technology analysis — architecture, technical depth, defensibility, developer experience, roadmap signals                                                                                      |
-| 1     | `financial-analysis`      | Unit economics, burn rate, cap table, comparables, revenue quality                                                                                                                                         |
+| 1a    | `company-profile`         | Company facts — team, product, traction, business model, funding history                                                                                                                                   |
+| 1b    | `product-teardown`        | Product and technology analysis — architecture, technical depth, defensibility, developer experience, roadmap signals                                                                                      |
+| 1c    | `financial-analysis`      | Unit economics, burn rate, cap table, comparables, revenue quality                                                                                                                                         |
 | 2     | `company-analysis`        | Vision, strategy, positioning logic, technology depth, current vs. future product                                                                                                                          |
 | 3a    | `industry-analysis`       | Value chain decomposition, company positioning, layer-specific market sizing, dynamics, timing                                                                                                             |
 | 3b    | `ecosystem-analysis`      | Supply chain, customers, partnerships, dependencies, geopolitical risks                                                                                                                                    |
@@ -36,12 +40,12 @@ compare/           — External model outputs (comparison only, never read by sk
 | 3d    | `regulatory-analysis`     | Regulations, compliance burden, regulatory risks/tailwinds, competitive implications                                                                                                                       |
 | 4a    | `graham-duncan-eval`      | Talent evaluation using Graham Duncan's framework (6 dimensions, qualitative ratings)                                                                                                                      |
 | 4b    | `founder-market-fit`      | Founder-market fit — domain expertise, network, timing, motivation, complementarity                                                                                                                        |
-| 5     | `recent-signals`          | Narrative deltas — what shifted in the last ~90 days, where concern is spiking, where excitement is building. Stage-adaptive sources (earnings calls, hiring, founder posts, etc.). Runs first in L5 so bear/bull can leverage it |
-| 5a    | `assess-bear`             | Worst case — failure modes, competitive threats, market/financial/timing risks                                                                                                                             |
-| 5a    | `assess-bull`             | Best case — upside scenarios, moat strength, tailwinds, why this could be a fund-returner                                                                                                                  |
-| 5b    | `assess-ic`               | IC partner perspective — weighs bear vs. bull, returns math, fund fit, hard questions                                                                                                                      |
-| 5c    | `assess-first-principles` | Foundational distillation — strips away narrative, stress-tests from fundamentals, deal-breakers/assumptions/unknowns, section health                                                                      |
-| 5d    | `assess-next`             | Actionable next steps — diligence calls, founder questions, areas to investigate, connections to build, creative angles                                                                                    |
+| 5a    | `recent-signals`          | Narrative deltas — what shifted in the last ~90 days, where concern is spiking, where excitement is building. Runs first in L5 so downstream assessments can leverage it.                                  |
+| 5b    | `assess-bear`             | Worst case — failure modes, competitive threats, market/financial/timing risks                                                                                                                             |
+| 5c    | `assess-bull`             | Best case — upside scenarios, moat strength, tailwinds, why this could be a fund-returner                                                                                                                  |
+| 5d    | `assess-ic`               | IC partner perspective — weighs bear vs. bull, returns math, fund fit, hard questions                                                                                                                      |
+| 5e    | `assess-first-principles` | Foundational distillation — strips away narrative, stress-tests from fundamentals, deal-breakers/assumptions/unknowns, section health                                                                      |
+| 5f    | `assess-next`             | Actionable next steps — diligence calls, founder questions, areas to investigate, connections to build, creative angles                                                                                    |
 | 6     | `consolidated-report`     | Investment memo merging all available artifacts                                                                                                                                                            |
 | 6     | `pre-meeting-read`        | Quick research brief for meeting prep — company snapshot, financials, catalysts, risks, questions to ask                                                                                                   |
 | 6     | `investment-memo`         | Transform an investment memo into presentation slides                                                                                                                                                      |
@@ -49,38 +53,17 @@ compare/           — External model outputs (comparison only, never read by sk
 
 ## Agents
 
-Two research agents share the same pipeline — they differ only in the final output.
-
-**IMPORTANT — agent vs. skill routing:** When the user asks for "pre-meeting prep" or "full report" (or similar), run the **full pipeline** defined in the corresponding agent file (`.claude/agents/{agent}/AGENT.md`). Read the AGENT.md, then execute each phase in the prescribed order. Do NOT just invoke the final skill (`/pre-meeting-read` or `/consolidated-report`) alone — that skips all upstream research.
-
-Only run a single skill directly when the user explicitly names that specific skill (e.g., "run company-profile for X").
-
-```
-Run the pre-meeting-prep agent for [Company Name].
-```
-
-```
-Run the full-report agent for [Company Name].
-```
-
-**Pipeline:** L1 parallel (company-profile, product-teardown, financial-analysis) → L2 company-analysis → L3 sequential (industry → ecosystem → competitor → regulatory) → L4 sequential (graham-duncan-eval → founder-market-fit) → L5 (recent-signals → bear + bull parallel → IC → first-principles → next) → final output: **pre-meeting-read** or **consolidated-report** → DD on final output only
-
-**Execution rule:** Every skill runs in its own subagent — never invoke a skill directly in the orchestrator's context. Parallel skills launch as multiple Agent calls in a single message; sequential skills launch one at a time. Each subagent returns a short summary (path, 2-3 lines, gaps). Disk is the interface between skills, not conversation context.
+**research** — full research pipeline. The user specifies the company and final output skill (e.g., pre-meeting-read or consolidated-report). Only run a single skill directly when the user explicitly names it.
 
 **tester** — workspace quality checks (read-only). Modes: `docs`, `scripts`, `full`, `optimize`, `integration`.
 
-```
-Run the tester agent in [mode] mode.
-```
-
 ## Research Standards
 
-Rules that govern how skills produce research. Apply to all skills.
+Guidelines that govern how skills produce research. Apply to all skills.
 
 ### Process
 
 - **Layer sequence matters.** Each layer builds on prior layers — skipping weakens downstream analysis. Reuse existing artifacts rather than re-running.
-- **Layer ordering follows the pipeline definition.** Sub-layers (a→b→c→d) run sequentially; each reads prior siblings' output. Skills at the same layer run parallel unless the pipeline specifies otherwise.
 - **Due-diligence runs on the final synthesis artifact** (consolidated-report or pre-meeting-read), not after every individual skill. Corrections produce a new version; additions update in-place.
 - **Skip gracefully.** If a skill finds insufficient information, produce a shorter artifact noting what couldn't be found. The gap itself is signal for downstream skills.
 - **Self-sufficiency.** If expected input isn't available, the skill conducts its own lighter research rather than failing. Skills are always runnable standalone.
@@ -89,7 +72,7 @@ Rules that govern how skills produce research. Apply to all skills.
 
 ### Data Integrity
 
-- **Search, don't recall.** Every factual claim must come from a fetched source — never model weights. Model knowledge has a cutoff; live search is required even for things you "know." Reasoning and analysis on top of fetched facts is fine at any layer.
+- **Recall guides search; sourced data goes in artifacts.** Model knowledge is useful for knowing what to search for, but published facts must come from a source with a URL — the concern is freshness and citability. Reasoning and analysis on top of fetched facts is fine at any layer.
 - Corroborate every material claim with 2-3 independent sources of different types (e.g., filing + report + news). Flag single-source claims.
 - Prefer primary sources (filings, patents, direct data) over secondary (news, analyst reports).
 - If a number, date, or fact can't be sourced, say so — never invent plausible-sounding data.
@@ -100,9 +83,9 @@ Rules that govern how skills produce research. Apply to all skills.
 
 **Superscript citations:** Attach `<sup>N</sup>` to every factual claim, linking it to the references list. Multiple claims can share a citation.
 
-**Confidence flags:** Mark issues with sourced claims inline — `[single-source]`, `[unverified]`, `[source: company PR]`, `[stale: 2024]`, `[estimated]`. These flag problems with information that *is* present.
+**Confidence flags:** Mark issues with sourced claims inline — `[single-source]`, `[unverified]`, `[source: company PR]`, `[stale: 2024]`, `[estimated]`. These flag problems with information that _is_ present.
 
-**Verification gaps:** Note what you looked for but *couldn't find* — data you expected to exist, claims you wanted to confirm but had no sources for, areas where research came up empty. Weave these into the relevant section where the gap matters, not in a separate section at the end. This is a research discipline like situational awareness.
+**Verification gaps:** Note what you looked for but _couldn't find_ — data you expected to exist, claims you wanted to confirm but had no sources for, areas where research came up empty. Weave these into the relevant section where the gap matters, not in a separate section at the end. This is a research discipline like situational awareness.
 
 **References:** Every artifact ends with a numbered references list. References cite external facts only — each entry must have a real URL. Never cite other pipeline artifacts as sources; analysis borrowed from earlier skills needs no citation. If a factual claim originates in an earlier artifact, trace it back to the original external URL.
 
@@ -150,29 +133,4 @@ When Claude Code is connected to a non-Claude backend, skills run normally throu
 
 ```bash
 mv output/{skill}/{skill}-{slug}-v{round}.md compare/{skill}-{backend}/
-```
-
-## Output Conventions
-
-Each skill writes to `output/{skill}/{skill}-{slug}-v{round}.md`. Slugs are lowercase, hyphenated (e.g., `acme-ai`). Timestamps use ISO 8601 with SGT: `YYYY-MM-DDTHH:MM:SS+08:00`.
-
-Before writing, check `glob output/{skill}/{skill}-{slug}-v*.md` — prior versions stay in place, versions coexist.
-
-### Frontmatter
-
-Every markdown artifact carries this frontmatter. `inputs:` uses filename only (globally unique via skill+slug+round).
-
-```yaml
----
-entity: "{name}"
-skill: "{skill-name}"
-type: "{artifact type}"
-round: { N }
-date: "{timestamp}"
-model: "{model}"
-description: "{human-readable}"
-inputs:
-  - company-profile-acme-ai-v1.md
-refined_from: v{N-1} # only if refining
----
 ```
