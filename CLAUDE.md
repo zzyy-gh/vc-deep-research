@@ -8,7 +8,7 @@ A modular, agent-assisted system for VC due diligence research — designed so a
 
 **Skills** are the building blocks — each is a self-contained research task with its own persona, process, and quality standards. Each artifact belongs to one skill, but a skill can produce multiple artifacts (e.g., markdown + HTML rendering, slide spec + advisory). No skill calls another skill.
 
-**Agents** orchestrate skills into workflows (e.g., the research agent runs company-profile → company-analysis → … → consolidated-report). Agents don't produce their own artifacts — all output is skill-owned.
+**Agents** orchestrate skills into workflows (e.g., the research agent runs company-profile → company-analysis → … → consolidated-report). All output is skill-owned, except infrastructure writes (cache pages, state.md). When orchestrating subagents — not as one blind pipeline delegation — **batch** by shared context and model affinity; **split and parallelize** where independent, content-heavy, or context grows too large. Heavy content stays in the subagent; instantiate with only the prompt and necessary harnesses — no files attached — letting the subagent fetch what it needs. Delegation never exempts a task from its protocol.
 
 **Disk is the interface.** All data flows through files, never conversation context. Skills receive inputs as file paths and read them directly. Inputs are flexible — some skills read prior artifacts, others work from web research alone.
 
@@ -56,6 +56,20 @@ compare/           — External model outputs (comparison only, never read by sk
 **research** — full research pipeline. The user specifies the company and final output skill (e.g., pre-meeting-read or consolidated-report). Only run a single skill directly when the user explicitly names it.
 
 **tester** — workspace quality checks (read-only). Modes: `docs`, `scripts`, `full`, `optimize`, `integration`.
+
+## Per-Skill Protocol
+
+For long-running stateful workflows — any pipeline that maintains `state.md` as a memory layer — every skill run, direct or delegated, follows this sequence:
+
+1. Read `state.md` — know what artifacts and cached pages exist
+2. Check whether existing cached pages already cover what the skill needs before loading anything full
+3. If more info needed: WebSearch → `cache-page.mjs` for uncached URLs → read the cached `.md` files
+4. For each newly cached page: append a row to state.md Cached Pages with a whole-page summary
+5. Run the skill's analysis per its SKILL.md spec
+6. Write the artifact to `output/{skill}/`
+7. Append a row to state.md Artifacts summarizing what the artifact covers
+
+Short-lived ad-hoc skill runs outside a stateful pipeline don't use this protocol.
 
 ## Research Standards
 

@@ -1,12 +1,12 @@
 ---
 name: research
 description: "Full research pipeline — all layers, all assessments, DD on final output"
-tools: Agent, Skill, Read, Write, Glob, Grep, Bash, WebSearch, WebFetch
+tools: Skill, Read, Write, Glob, Grep, Bash, WebSearch, WebFetch
 ---
 
 # Research Pipeline
 
-Run the complete research pipeline for a company. All skills run sequentially, each in its own subagent. The user specifies the final output — typically `pre-meeting-read` or `consolidated-report`.
+Run the complete research pipeline for a company. All skills run sequentially. The user specifies the final output — typically `pre-meeting-read` or `consolidated-report`.
 
 ## Inputs
 
@@ -71,34 +71,6 @@ inputs:
 refined_from: v{N-1} # only if refining
 ---
 ```
-
-## Dispatching Skill Subagents
-
-Every skill runs in its own subagent. Spawn one at a time — sequential. The orchestrator reads `state.md` before each dispatch to know what exists, then writes a contextual prompt for that skill.
-
-### Required in every skill subagent prompt
-
-Include all of these — a subagent that doesn't receive them will silently fall back to wrong behavior:
-
-1. **Entity name and slug**
-2. **Skill name** to run
-3. **Prior artifacts** available — filenames from the state.md Artifacts table
-4. **Cached pages** available — page numbers, summaries, and paths from the state.md Cached Pages table
-5. **Fetch rule** — run `node .claude/scripts/cache-page.mjs {slug} {url}` for every URL before reading content. Only use WebFetch if the script errors; if so, write the result to `pages/NNN.md` manually.
-6. **State update rule** — append a Cached Pages row for each newly cached page; append an Artifacts row after writing the skill output. Both updates happen before the subagent exits.
-7. **Citation rule** — every factual claim gets a `<sup>N</sup>` superscript; artifact ends with a numbered references list with real URLs; never cite other pipeline artifacts as sources.
-
-### Per-skill research flow
-
-Each subagent follows this sequence:
-
-1. Read `state.md` — know what artifacts and cached pages exist
-2. Determine what the skill needs — check if existing cached pages already cover it
-3. If more info needed: WebSearch to find URLs → `cache-page.mjs` for uncached URLs → read the cached `.md` files
-4. For each newly cached page: append a row to state.md Cached Pages with a whole-page summary
-5. Run the skill's analysis using the SKILL.md spec
-6. Write the artifact to `output/{skill}/`
-7. Append a row to state.md Artifacts summarizing what the artifact covers
 
 ## Workflow
 
