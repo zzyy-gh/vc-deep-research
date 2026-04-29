@@ -74,48 +74,32 @@ refined_from: v{N-1} # only if refining
 
 ## Workflow
 
-### Phase 0 — Initialize
+### 1. Initialize
 
 - `mkdir -p output/.research/{slug}/pages`
 - Write empty `state.md` if it doesn't exist; reuse if it does
 - Place any user-provided deck or notes in `docs/`
 
-### Phase 1 — Foundation
+### 2. Run research flow
 
-- `company-profile`
-- `product-teardown`
-- `financial-analysis`
+1. `company-profile`
+2. `product-teardown`
+3. `financial-analysis`
+4. `company-analysis`
+5. `industry-analysis`
+6. `ecosystem-analysis`
+7. `competitor-research`
+8. `regulatory-analysis` _(skip if unregulated sector)_
+9. `graham-duncan-eval`
+10. `founder-market-fit`
+11. `recent-signals`
+12. `assess-bear`
+13. `assess-bull`
+14. `assess-ic`
+15. `assess-first-principles`
+16. `assess-next`
 
-### Phase 2 — Deep Analysis
-
-- `company-analysis`
-
-### Phase 3 — External Analysis
-
-Each reads prior artifacts and siblings:
-
-- `industry-analysis`
-- `ecosystem-analysis`
-- `competitor-research`
-- `regulatory-analysis` _(skip if unregulated sector)_
-
-### Phase 4 — People
-
-- `graham-duncan-eval`
-- `founder-market-fit` _(reads the talent eval)_
-
-### Phase 5 — Assessment
-
-`recent-signals` runs first — downstream assessments read it:
-
-- `recent-signals`
-- `assess-bear`
-- `assess-bull`
-- `assess-ic`
-- `assess-first-principles`
-- `assess-next`
-
-### Phase 6 — Synthesis
+### 3. Synthesis
 
 - Run the user-specified final output skill
 - `due-diligence` on the final artifact
