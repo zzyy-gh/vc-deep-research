@@ -11,9 +11,9 @@ settings.local.json
 *.stackdump
 
 # Binary assets (keep locally, don't commit)
-*.pptx
-*.jpg
-*.jpeg
-*.png
-*.pdf
-*.docx
+# *.pptx
+# *.jpg
+# *.jpeg
+# *.png
+# *.pdf
+# *.docx
