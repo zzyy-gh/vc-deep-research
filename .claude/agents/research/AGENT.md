@@ -86,18 +86,19 @@ refined_from: v{N-1} # only if refining
 2. `product-teardown`
 3. `financial-analysis`
 4. `company-analysis`
-5. `industry-analysis`
-6. `ecosystem-analysis`
-7. `competitor-research`
-8. `regulatory-analysis` _(skip if unregulated sector)_
-9. `graham-duncan-eval`
-10. `founder-market-fit`
-11. `recent-signals`
-12. `assess-bear`
-13. `assess-bull`
-14. `assess-ic`
-15. `assess-first-principles`
-16. `assess-next`
+5. `technology-primer`
+6. `industry-analysis`
+7. `ecosystem-analysis`
+8. `competitor-research`
+9. `regulatory-analysis` _(skip if unregulated sector)_
+10. `graham-duncan-eval`
+11. `founder-market-fit`
+12. `recent-signals`
+13. `assess-bear`
+14. `assess-bull`
+15. `assess-ic`
+16. `assess-first-principles`
+17. `assess-next`
 
 ### 3. Synthesis
 
